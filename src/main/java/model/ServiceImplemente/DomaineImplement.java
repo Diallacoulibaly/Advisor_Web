@@ -42,6 +42,10 @@ public class DomaineImplement implements DomaineService {
     public List<Domaine> afficher() {
         return domaineDao.afficherDomaine();
     }
+    @Override
+    public Domaine getById(int id){
+        return  domaineDao.getById(id);
+    }
 
 
 }
