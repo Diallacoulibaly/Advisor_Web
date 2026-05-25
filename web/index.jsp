@@ -12,7 +12,9 @@
 </head>
 <body>
 <%String nom="test";%>
+
 <h1>Test de l'appli <%=nom%></h1>
+
 
 </body>
 </html>
