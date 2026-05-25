@@ -9,4 +9,5 @@ public interface DomaineDao {
     List<Domaine> afficherDomaine();
     public void  modifierDomaine(Domaine domaine);
     public void supprimerDomaine(int id);
+    public Domaine getById(int id);
 }
