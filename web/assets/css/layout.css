@@ -45,6 +45,16 @@ body {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
+.main-content {
+    display: flex;
+    flex-direction: column;
+}
+.dynamic-content {
+    flex: 1;
+
+    padding: 30px;
+}
+
 
 
 

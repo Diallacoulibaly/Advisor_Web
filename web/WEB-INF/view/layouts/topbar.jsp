@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>topbar</title>
-    <link rel="stylesheet" href="../css/topbar.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/topbar.css">
 
 
 </head>
@@ -18,7 +18,7 @@
 
         <div class="profil-container">
 
-            <img src="img/profil.png" alt="Profil" class="profil">
+            <img src="${pageContext.request.contextPath}/assets/img/profil.png" alt="Profil" class="profil">
 
 
             <div>

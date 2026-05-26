@@ -24,15 +24,28 @@ public class LocaliteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        String action=req.getParameter("action");
-       if (action==null){
-           List<Localite> lstLocalite=localiteServiceImplemente.getAll();
-           req.setAttribute("lstLocalite",lstLocalite);
-           req.getRequestDispatcher("/WEB-INF/view/index_localite.jsp").forward(req,resp);
-       }
-       else if (action.equalsIgnoreCase("add")  ){
-           req.getRequestDispatcher("/WEB-INF/view/add_localite.jsp").forward(req,resp);
+       if (action==null) action = "liste";
 
-
+       switch (action) {
+           case "add":
+               req.getRequestDispatcher("/WEB-INF/view/add_localite.jsp").forward(req, resp);
+               break;
+           case "edit":
+               int id = Integer.parseInt(req.getParameter("id"));
+               Localite l = localiteServiceImplemente.getById(id);
+               req.setAttribute("localite", l);
+               req.getRequestDispatcher("/WEB-INF/view/edit_localite.jsp").forward(req, resp);
+               break;
+           case "delete":
+               int idl = Integer.parseInt(req.getParameter("id"));
+               localiteServiceImplemente.delete(idl);
+               resp.sendRedirect("localites");
+               break;
+           default:
+               List<Localite> lstLocalite = localiteServiceImplemente.getAll();
+               req.setAttribute("lstLocalite", lstLocalite);
+               req.getRequestDispatcher("/WEB-INF/view/index_localite.jsp").forward(req, resp);
+               break;
        }
 
     }
@@ -48,6 +61,16 @@ public class LocaliteController extends HttpServlet {
                localiteServiceImplemente.add(localite);
                resp.sendRedirect("localites");
            }
+           else if (action.equalsIgnoreCase("update")){
+               int id=Integer.parseInt(req.getParameter("id"));
+               String regionClient=req.getParameter("regionClient");
+               localiteServiceImplemente.update(id,regionClient);
+               resp.sendRedirect("localites");
+
+
+           }
        }
     }
+
+
 }
