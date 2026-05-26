@@ -1,4 +1,4 @@
-/*package main.java.model.DaoImplement;
+package main.java.model.DaoImplement;
 
 public class ActiviteDaoImplement implements ActiviteDao{
 
@@ -106,4 +106,4 @@ public class ActiviteDaoImplement implements ActiviteDao{
             throw new RuntimeException(e);
         }
     }
-}*/
+}

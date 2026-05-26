@@ -1,4 +1,4 @@
-/*package model.dao;
+package model.dao;
 
 import java.util.List;
 
@@ -11,4 +11,3 @@ public interface LocaliteDao {
         void update(int id, String regionClient);
         void delete(int id);
 }
-*/

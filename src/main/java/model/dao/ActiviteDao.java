@@ -1,4 +1,4 @@
-/*package main.java.model.dao;
+package main.java.model.dao;
 import java.util.List;
 
 public interface ActiviteDao {
@@ -8,4 +8,4 @@ public interface ActiviteDao {
     void marqueTerminer(int id);
     void supprimerActivite(int id);
 
-}*/
+}

@@ -1,4 +1,4 @@
-/*package model.classes;
+package model.classes;
 import model.enums.*;
 
 //Implémentation de l'objet activité avec ses attributs
@@ -80,4 +80,4 @@ public class Activite {
     }
 }
 
- */
+

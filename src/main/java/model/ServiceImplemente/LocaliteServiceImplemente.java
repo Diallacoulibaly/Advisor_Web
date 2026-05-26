@@ -1,4 +1,4 @@
-/*package main.java.model.ServiceImplemente;
+package main.java.model.ServiceImplemente;
 
 import java.util.List;
 
@@ -48,4 +48,4 @@ public class LocaliteServiceImplemente implements LocaliteService {
     }
 }
 
- */
+
