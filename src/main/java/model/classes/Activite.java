@@ -1,5 +1,4 @@
 package main.java.model.classes;
-
 import main.java.model.enums.*;
 
 //Implémentation de l'objet activité avec ses attributs
@@ -13,7 +12,7 @@ public class Activite {
     private Statut statut;
 
     // Constructeur vide
-    public Activite (){}
+    public Activite() {}
 
     // Contruteurs avec paramètres
     public Activite(int id, String titre, String description, int ordre, int duree, int montant_activite, Statut statut){
@@ -56,10 +55,6 @@ public class Activite {
     }
 
     // Les setters, ils permettrons de modifier des informations de l'objet comme le titre, la description etc
-    public void setId(int id){
-        this.id = id;
-    }
-
     public void setTitre(String titre){
         this.titre = titre;
     }
@@ -82,5 +77,9 @@ public class Activite {
 
     public void setStatut(Statut statut){
         this.statut = statut;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
