@@ -1,4 +1,4 @@
-package main.java.model.DaoImplement;
+/*package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
 import main.java.model.classes.Utilisateur;
@@ -317,3 +317,4 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
         return false;
     }
 }
+*/
