@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import model.dao.ProjetDao;
-import model.classes.Projet;
+import main.java.model.classes.Projet;
 
 
 public class ProjetServiceImpl {
@@ -54,7 +54,7 @@ public class ProjetServiceImpl {
 
     public void getProjetById(int id) {
         try {
-            Optional<Projet> projetOpt = projetDao.getById(id);
+            Optional<Projet> projetOpt= projetDao.getById(id);
             if (projetOpt.isPresent()) {
                 System.out.println("Projet trouvé : " + projetOpt.get().getTitre());
             } else {
