@@ -1,4 +1,4 @@
-package model.ServiceImplemente;
+/*package main.java.model.ServiceImplemente;
 
 import java.util.List;
 
@@ -47,3 +47,5 @@ public class LocaliteServiceImplemente implements LocaliteService {
         localiteDao.delete(id);
     }
 }
+
+ */

@@ -1,4 +1,4 @@
-package model.service;
+/*package model.service;
 
 public interface ActiviteService {
     void ajouterActivite(Activite activite);
@@ -6,4 +6,4 @@ public interface ActiviteService {
     void modifierActivite(Activite activite);
     void marquerTerminer(int id);
     void supprimerActivite(int id);
-}
+}*/

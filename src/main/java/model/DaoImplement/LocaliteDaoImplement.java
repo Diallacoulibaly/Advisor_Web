@@ -1,4 +1,4 @@
-package model.DaoImplement;
+package main.java.model.DaoImplement;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

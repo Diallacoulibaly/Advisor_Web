@@ -1,4 +1,4 @@
-package model.service;
+/*package main.java.model.service;
 
 import java.util.List;
 
@@ -10,4 +10,4 @@ public interface LocaliteService {
         List<Localite> getAll();
         void update(int id, String regionClient);
         void delete(int id);
-}
+}*/

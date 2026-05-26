@@ -1,4 +1,4 @@
-package model.classes;
+package main.java.model.classes;
 
 public class Localite {
     public Integer id;

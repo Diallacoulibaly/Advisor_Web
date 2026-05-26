@@ -25,6 +25,7 @@ public class deleteDomaineController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id=Integer.parseInt(req.getParameter("id")) ;
         service.supprimer(id);
+        resp.sendRedirect("domaines");
 
 
     }
