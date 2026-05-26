@@ -1,4 +1,4 @@
-package model.service;
+package main.java.model.service;
 
 public interface ProjetService {
     

@@ -1,4 +1,4 @@
-package controller;
+package main.java.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -6,10 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import model.dao.ProjetDao;
-import model.enums.Niveau;
-import model.DaoImplement.ProjetDaoImpl;
-import model.classes.Projet;
+import main.java.model.dao.ProjetDao;
+import main.java.model.enums.Niveau;
+import main.java.model.DaoImplement.ProjetDaoImpl;
+import main.java.model.classes.Projet;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,12 +43,10 @@ public class ProjetController extends HttpServlet {
 
         Projet p1 = new Projet();
         p1.setTitre("Agriculture Urbaine");
-        p1.setNiveau(Niveau.DEBUTANT);
         p1.setBudgetMax(50000.0);
         
         Projet p2 = new Projet();
         p2.setTitre("Digitalisation PME");
-        p2.setNiveau(Niveau.INTERMEDIAIRE);
         p2.setBudgetMax(250000.0);
         
         listeProjets.add(p1);
