@@ -8,8 +8,8 @@ public class ConnectBD {
 
     private static String URL="jdbc:mysql://localhost:3306/advisor";
     private static String USER="root";
-    private static String PASSWORD="diallacoul";
-    public static Connection getConnection () throws SQLException {
+    private static String PASSWORD="isma@1604";
+    public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL,USER,PASSWORD);
     }
 }
