@@ -1,4 +1,4 @@
-package main.java.model.DaoImplement;
+/*package main.java.model.DaoImplement;
 
 package DAOimplementation;
 
@@ -138,3 +138,4 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
     }
 }
 
+*/

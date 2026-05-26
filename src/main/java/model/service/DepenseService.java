@@ -1,4 +1,4 @@
-package service;
+/*package service;
 
 import classes.Depense;
 
@@ -11,4 +11,4 @@ public interface DepenseService {
     List<Depense> getAll();
     void update (int id);
     void delete(int id);
-}
+} */

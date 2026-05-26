@@ -1,4 +1,4 @@
-package model.ServiceImplemente;
+/*package model.ServiceImplemente;
 
 import model.service.CompetenceProjetDao;
 import model.classes.CompetenceProjet;
@@ -85,4 +85,4 @@ public class CompetenceProjetImplement implements CompetenceProjetDao {
     public boolean verification(int id) {
         return competenceProjetDao.verification(id);
     }
-}
+}*/

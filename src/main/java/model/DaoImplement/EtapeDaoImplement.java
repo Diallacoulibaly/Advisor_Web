@@ -1,7 +1,8 @@
 package main.java.model.DaoImplement;
 
-import main.java.model.classes.;
+import main.java.model.classes.Etape;
 import main.java.model.classes.Projet;
+import main.java.model.dao.EtapeDao;
 import main.java.model.enums.StatutEtape;
 import main.java.Database.ConnectBD;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class EtapeDaoImplement {
+public class EtapeDaoImplement implements EtapeDao {
 
     // AJOUT
     public boolean ajout_etape(Etape etape) {
@@ -72,7 +73,7 @@ public class EtapeDaoImplement {
         return Optional.empty();
     }
 
-    // ==================== LISTE ====================
+    //  LISTE
     public List<Etape> Liste_etape() {
         String sql = "SELECT * FROM etape ORDER BY ordre ASC";
         List<Etape> etapeList = new ArrayList<>();
@@ -83,25 +84,25 @@ public class EtapeDaoImplement {
 
             while (rs.next()) {
                 Etape e = new Etape();
-                e.setIdEtape(rs.getInt("idEtape"));
+                e.setIdEtape(rs.getInt("id"));
                 e.setTitre(rs.getString("titre"));
                 e.setDescription(rs.getString("description"));
                 e.setOrdre(rs.getInt("ordre"));
 
-                String statut = rs.getString("etapeStatut");
+                /*String statut = rs.getString("statut");
                 if (statut != null) {
                     e.setStatutEtape(StatutEtape.valueOf(statut));
-                }
+                }*/
 
                 Projet p = new Projet();
-                p.setId(rs.getInt("projet"));
+                p.setId(rs.getInt("idProjet"));
                 e.setProjet(p);
 
                 etapeList.add(e);
             }
         } catch (Exception e) {
-            System.out.println("Erreur lors de la récupération de la liste des étapes !");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
+            //e.printStackTrace();
         }
         return etapeList;
     }

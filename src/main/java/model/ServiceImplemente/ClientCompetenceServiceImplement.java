@@ -1,4 +1,4 @@
-package ServiceImplementation;
+/*package ServiceImplementation;
 
 import DAO.ClientCompetenceRepository;
 import Service.ClientCompetenceInterface;
@@ -53,3 +53,4 @@ public class ClientCompetenceServiceImplement {
         clientCompetenceRepository.delete(id);
     }
 }
+*/

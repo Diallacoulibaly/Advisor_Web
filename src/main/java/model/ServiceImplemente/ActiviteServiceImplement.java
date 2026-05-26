@@ -1,4 +1,4 @@
-package main.java.model.ServiceImplemente;
+/*package main.java.model.ServiceImplemente;
 
 
 import main.java.model.classes.Activite;
@@ -64,3 +64,5 @@ public class ActiviteServiceImplement implements ActiviteService {
         activiteDao.supprimerActivite(id);
     }
 }
+
+ */

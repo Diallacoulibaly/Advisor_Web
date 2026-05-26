@@ -1,4 +1,4 @@
-package ServiceImplemente;
+/*package ServiceImplemente;
 
 import dao.DepenseDao;
 import Service.DepenseServiceDao;
@@ -53,4 +53,4 @@ public class DepenseService implements DepenseServiceDao {
         }
         depenseDao.delete(id);
     }
-}
+}*/

@@ -1,4 +1,4 @@
-package main.java.model.DaoImplement;
+/*package main.java.model.DaoImplement;
 import main.java.model.dao.CompetenceProjetDao;
 import main.java.Database.ConnectBD;
 import main.java.model.classes.CompetenceProjet;
@@ -153,3 +153,5 @@ public class CompetenceProjetDaoImplement implements CompetenceProjetDao{
         }
     }
 }
+
+ */

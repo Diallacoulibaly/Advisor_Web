@@ -1,4 +1,4 @@
-package main.java.model.service;
+/*package main.java.model.service;
 
 import main.java.model.classes.ClientCompetence;
 
@@ -16,3 +16,4 @@ public interface ClientCompetenceService {
     void delete(int id);
 
 }
+*/

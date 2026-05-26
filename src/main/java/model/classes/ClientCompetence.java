@@ -1,4 +1,4 @@
-package Models;
+/*package Models;
 
 public class ClientCompetence {
 
@@ -44,3 +44,4 @@ public class ClientCompetence {
         this.client = client;
     }
 }
+*/
