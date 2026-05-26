@@ -52,7 +52,7 @@
 
   <aside class="sidebar">
     <div class="logo-wrap">
-      <img src="image 11.png" alt="Logo Advisor">
+      <img src="asset/image 11.png" alt="Logo Advisor">
     </div>
     <nav>
       <a class="nav-item" href="dashboard.jsp">
@@ -104,15 +104,15 @@
     <div class="content">
       <div class="stats-row">
         <div class="stat-card">
-          <div class="stat-img-placeholder"><img src="Task management, Kanban board interface with user icon and check mark, Project progress tracker.png" alt=""></div>
+          <div class="stat-img-placeholder"><img src="asset/Task management, Kanban board interface with user icon and check mark, Project progress tracker.png" alt=""></div>
           <div class="stat-text"><div class="label">Projet disponible</div><div class="value">22</div></div>
         </div>
         <div class="stat-card">
-          <div class="stat-img-placeholder"><img src="User identification card symbolizing account profile and secure authentication.png" alt=""></div>
+          <div class="stat-img-placeholder"><img src="asset/User identification card symbolizing account profile and secure authentication.png" alt=""></div>
           <div class="stat-text"><div class="label">Nombre d'utilisateur</div><div class="value">803</div></div>
         </div>
         <div class="stat-card">
-          <div class="stat-img-placeholder"><img src="Heart in frame with orbit ring, Social media like, Content likes overview.png" alt=""></div>
+          <div class="stat-img-placeholder"><img src="asset/Heart in frame with orbit ring, Social media like, Content likes overview.png" alt=""></div>
           <div class="stat-text"><div class="label">Projets les populaire</div><div class="value">57</div></div>
         </div>
       </div>
