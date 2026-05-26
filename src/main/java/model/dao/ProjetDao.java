@@ -1,8 +1,8 @@
-package model.dao;
+package main.java.model.dao;
 
 import java.util.List;
 import java.util.Optional;
-import model.classes.Projet;
+import main.java.model.classes.Projet;
 
 public interface ProjetDao {
     void add(Projet projet);

@@ -1,9 +1,11 @@
-package model.DaoImplement;
+package main.java.model.DaoImplement;
 
 
-import Database.ConnectBD;
-import model.dao.ProjetDao;
-import model.classes.Projet;
+
+
+import main.java.Database.ConnectBD;
+import main.java.model.classes.Projet;
+import main.java.model.dao.ProjetDao;
 
 import java.sql.*;
 import java.util.ArrayList;
