@@ -2,6 +2,7 @@ package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
 import main.java.model.classes.Client;
+import main.java.model.classes.Domaine;
 import main.java.model.classes.Localite;
 import main.java.model.classes.Utilisateur;
 import main.java.model.dao.ClientDAO;
@@ -61,14 +62,15 @@ public class ClientDAOImplement implements ClientDAO {
     }
 
     @Override
-    public boolean addInfoClient(int clientID, Niveau niveau, Localite localite, int budget) {
-        String sql= "UPDATE client set niveau= ?, idLocalite= ?, budgetApporte= ? WHERE id = ?";
+    public boolean addInfoClient(int clientID, Niveau niveau, Localite localite, Domaine domaine, int budget) {
+        String sql= "UPDATE client set niveau= ?, idlocalite= ?, iddomaine=?, budgetApporte= ? WHERE id = ?";
         try(Connection connection= ConnectBD.getConnection();
             PreparedStatement ps= connection.prepareStatement(sql))    {
             ps.setString(1, niveau.name());
             ps.setInt(2, localite.getId());
-            ps.setInt(3, budget);
-            ps.setInt(4, clientID);
+            ps.setInt(3, domaine.getId());
+            ps.setInt(4, budget);
+            ps.setInt(5, clientID);
             int affected= ps.executeUpdate();
             return affected>0;
         }
@@ -79,10 +81,10 @@ public class ClientDAOImplement implements ClientDAO {
     }
 
     @Override
-    public boolean update(int id, String nom, String prenom, String telephone, Niveau niveau, int idlocalite, int budget) {
+    public boolean update(int id, String nom, String prenom, String telephone, Niveau niveau, int idlocalite, int iddomaine, int budget) {
         String updateUser = "UPDATE utilisateur SET nom=?, prenom=?, telephone=? WHERE id=?";
 
-        String updateClient = "UPDATE client SET niveau=?, idlocalite=?, budgetApporte= ? WHERE id=?";
+        String updateClient = "UPDATE client SET niveau=?, idlocalite=?, iddomaine=?, budgetApporte= ? WHERE id=?";
         try (
                 Connection conn = ConnectBD.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(updateUser);
@@ -102,9 +104,9 @@ public class ClientDAOImplement implements ClientDAO {
             }
             ps.setString(1, niveau.name());
             ps.setInt(2, idlocalite);
-
-            ps.setInt(3, budget);
-            ps.setInt(4, id);
+            ps.setInt(3, iddomaine);
+            ps.setInt(4, budget);
+            ps.setInt(5, id);
 
             int row= ps.executeUpdate();
             conn.commit();
@@ -117,7 +119,16 @@ public class ClientDAOImplement implements ClientDAO {
 
     @Override
     public List<Client> getAll() {
-        String selectAll= "SELECT u.id AS user_id, u.nom, u.prenom, u.telephone, u.role AS role, u.email, c.niveau, c.budgetApporte AS budget, l.id AS id_localite, l.regionClient AS region FROM utilisateur u JOIN client c ON u.id= c.id JOIN localite l ON l.id=c.idlocalite";
+        String selectAll= """
+                        SELECT u.id AS user_id, u.nom, u.prenom, u.telephone, u.role AS role, u.email,
+                        c.niveau, c.budgetApporte AS budget,
+                        l.id AS id_localite, l.regionClient AS region,
+                        d.id AS idDomaine, d.domaine AS domaine
+                        FROM utilisateur u 
+                        JOIN client c ON u.id= c.id 
+                        JOIN localite l ON l.id=c.idlocalite
+                        JOIN domaine d ON d.id=c.iddomaine
+                        """;
         List<Client> clients = new ArrayList<>();
         try(Connection conn= ConnectBD.getConnection();
             PreparedStatement stmt= conn.prepareStatement(selectAll)) {
@@ -125,8 +136,11 @@ public class ClientDAOImplement implements ClientDAO {
 
                 while (rs.next()) {
                     Localite localite= new Localite();
+                    Domaine domaine= new Domaine();
                     localite.setId(rs.getInt("id_localite"));
                     localite.setRegionClient(rs.getString("region"));
+                    domaine.setId(rs.getInt("iddomaine"));
+                    domaine.setDomaine(rs.getString("domaine"));
                     Client client = new Client();
                     client.setIdUtilisateur((rs.getInt("user_id")));
                     client.setNom(rs.getString("nom"));
@@ -139,6 +153,7 @@ public class ClientDAOImplement implements ClientDAO {
                     client.setNiveau(Niveau.valueOf(rs.getString("niveau").toUpperCase()));
 
                     client.setLocalite(localite);
+                    client.setDomaine(domaine);
                     clients.add(client);
                 }
 
@@ -154,7 +169,17 @@ public class ClientDAOImplement implements ClientDAO {
 
     @Override
     public Optional<Client> getById(int id) {
-        String selectById= "SELECT u.id AS user_id, u.nom, u.prenom, u.telephone,  u.role AS role, u.email, c.niveau, c.budgetApporte AS budget, l.id AS id_localite, l.regionClient AS region FROM utilisateur u JOIN client c ON u.id= c.id JOIN localite l ON l.id=c.idlocalite WHERE u.id = ?";
+        String selectById= """
+                        SELECT u.id AS user_id, u.nom, u.prenom, u.telephone, u.role AS role, u.email,
+                        c.niveau, c.budgetApporte AS budget,
+                        l.id AS id_localite, l.regionClient AS region,
+                        d.id AS idDomaine, d.domaine AS domaine
+                        FROM utilisateur u 
+                        JOIN client c ON u.id= c.id 
+                        JOIN localite l ON l.id=c.idlocalite
+                        JOIN domaine d ON d.id=c.iddomaine
+                        WHERE u.id = ?
+                        """ ;
         try  (Connection conn= ConnectBD.getConnection();
               PreparedStatement stmt= conn.prepareStatement(selectById)) {
             stmt.setInt(1, id);
@@ -162,8 +187,11 @@ public class ClientDAOImplement implements ClientDAO {
 
                 if (rs.next()) {
                     Localite localite= new Localite();
+                    Domaine domaine= new Domaine();
                     localite.setId(rs.getInt("id_localite"));
                     localite.setRegionClient(rs.getString("region"));
+                    domaine.setId(rs.getInt("iddomaine"));
+                    domaine.setDomaine(rs.getString("domaine"));
                     Client client = new Client();
                     client.setIdUtilisateur((rs.getInt("user_id")));
                     client.setNom(rs.getString("nom"));
