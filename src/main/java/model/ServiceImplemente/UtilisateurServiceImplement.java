@@ -1,6 +1,8 @@
-/*package main.java.model.ServiceImplemente;
+package main.java.model.ServiceImplemente;
 
+import main.java.model.DaoImplement.UtilisateurDaoImplement;
 import main.java.model.classes.Utilisateur;
+import main.java.model.dao.UtilisateurDao;
 import main.java.model.enums.Role;
 import main.java.model.service.UtilisateurService;
 
@@ -8,7 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class UtilisateurServiceImplement implements UtilisateurService {
-    private model.dao.UtilisateurDao utilisateurRepository;
+    private final UtilisateurDao utilisateurRepository;
+
+    public UtilisateurServiceImplement(UtilisateurDao utilisateurRepository) {
+        this.utilisateurRepository = utilisateurRepository;
+    }
 
     @Override
     public void updateUtilisateur(int id, String nom, String prenom, String email, Integer telephone) {
@@ -279,4 +285,3 @@ public class UtilisateurServiceImplement implements UtilisateurService {
         }
     }
 }
-*/
