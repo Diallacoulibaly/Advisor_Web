@@ -27,5 +27,4 @@ public class Localite {
     public void setRegionClient(String regionClient) {
         this.regionClient = regionClient;
     }
-    
 }

@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Database.ConnectBD;
-import model.classes.Localite;
-import model.dao.LocaliteDao;
 
-public class LocaliteDaoImplement implements LocaliteDao{
+import main.java.Database.ConnectBD;
+import main.java.model.classes.Localite;
+import main.java.model.dao.LocaliteDao;
+
+
+public class LocaliteDaoImplement implements LocaliteDao {
     @Override
         public void add(Localite localite) {
             String sql = "INSERT INTO localite(regionClient) VALUES(?)";
