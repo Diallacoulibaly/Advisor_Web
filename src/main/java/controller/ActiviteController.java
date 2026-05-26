@@ -1,4 +1,4 @@
-package controller;
+/*package controller;
 
 
 import jakarta.servlet.http.HttpServlet;
@@ -6,4 +6,4 @@ import jakarta.servlet.http.HttpServlet;
 public class ActiviteController extends HttpServlet {
     private ActiviteService activiteService;
 
-}
+}*/
