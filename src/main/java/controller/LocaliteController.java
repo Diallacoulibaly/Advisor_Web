@@ -24,7 +24,18 @@ public class LocaliteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        String action=req.getParameter("action");
-       if (action==null){
+       if (action==null) action = "azert";
+
+       switch (action) {
+           case "add":
+               req.getRequestDispatcher("/WEB-INF/view/add_localite.jsp").forward(req,resp);
+               break;
+           case "update":
+
+       }
+
+
+       {
            List<Localite> lstLocalite=localiteServiceImplemente.getAll();
            req.setAttribute("lstLocalite",lstLocalite);
            req.getRequestDispatcher("/WEB-INF/view/index_localite.jsp").forward(req,resp);
