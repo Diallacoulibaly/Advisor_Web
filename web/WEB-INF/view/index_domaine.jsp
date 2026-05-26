@@ -10,6 +10,7 @@
 <%List <Domaine> domaines=(List<Domaine>) request.getAttribute("domaines");%>
 <html>
 <head>
+
     <title>La liste des domaines</title>
 </head>
 <body>
