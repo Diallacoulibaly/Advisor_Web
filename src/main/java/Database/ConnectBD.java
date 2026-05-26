@@ -6,14 +6,29 @@ import java.sql.SQLException;
 
 public class ConnectBD {
 
-    private static String URL="jdbc:mysql://localhost:3306/advisor";
-    private static String USER="root";
-    private static String PASSWORD="diallacoul";
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL,USER,PASSWORD);
+    private static final String URL =
+            "jdbc:mysql://localhost:3306/advisor";
+
+    private static final String USER = "root";
+    private static final String PASSWORD = "diallacoul";
+
+    public static Connection getConnection() {
+
+        try {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection conn =
+                    DriverManager.getConnection(URL, USER, PASSWORD);
+
+            System.out.println("CONNEXION avec succes");
+
+            return conn;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
-
-
-
-

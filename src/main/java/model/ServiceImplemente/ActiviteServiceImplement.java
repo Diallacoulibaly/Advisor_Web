@@ -51,7 +51,7 @@ public class ActiviteServiceImplement implements ActiviteService {
             System.out.println("id de l'activité incorrecte ! ");
             return;
         }
-        activiteDao.marquerTerminer(id);
+        activiteDao.marqueTerminer(id);
     }
 
     @Override
