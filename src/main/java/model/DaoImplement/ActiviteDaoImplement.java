@@ -84,10 +84,12 @@ public class ActiviteDaoImplement implements ActiviteDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
     }
 
+
     @Override
-    public void marqueTerminer(int id) {
+    public void marquerTerminer(int id) {
         String sql = "UPDATE activite SET statut=? WHERE id=?";
 
         try (Connection connection = ConnectBD.getConnection();
