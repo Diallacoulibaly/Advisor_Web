@@ -1,4 +1,4 @@
-package model.dao;
+package main.java.model.dao;
 
 import java.util.List;
 
