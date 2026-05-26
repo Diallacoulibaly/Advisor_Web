@@ -1,6 +1,7 @@
 package main.java.model.classes;
 
 
+import main.java.model.enums.Niveau;
 import main.java.model.enums.StatutProjet;
 
 public class Projet {

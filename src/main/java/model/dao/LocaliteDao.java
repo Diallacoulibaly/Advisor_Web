@@ -1,7 +1,8 @@
 package main.java.model.dao;
-import main.java.model.classes.Localite;
 
 import java.util.List;
+
+import main.java.model.classes.Localite;
 
 public interface LocaliteDao {
     void add(Localite localite);

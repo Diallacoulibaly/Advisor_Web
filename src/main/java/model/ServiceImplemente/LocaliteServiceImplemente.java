@@ -1,13 +1,10 @@
 package main.java.model.ServiceImplemente;
 
+import java.util.List;
 
 import main.java.model.classes.Localite;
 import main.java.model.dao.LocaliteDao;
 import main.java.model.service.LocaliteService;
-
-import java.util.List;
-
-
 
 public class LocaliteServiceImplemente implements LocaliteService {
     private final LocaliteDao localiteDao;
@@ -50,3 +47,5 @@ public class LocaliteServiceImplemente implements LocaliteService {
         localiteDao.delete(id);
     }
 }
+
+

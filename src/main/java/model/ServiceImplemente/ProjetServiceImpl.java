@@ -1,11 +1,12 @@
-package model.ServiceImplemente;
+package main.java.model.ServiceImplemente;
 
+
+import main.java.model.classes.Projet;
+import main.java.model.dao.ProjetDao;
 
 import java.util.List;
 import java.util.Optional;
 
-import model.dao.ProjetDao;
-import main.java.model.classes.Projet;
 
 
 public class ProjetServiceImpl {
