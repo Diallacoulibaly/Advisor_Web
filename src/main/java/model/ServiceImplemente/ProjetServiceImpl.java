@@ -9,7 +9,6 @@ import java.util.Optional;
 
 
 
-
 public class ProjetServiceImpl {
     private final ProjetDao projetDao;
 
@@ -56,7 +55,7 @@ public class ProjetServiceImpl {
 
     public void getProjetById(int id) {
         try {
-            Optional<Projet> projetOpt = projetDao.getById(id);
+            Optional<Projet> projetOpt= projetDao.getById(id);
             if (projetOpt.isPresent()) {
                 System.out.println("Projet trouvé : " + projetOpt.get().getTitre());
             } else {

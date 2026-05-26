@@ -2,6 +2,7 @@ package main.java.model.ServiceImplemente;
 
 import main.java.model.DaoImplement.ClientDAOImplement;
 import main.java.model.classes.Client;
+import main.java.model.classes.Domaine;
 import main.java.model.classes.Localite;
 import main.java.model.dao.ClientDAO;
 import main.java.model.enums.Niveau;
@@ -38,7 +39,7 @@ public class ClientServiceImplement implements ClientService {
     }
 
     @Override
-    public boolean addInfoClient(int clientID, Niveau niveau, Localite localite, int budget) {
+    public boolean addInfoClient(int clientID, Niveau niveau, Localite localite, Domaine domaine, int budget) {
         try {
             if(clientID==0 || niveau==null || niveau.name().isEmpty() || localite==null || budget<=0) {
                 return false;
@@ -46,7 +47,7 @@ public class ClientServiceImplement implements ClientService {
         } catch (IllegalArgumentException e){
             e.printStackTrace(System.out);
         }
-        return clientRepository.addInfoClient(clientID, niveau, localite, budget);
+        return clientRepository.addInfoClient(clientID, niveau, localite, domaine, budget);
 
     }
 
@@ -57,11 +58,11 @@ public class ClientServiceImplement implements ClientService {
 
     @Override
     public List<Client> getAllClients() {
-        return  clientRepository.getAll();
+        return clientRepository.getAll();
     }
 
     @Override
-    public boolean updateClient(int id, String nom, String prenom, String telephone, Niveau niveau , int idlocalite, int budget) {
+    public boolean updateClient(int id, String nom, String prenom, String telephone, Niveau niveau , int idlocalite, int iddomaine, int budget) {
         if(nom.isEmpty() ||  prenom.isEmpty()  ||  telephone.isEmpty() ||  niveau.name().isEmpty() ){
             System.out.println("Remplissez correctement les champs!!!");
             return false;
@@ -69,7 +70,7 @@ public class ClientServiceImplement implements ClientService {
         if(budget<100000){
             System.out.println("Le budget ne pas peut être inferieur a 100.000 F");
         }
-        return clientRepository.update(id, nom, prenom, telephone, niveau, idlocalite, budget);
+        return clientRepository.update(id, nom, prenom, telephone, niveau, idlocalite, iddomaine, budget);
     }
 
     @Override
