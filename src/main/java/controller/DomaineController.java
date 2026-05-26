@@ -22,8 +22,6 @@ public class DomaineController extends HttpServlet {
         DomaineDao dom=new DomaineDaoImplement();
         domaineService =
                 new DomaineImplement(dom);
-
-
     }
 
     @Override

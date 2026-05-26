@@ -8,13 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Page d'accueil</title>
+    <title>Title</title>
 </head>
 <body>
-<%String nom="Advisor";%>
+<%String nom="test";%>
 <h1>Test de l'appli <%=nom%></h1>
-<h2>Bonjour</h2>
-
 
 </body>
 </html>
