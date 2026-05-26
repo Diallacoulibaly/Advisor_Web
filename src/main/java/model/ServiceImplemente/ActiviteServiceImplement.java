@@ -1,7 +1,13 @@
 package main.java.model.ServiceImplemente;
 
 
-public class ActiviteServiceImplement implements ActiviteService{
+import main.java.model.classes.Activite;
+import main.java.model.dao.ActiviteDao;
+import main.java.model.service.ActiviteService;
+
+import java.util.List;
+
+public class ActiviteServiceImplement implements ActiviteService {
     private ActiviteDao activiteDao;
     public ActiviteServiceImplement (ActiviteDao activiteDao){
         this.activiteDao = activiteDao;
@@ -45,7 +51,7 @@ public class ActiviteServiceImplement implements ActiviteService{
             System.out.println("id de l'activité incorrecte ! ");
             return;
         }
-        activiteDao.marquerTerminer(id);
+        activiteDao.marqueTerminer(id);
     }
 
     @Override

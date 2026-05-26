@@ -1,4 +1,8 @@
-/*package model.service;
+package main.java.model.service;
+
+import main.java.model.classes.Activite;
+
+import java.util.List;
 
 public interface ActiviteService {
     void ajouterActivite(Activite activite);
@@ -6,4 +10,4 @@ public interface ActiviteService {
     void modifierActivite(Activite activite);
     void marquerTerminer(int id);
     void supprimerActivite(int id);
-}*/
+}

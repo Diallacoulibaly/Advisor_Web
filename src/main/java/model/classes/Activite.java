@@ -56,6 +56,10 @@ public class Activite {
     }
 
     // Les setters, ils permettrons de modifier des informations de l'objet comme le titre, la description etc
+    public void setId(int id){
+        this.id = id;
+    }
+
     public void setTitre(String titre){
         this.titre = titre;
     }
