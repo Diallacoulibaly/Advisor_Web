@@ -38,10 +38,10 @@ public class ClientController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        //super.doGet(req, resp);
        // List<Client> clients = clientService.getAllClients();
-        req.setAttribute("pageContent", "pages/accueilClient.jsp");
-        req.getRequestDispatcher("/WEB-INF/views/layouts/layout.jsp").forward(req, resp);
+        req.setAttribute("pageContent", "accueilClient.jsp");
+        req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
     }
 
     @Override
