@@ -1,4 +1,4 @@
-package main.java.model.ServiceImplemente;
+/*package main.java.model.ServiceImplemente;
 
 import main.java.model.classes.Utilisateur;
 import main.java.model.enums.Role;
@@ -279,3 +279,4 @@ public class UtilisateurServiceImplement implements UtilisateurService {
         }
     }
 }
+*/

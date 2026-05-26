@@ -1,4 +1,4 @@
-package model.dao;
+package main.java.model.dao;
 
 import main.java.model.classes.Utilisateur;
 import main.java.model.enums.Role;
