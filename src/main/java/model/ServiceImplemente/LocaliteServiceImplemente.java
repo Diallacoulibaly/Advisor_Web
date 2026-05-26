@@ -1,10 +1,13 @@
-package model.ServiceImplemente;
+package main.java.model.ServiceImplemente;
+
+
+import main.java.model.classes.Localite;
+import main.java.model.dao.LocaliteDao;
+import main.java.model.service.LocaliteService;
 
 import java.util.List;
 
-import model.classes.Localite;
-import model.dao.LocaliteDao;
-import model.service.LocaliteService;
+
 
 public class LocaliteServiceImplemente implements LocaliteService {
     private final LocaliteDao localiteDao;

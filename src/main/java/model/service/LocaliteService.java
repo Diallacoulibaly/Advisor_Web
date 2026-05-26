@@ -1,8 +1,9 @@
-package model.service;
+package main.java.model.service;
+
+
+import main.java.model.classes.Localite;
 
 import java.util.List;
-
-import model.classes.Localite;
 
 public interface LocaliteService {
     void add(Localite localite);
