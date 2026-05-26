@@ -27,27 +27,27 @@
         <th>Actions</th>
 
     </tr>
-<% for (Domaine d:domaines){
+<% for (int i=0 ; i<domaines.size();i++){
 %>
     <tr>
 
         <td>
-            <%= d.getId() %>
+            <%= i+1 %>
         </td>
 
         <td>
-            <%= d.getDomaine() %>
+            <%= domaines.get(i).getDomaine() %>
         </td>
 
         <td>
-            <a href="update-domaine?id=<%= d.getId() %>">
+            <a href="update-domaine?id=<%= domaines.get(i).getId() %>">
 
                 Modifier
 
             </a>
 
 
-            <a href="delete-domaine?id=<%= d.getId() %>">
+            <a href="delete-domaine?id=<%= domaines.get(i).getId() %>">
 
                 Supprimer
 

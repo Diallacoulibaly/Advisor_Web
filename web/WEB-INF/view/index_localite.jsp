@@ -40,14 +40,14 @@
     </td>
 
     <td>
-      <a href="">
+      <a href="localites?action=edit&id=<%=l.getId()%>">
 
         Modifier
 
       </a>
 
 
-      <a href="">
+      <a href="localites?action=delete&id=<%=l.getId()%>">
 
         Supprimer
 

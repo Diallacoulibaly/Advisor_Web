@@ -33,6 +33,19 @@ public class LocaliteController extends HttpServlet {
            req.getRequestDispatcher("/WEB-INF/view/add_localite.jsp").forward(req,resp);
 
 
+       } else if (action.equalsIgnoreCase("edit")) {
+           int id=Integer.parseInt(req.getParameter("id"));
+          Localite l= localiteServiceImplemente.getById(id);
+           req.setAttribute("localite",l);
+           req.getRequestDispatcher("/WEB-INF/view/edit_localite.jsp").forward(req,resp);
+
+
+
+       } else if (action.equalsIgnoreCase("delete")) {
+           int id=Integer.parseInt(req.getParameter("id"));
+           localiteServiceImplemente.delete(id);
+           resp.sendRedirect("localites");
+
        }
 
     }
@@ -48,6 +61,16 @@ public class LocaliteController extends HttpServlet {
                localiteServiceImplemente.add(localite);
                resp.sendRedirect("localites");
            }
+           else if (action.equalsIgnoreCase("update")){
+               int id=Integer.parseInt(req.getParameter("id"));
+               String regionClient=req.getParameter("regionClient");
+               localiteServiceImplemente.update(id,regionClient);
+               resp.sendRedirect("localites");
+
+
+           }
        }
     }
+
+
 }
