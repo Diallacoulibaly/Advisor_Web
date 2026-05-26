@@ -25,6 +25,10 @@ bin/
 
 ### VS Code ###
 .vscode/
+web/WEB-INF/classes/
+web/WEB-INF/lib/jakar*
 
 ### Mac OS ###
 .DS_Store
+
+

@@ -13,6 +13,8 @@ import main.java.model.service.DomaineService;
 
 import java.io.IOException;
 import java.util.List;
+
+
 @WebServlet("/domaines")
 public class DomaineController extends HttpServlet {
     private DomaineService domaineService;
@@ -22,8 +24,6 @@ public class DomaineController extends HttpServlet {
         DomaineDao dom=new DomaineDaoImplement();
         domaineService =
                 new DomaineImplement(dom);
-
-
     }
 
     @Override

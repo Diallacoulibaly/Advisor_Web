@@ -1,4 +1,4 @@
-package model.classes;
+package main.java.model.classes;
 
 public class Localite {
     public Integer id;
@@ -27,5 +27,4 @@ public class Localite {
     public void setRegionClient(String regionClient) {
         this.regionClient = regionClient;
     }
-    
 }
