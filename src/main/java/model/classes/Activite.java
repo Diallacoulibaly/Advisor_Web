@@ -1,5 +1,5 @@
-package model.classes;
-import model.enums.*;
+package main.java.model.classes;
+import main.java.model.enums.*;
 
 //Implémentation de l'objet activité avec ses attributs
 public class Activite {
@@ -12,7 +12,7 @@ public class Activite {
     private Statut statut;
 
     // Constructeur vide
-    public Activite{}
+    public Activite() {}
 
     // Contruteurs avec paramètres
     public Activite(int id, String titre, String description, int ordre, int duree, int montant_activite, Statut statut){
@@ -50,7 +50,7 @@ public class Activite {
         return montant_activite;
     }
 
-    public String getStatutActivite(){
+    public Statut getStatutActivite(){
         return statut;
     }
 
@@ -77,5 +77,9 @@ public class Activite {
 
     public void setStatut(Statut statut){
         this.statut = statut;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
