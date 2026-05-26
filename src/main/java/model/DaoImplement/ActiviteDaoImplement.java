@@ -1,6 +1,18 @@
-package model.DaoImplement;
+package main.java.model.DaoImplement;
 
-public class ActiviteDaoImplement implements ActiviteDao{
+import main.java.Database.ConnectBD;
+import main.java.model.classes.Activite;
+import main.java.model.dao.ActiviteDao;
+import main.java.model.enums.Statut;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ActiviteDaoImplement implements ActiviteDao {
 
     @Override
     public void ajouterActivite(Activite activite) {

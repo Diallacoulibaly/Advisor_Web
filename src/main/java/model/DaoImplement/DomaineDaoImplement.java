@@ -4,10 +4,7 @@ import main.java.Database.ConnectBD;
 import main.java.model.classes.Domaine;
 import main.java.model.dao.DomaineDao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +50,25 @@ public class DomaineDaoImplement implements DomaineDao {
         return  domaineList;
 
     }
+    @Override
+    public Domaine getById(int id){
+        String sql="SELECT * FROM domaine where id=?";
+        try (Connection connection = ConnectBD.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Domaine domaine = new Domaine(
+                            rs.getInt("id"),
+                            rs.getString("domaine"));
+                    return domaine;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la recuperation du domaine" + e.getMessage());
+        }
+        return null;}
+
     @Override
     public void modifierDomaine(Domaine domaine){
         String sql="UPDATE domaine SET domaine=? WHERE id=?";
