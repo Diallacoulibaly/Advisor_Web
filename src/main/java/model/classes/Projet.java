@@ -1,7 +1,7 @@
-package model.classes;
+package main.java.model.classes;
 
-import model.enums.Niveau;
-import model.enums.StatutProjet;
+
+import main.java.model.enums.StatutProjet;
 
 public class Projet {
 
