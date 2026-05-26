@@ -22,7 +22,7 @@
 
             <h1>Creer un compte</h1>
 
-            <form method="post">
+            <form action="inscription" method="post">
 
                 <div class="input-group">
                     <input type="text" placeholder="Prenom" name="prenom">
@@ -47,10 +47,12 @@
                     <span class="eye-icon">👁</span>
 
                 </div>
+                <a href="">
+                    <button type="submit" class="btn-inscription" >
+                        Inscription
+                    </button>
+                </a>
 
-                <button type="submit" class="btn-inscription">
-                    Inscription
-                </button>
 
             </form>
 
@@ -67,10 +69,12 @@
                 <p>
                     Connectez-vous si vous avez déjà un compte
                 </p>
+                <a href="connexion">
+                    <button class="btn-connexion">
+                        Connection
+                    </button>
+                </a>
 
-                <button class="btn-connexion">
-                    Connection
-                </button>
 
             </div>
 

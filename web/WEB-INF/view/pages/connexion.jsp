@@ -25,10 +25,12 @@
                 <p>
                     Inscrivez-vous dès maintenant et profitez de notre site
                 </p>
+                <a href="inscription">
+                    <button class="btn-connexion">
+                        Inscription
+                    </button>
+                </a>
 
-                <button class="btn-connexion">
-                    Inscription
-                </button>
 
             </div>
 
@@ -38,16 +40,16 @@
 
             <h1>Se connecter</h1>
 
-            <form>
+            <form action="connexion" method="post">
 
 
                 <div class="input-group">
-                    <input type="email" placeholder="Entre votre email">
+                    <input type="email" placeholder="Entre votre email" name="email">
                 </div>
 
                 <div class="input-group password-group">
 
-                    <input type="password" placeholder="Mot de passe">
+                    <input type="password" placeholder="Mot de passe" name="password">
 
                     <span class="eye-icon">👁</span>
 
@@ -56,6 +58,13 @@
                 <button type="submit" class="btn-inscription">
                     Connexion
                 </button>
+
+                <% if (request.getAttribute("erreur")!= null) {%>
+                <h3 style="color: red; font-weight: bold">${erreur}</h3>
+                    <%
+        }
+    %>
+
 
             </form>
 
