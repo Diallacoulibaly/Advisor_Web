@@ -1,6 +1,6 @@
 package main.java.model.DaoImplement;
 
-import main.java.model.classes.;
+import main.java.model.classes.Etape;
 import main.java.model.classes.Projet;
 import main.java.model.enums.StatutEtape;
 import main.java.Database.ConnectBD;
