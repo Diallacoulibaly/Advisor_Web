@@ -2,6 +2,7 @@ package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
 import main.java.model.classes.Activite;
+import main.java.model.classes.Etape;
 import main.java.model.dao.ActiviteDao;
 import main.java.model.enums.Statut;
 
@@ -16,7 +17,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
 
     @Override
     public void ajouterActivite(Activite activite) {
-        String sql = "INSERT INTO activite(titre, description, ordre, duree, montant_activite, statut) VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO activite(titre, description, ordre, duree, montant_activite, statut, idEtape) VALUES(?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectBD.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);){
             ps.setString(1, activite.getTitre());
@@ -25,6 +26,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
             ps.setInt(4, activite.getDuree());
             ps.setInt(5, activite.getMontantActivite());
             ps.setString(6, String.valueOf(activite.getStatutActivite()));
+            ps.setInt(7, activite.getEtape().getIdEtape());
 
             ps.executeUpdate();
 
@@ -39,21 +41,24 @@ public class ActiviteDaoImplement implements ActiviteDao {
     public List<Activite> afficherActivite() {
         List<Activite> activites = new ArrayList<>();
 
-        String sql = "SELECT * FROM activite";
+        String sql = "SELECT * FROM Activite JOIN Etape ON Activite.id = Etape.id";
 
         try (Connection connection = ConnectBD.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet rs = ps.executeQuery();){
 
             while (rs.next()){
-                Activite activite = new Activite();
-                activite.setId(rs.getInt("id"));
-                activite.setTitre(rs.getString("titre"));
-                activite.setDescription(rs.getString("description"));
-                activite.setDuree(rs.getInt("duree"));
-                activite.setOrdre(rs.getInt("ordre"));
-                activite.setMontantActivite(rs.getInt("montant_activite"));
-                activite.setStatut(Statut.valueOf(rs.getString("statut")));
+                Etape etape = new Etape();
+                Activite activite = new Activite(
+                        rs.getInt("id"),
+                        rs.getString("titre"),
+                        rs.getString("description"),
+                        rs.getInt("duree"),
+                        rs.getInt("ordre"),
+                        rs.getInt("montant_activite"),
+                        Statut.valueOf(rs.getString("statut")),
+                        etape
+                );
 
                 //Ajout de l'activité créer depuis la base de données dans la liste d'activités activites
                 activites.add(activite);
