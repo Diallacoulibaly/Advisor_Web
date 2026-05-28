@@ -2,7 +2,6 @@
 <%@ page import="main.java.model.classes.Etape" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    // Récupération de la liste comme pour vos localités
     List<Etape> etapes = (List<Etape>) request.getAttribute("etape");
 %>
 <html>
@@ -36,10 +35,10 @@
         <td><%= item.getDescription() %></td>
         <td><%= item.getStatutEtape() %></td>
         <td>
-            <!-- Liens d'actions en GET conformes à votre exemple -->
-            <a href="etape?action=edit&id=<%= item.getIdEtape() %>">Modifier</a>
+
+            <a href="etape?action=miseAjour&id=<%= item.getIdEtape() %>">Modifier</a>
             |
-            <a href="etape?action=delete&id=<%= item.getIdEtape() %>" onclick="return confirm('Supprimer cette étape ?');">Supprimer</a>
+            <a href="etape?action=suppression&id=<%= item.getIdEtape() %>" onclick="return confirm('Supprimer cette étape ?');">Supprimer</a>
         </td>
     </tr>
     <%

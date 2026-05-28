@@ -41,7 +41,6 @@
     <div class="form-group">
         <label for="statut">Statut :</label>
         <select id="statut" name="statut">
-            <option value="A_FAIRE">À faire</option>
             <option value="ENCOURS">En cours</option>
             <option value="TERMINE">Terminé</option>
         </select>
