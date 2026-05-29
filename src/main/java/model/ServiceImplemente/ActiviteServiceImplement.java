@@ -16,7 +16,7 @@ public class ActiviteServiceImplement implements ActiviteService {
 
     @Override
     public void ajouterActivite(Activite activite) {
-        if (activite.getOrdre() <= 0 || activite.getDuree() <= 0 || activite.getMontantActivite() <= 0) {
+        if (activite.getOrdre() <= 0 || activite.getDuree() <= 0) {
             System.out.println("L'ordre, la durée ou le montant de l'activité ne peuvent pas être négative !");
             return;
         }
@@ -36,7 +36,7 @@ public class ActiviteServiceImplement implements ActiviteService {
                 || activite.getDescription() == null || activite.getDescription().trim().isEmpty()) {
             System.out.println("Le titre ou la description ne peuvent pas être vide");
             return;
-        } else if (activite.getOrdre() <= 0 || activite.getMontantActivite() <= 0 || activite.getDuree() <= 0) {
+        } else if (activite.getOrdre() <= 0 || activite.getDuree() <= 0) {
             System.out.println("L'ordre, la durée ou le montant d'une activité ne peuvent pas être négatif !");
             return;
 

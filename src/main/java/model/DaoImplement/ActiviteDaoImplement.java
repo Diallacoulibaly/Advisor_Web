@@ -17,16 +17,15 @@ public class ActiviteDaoImplement implements ActiviteDao {
 
     @Override
     public void ajouterActivite(Activite activite) {
-        String sql = "INSERT INTO activite(titre, description, ordre, duree, montant_activite, statut, idEtape) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO activite(titre, description, ordre, duree, statut, idEtape) VALUES(?, ?, ?, ?, ?, ?)";
         try (Connection connection = ConnectBD.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);){
             ps.setString(1, activite.getTitre());
             ps.setString(2, activite.getDescription());
             ps.setInt(3, activite.getOrdre());
             ps.setInt(4, activite.getDuree());
-            ps.setInt(5, activite.getMontantActivite());
-            ps.setString(6, String.valueOf(activite.getStatutActivite()));
-            ps.setInt(7, activite.getEtape().getIdEtape());
+            ps.setString(5, String.valueOf(activite.getStatutActivite()));
+            ps.setInt(6, activite.getEtape().getIdEtape());
 
             ps.executeUpdate();
 
@@ -55,7 +54,6 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getString("description"),
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
-                        rs.getInt("montant_activite"),
                         Statut.valueOf(rs.getString("statut")),
                         etape
                 );
@@ -79,7 +77,6 @@ public class ActiviteDaoImplement implements ActiviteDao {
             ps.setString(2, activite.getDescription());
             ps.setInt(3, activite.getOrdre());
             ps.setInt(4, activite.getDuree());
-            ps.setInt(5, activite.getMontantActivite());
             ps.setString(6, String.valueOf(activite.getStatutActivite()));
             ps.setInt(7, activite.getId());
 
@@ -99,7 +96,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
 
         try (Connection connection = ConnectBD.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)){
-            ps.setString(1, String.valueOf(Statut.TERMINER));
+            ps.setString(1, String.valueOf(Statut.TERMINE));
             ps.setInt(2, id);
 
             ps.executeUpdate();
