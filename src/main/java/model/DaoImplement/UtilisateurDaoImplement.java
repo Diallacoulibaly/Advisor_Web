@@ -50,7 +50,7 @@ public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurD
     @Override
     public Optional<Utilisateur> getById(int id) {
 
-        String sql = "SELECT * FROM utilisateur WHERE id = ?";
+        String sql = "SELECT * FROM Utilisateur WHERE id = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -88,7 +88,7 @@ public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurD
     @Override
     public Optional<Utilisateur> getByEmail(String email) {
 
-        String sql = "SELECT * FROM utilisateur WHERE email = ?";
+        String sql = "SELECT * FROM Utilisateur WHERE email = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -129,7 +129,7 @@ public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurD
 
         List<Utilisateur> utilisateurs = new ArrayList<>();
 
-        String sql = "SELECT * FROM utilisateur";
+        String sql = "SELECT * FROM Utilisateur";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -167,7 +167,7 @@ public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurD
 
         List<Utilisateur> utilisateurs = new ArrayList<>();
 
-        String sql = "SELECT * FROM utilisateur WHERE role = ?";
+        String sql = "SELECT * FROM Utilisateur WHERE role = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -271,7 +271,7 @@ public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurD
     @Override
     public int delete(int id) {
 
-        String sql = "DELETE FROM utilisateur WHERE id = ?";
+        String sql = "DELETE FROM Utilisateur WHERE id = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -295,7 +295,7 @@ public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurD
     @Override
     public boolean existsByEmail(String email) {
 
-        String sql = "SELECT COUNT(*) FROM utilisateur WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM Utilisateur WHERE email = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();

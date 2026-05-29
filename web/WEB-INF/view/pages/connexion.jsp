@@ -1,3 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%--c'est toi qui as ajouté cette ligne ? :|    vraiment???????--%>
+
 <!DOCTYPE html>
 <html lang="fr">
 

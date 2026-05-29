@@ -13,6 +13,8 @@ import main.java.model.dao.UtilisateurDao;
 import main.java.model.enums.Role;
 
 import java.io.IOException;
+import java.util.Optional;
+
 @WebServlet("/connexion")
 public class ConnexionController extends HttpServlet {
     private UtilisateurServiceImplement utilisateurServiceImplement;
@@ -35,23 +37,29 @@ public class ConnexionController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email=req.getParameter("email");
         String password=req.getParameter("password");
-        Object response= utilisateurServiceImplement.authentifierUtilisateur(email, password);
-        if(!(response instanceof Utilisateur)){
-            req.setAttribute("erreur", "Identifiant incorrect!!!!");
-            req.getRequestDispatcher("/WEB-INF/view/pages/connexion.jsp");
-//            resp.getWriter().print("Identifiant incorrect!!!!");
-        }
+        Optional<Utilisateur> utilisateur = Optional.of(new Utilisateur());
 
-        Utilisateur utilisateur= (Utilisateur) response;
-        HttpSession session=req.getSession();
-        session.setAttribute("user", utilisateur);
-        if(utilisateur.getRole()== Role.CLIENT){
-            req.setAttribute("pageContent", "accueilClient.jsp");
-            req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
-        }
-        else {
-            req.setAttribute("pageContent", "dashboard.jsp");
-            req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+        int response= utilisateurServiceImplement.authentifierUtilisateur(email, password);
+        if(response==0){
+            req.setAttribute("erreur", "Identifiant incorrect !");
+            req.getRequestDispatcher("/WEB-INF/view/pages/connexion.jsp").include(req, resp);
+//            resp.getWriter().print("Identifiant incorrect!!!!");
+        } else {
+            utilisateur = utilisateurServiceImplement.getUtilisateurById(response);
+            HttpSession session = req.getSession();
+            session.setAttribute("user", utilisateur.get()); // plus la peine de renvoyer tout l'objet à mon avis. Voici ce que je fais en bas.... pour affichage dans Topbar.jsp
+
+            session.setAttribute("username", utilisateur.get().getPrenom() + " " + utilisateur.get().getNom());
+            session.setAttribute("role", utilisateur.get().getRole());
+
+            if (utilisateur.get().getRole() == Role.CLIENT) {
+                req.setAttribute("pageContent", "accueilClient.jsp");
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+            } else {
+//                req.setAttribute("pageContent", "dashboard.jsp");
+//                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+                  req.getRequestDispatcher("/WEB-INF/view/pages/dashboard.jsp").forward(req, resp);
+            }
         }
 
 

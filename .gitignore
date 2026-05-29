@@ -32,3 +32,5 @@ web/WEB-INF/lib/jakar*
 .DS_Store
 
 
+### Database ###
+src/main/java/Database/ConnectBD.java

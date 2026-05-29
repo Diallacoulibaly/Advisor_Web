@@ -1,8 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
 <body>
-<<<<<<< HEAD
 <div class="dashboard">
 
   <aside class="sidebar">
@@ -125,20 +123,5 @@
     if (!isOpen) item.classList.add('open');
   }
 </script>
-=======
-    <h1>Liste des Projets</h1>
-    <table border="1">
-        <tr>
-            <th>Titre</th><th>Niveau</th><th>Budget Max</th>
-        </tr>
-        <c:forEach var="p" items="${projets}">
-            <tr>
-                <td>${p.titre}</td>
-                <td>${p.niveau}</td>
-                <td>${p.budgetMax} FCFA</td>
-            </tr>
-        </c:forEach>
-    </table>
->>>>>>> b348432cb7a3c523453e88c6a84585632ac0126e
 </body>
 </html>
