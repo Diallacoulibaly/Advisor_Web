@@ -3,6 +3,7 @@ package main.java.model.ServiceImplemente;
 import java.util.List;
 import java.util.Optional;
 
+import main.java.model.dao.EtapeDao;
 import main.java.model.service.EtapeService;
 import main.java.model.classes.Etape;
 
