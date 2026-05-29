@@ -1,4 +1,4 @@
-/*package main.java.model.DaoImplement;
+package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
 import main.java.model.classes.Utilisateur;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
+public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurDao {
 
     @Override
     public void add(Utilisateur utilisateur) {
@@ -317,4 +317,3 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
         return false;
     }
 }
-*/

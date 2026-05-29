@@ -10,12 +10,13 @@
 <%List <Domaine> domaines=(List<Domaine>) request.getAttribute("domaines");%>
 <html>
 <head>
+
     <title>La liste des domaines</title>
 </head>
 <body>
 
 
-<a href="add-domaine">
+<a href="domaines?actions=addDomaine">
     <button>Ajouter un Domaine</button>
 </a>
 <h1>La liste des domaines</h1>
@@ -40,14 +41,14 @@
         </td>
 
         <td>
-            <a href="update-domaine?id=<%= domaines.get(i).getId() %>">
+            <a href="domaines?actions=editDomaine&id=<%= domaines.get(i).getId() %>">
 
                 Modifier
 
             </a>
 
 
-            <a href="delete-domaine?id=<%= domaines.get(i).getId() %>">
+            <a href="domaines?actions=deleteDomaine&id=<%= domaines.get(i).getId() %>">
 
                 Supprimer
 
