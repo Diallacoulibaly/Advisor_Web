@@ -11,11 +11,12 @@ import java.util.List;
 public class HistoriqueDaoImplement implements HistoriqueDao {
     @Override
     public void ajouterHistorique(Historique historique) {
-        String sql = "INSERT INTO historique (date, budgetApporte ) VALUES (?, ?)";
+        String sql = "INSERT INTO historique (date, descriptionAction ) VALUES (?, ?)";
         try(Connection connection = ConnectBD.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setDate(1, Date.valueOf(historique.getDate()));
-            ps.setInt(2, historique.getBudgetApporte());
+            //ps.setInt(2, historique.getBudgetApporte());
+            ps.setString(2, historique.getDescriptionAction());
 
             ps.executeUpdate();
             System.out.println("Historique ajoutée avec succès !");
@@ -27,7 +28,7 @@ public class HistoriqueDaoImplement implements HistoriqueDao {
 
     @Override
     public List<Historique> afficherHistorique() {
-        String sql = "SELET * FROM historique";
+        String sql = "SELECT * FROM historique";
         List<Historique> historiques = new ArrayList<>();
 
         try(Connection connection = ConnectBD.getConnection();
@@ -38,7 +39,8 @@ public class HistoriqueDaoImplement implements HistoriqueDao {
                 Historique historique = new Historique();
                 historique.setId(rs.getInt("id"));
                 historique.setDate(rs.getDate("date").toLocalDate());
-                historique.setBudgetApporte(rs.getInt("budgetApporte"));
+                //historique.setBudgetApporte(rs.getInt("budgetApporte"));
+                historique.setDescriptionAction(rs.getString("descriptionAction"));
 
                 historiques.add(historique);
             }

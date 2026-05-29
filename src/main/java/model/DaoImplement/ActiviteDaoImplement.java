@@ -40,11 +40,11 @@ public class ActiviteDaoImplement implements ActiviteDao {
     public List<Activite> afficherActivite() {
         List<Activite> activites = new ArrayList<>();
 
-        String sql = "SELECT * FROM Activite JOIN Etape ON Activite.id = Etape.id";
+        String sql = "SELECT * FROM Activite JOIN Etape ON Activite.idEtape = Etape.id";
 
         try (Connection connection = ConnectBD.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery();){
+             ResultSet rs = ps.executeQuery()){
 
             while (rs.next()){
                 Etape etape = new Etape();

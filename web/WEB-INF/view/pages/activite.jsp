@@ -19,11 +19,20 @@
         <% for (Activite activite : activiteList){ %>
         <li>
             <%= activite.getTitre() %>
-        </li>
+            <form action="activite" method="post">
+                <input type="hidden" name="action" value="terminer">
+                <input type="hidden" name="id" value="<%= activite.getId()%>">
+                <button type="submit"> Terminer </button>
+            </form>
+
+            <form action="activite" method="post">
+                <input type="hidden" name="action" value="supprimer">
+                <input type="hidden" name="id" value="<%= activite.getId()%>">
+                <button type="submit"> Supprimer </button>
+            </form>
+        </>
         <% } %>
     </ol>
-
-
 
 </body>
 </html>

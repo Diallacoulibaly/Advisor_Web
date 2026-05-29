@@ -33,6 +33,18 @@ public class ActiviteController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        String action = req.getParameter("action");
+        
+        if (action.equals("terminer")){
+            int id = Integer.parseInt(req.getParameter("id"));
+            activiteServiceImplement.marquerTerminer(id);
+            resp.sendRedirect("activite");
+            
+        } else if (action.equals("supprimer")) {
+            int id = Integer.parseInt(req.getParameter("id"));
+            activiteServiceImplement.supprimerActivite(id);
+            resp.sendRedirect("activite");
+            
+        }
     }
 }
