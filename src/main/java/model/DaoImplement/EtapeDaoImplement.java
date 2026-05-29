@@ -15,7 +15,7 @@ public class EtapeDaoImplement implements EtapeDao {
 
     // AJOUT
     public boolean ajout_etape(Etape etape) {
-        String sql = "INSERT INTO etape (titre, description, ordre, etapeStatut, projet) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO etape (titre, description, ordre, statut, idProjet) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -28,11 +28,11 @@ public class EtapeDaoImplement implements EtapeDao {
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                System.out.println("Étape ajoutée avec succès !");
+                System.out.println("Etape ajoutee avec succes !");
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("Erreur lors de l'ajout de l'étape !");
+            System.out.println("Erreur lors de l ajout de l etape !");
             e.printStackTrace();
         }
         return false;
@@ -40,7 +40,7 @@ public class EtapeDaoImplement implements EtapeDao {
 
     // RECHERCHE
     public Optional<Etape> rech_etape(int idEtape) {
-        String sql = "SELECT * FROM etape WHERE idEtape = ?";
+        String sql = "SELECT * FROM etape WHERE id = ?";
 
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -50,18 +50,19 @@ public class EtapeDaoImplement implements EtapeDao {
 
             if (rs.next()) {
                 Etape etape = new Etape();
-                etape.setIdEtape(rs.getInt("idEtape"));
+                etape.setIdEtape(rs.getInt("id"));
                 etape.setTitre(rs.getString("titre"));
+                rs.getString("description"); // maintient la lecture mais préférez l'affecter s'il manque:
                 etape.setDescription(rs.getString("description"));
                 etape.setOrdre(rs.getInt("ordre"));
 
-                String statut = rs.getString("etapeStatut");
+                String statut = rs.getString("statut");
                 if (statut != null) {
                     etape.setStatutEtape(StatutEtape.valueOf(statut));
                 }
 
                 Projet projet = new Projet();
-                projet.setId(rs.getInt("projet"));
+                projet.setId(rs.getInt("idProjet"));
                 etape.setProjet(projet);
 
                 return Optional.of(etape);
@@ -75,7 +76,7 @@ public class EtapeDaoImplement implements EtapeDao {
 
     //  LISTE
     public List<Etape> Liste_etape() {
-        String sql = "SELECT * FROM etape ORDER BY ordre ASC";
+        String sql = "SELECT id, idProjet, titre, description, ordre, statut FROM etape ORDER BY ordre ASC";
         List<Etape> etapeList = new ArrayList<>();
 
         try (Connection conn = ConnectBD.getConnection();
@@ -89,10 +90,15 @@ public class EtapeDaoImplement implements EtapeDao {
                 e.setDescription(rs.getString("description"));
                 e.setOrdre(rs.getInt("ordre"));
 
-                /*String statut = rs.getString("statut");
-                if (statut != null) {
-                    e.setStatutEtape(StatutEtape.valueOf(statut));
-                }*/
+                // Gestion sécurisée du Statut Enum
+                String statutStr = rs.getString("statut");
+                if (statutStr != null) {
+                    try {
+                        e.setStatutEtape(StatutEtape.valueOf(statutStr));
+                    } catch (IllegalArgumentException ex) {
+                        System.out.println("Attention : Le statut '" + statutStr + "' n'existe pas dans l'Enum StatutEtape.");
+                    }
+                }
 
                 Projet p = new Projet();
                 p.setId(rs.getInt("idProjet"));
@@ -101,15 +107,17 @@ public class EtapeDaoImplement implements EtapeDao {
                 etapeList.add(e);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            //e.printStackTrace();
+            // CORRECTION CRITIQUE : Forcer l'affichage de l'erreur dans la console IntelliJ
+            System.out.println("Erreur critique lors de la récupération de la liste des étapes :");
+            e.printStackTrace();
         }
         return etapeList;
     }
 
+
     // MISE À JOUR
     public boolean mise_a_jour_etape(Etape etape) {
-        String sql = "UPDATE etape SET titre = ?, description = ?, ordre = ?, etapeStatut = ?, projet = ? WHERE idEtape = ?";
+        String sql = "UPDATE etape SET titre = ?, description = ?, ordre = ?, statut = ?, idProjet = ? WHERE id = ?";
 
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -123,11 +131,11 @@ public class EtapeDaoImplement implements EtapeDao {
 
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                System.out.println("Étape mise à jour avec succès !");
+                System.out.println("Etape mise a jour avec succes !");
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("Erreur lors de la mise à jour de l'étape !");
+            System.out.println("Erreur lors de la mise a jour de l etape !");
             e.printStackTrace();
         }
         return false;
@@ -135,7 +143,7 @@ public class EtapeDaoImplement implements EtapeDao {
 
     // SUPPRESSION
     public boolean suppr_etape(int idEtape) {
-        String sql = "DELETE FROM etape WHERE idEtape = ?";
+        String sql = "DELETE FROM etape WHERE id = ?";
 
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -143,11 +151,11 @@ public class EtapeDaoImplement implements EtapeDao {
             stmt.setInt(1, idEtape);
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                System.out.println("Étape supprimée avec succès !");
+                System.out.println("Etape supprimee avec succes !");
                 return true;
             }
         } catch (Exception e) {
-            System.out.println("Erreur lors de la suppression de l'étape !");
+            System.out.println("Erreur lors de la suppression de l etape !");
             e.printStackTrace();
         }
         return false;
@@ -155,7 +163,7 @@ public class EtapeDaoImplement implements EtapeDao {
 
     // VERIFICATION
     public boolean verif_etape(int idEtape) {
-        String sql = "SELECT 1 FROM etape WHERE idEtape = ?";
+        String sql = "SELECT 1 FROM etape WHERE id = ?";
 
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -164,7 +172,7 @@ public class EtapeDaoImplement implements EtapeDao {
             ResultSet rs = stmt.executeQuery();
             return rs.next();
         } catch (Exception e) {
-            System.out.println("Erreur lors de la vérification de l'étape : " + e.getMessage());
+            System.out.println("Erreur lors de la verification de l etape : " + e.getMessage());
             e.printStackTrace();
             return false;
         }
