@@ -68,6 +68,12 @@
         }
     %>
 
+                <% if (request.getAttribute("succes")!= null) {%>
+                <h3 style="color: green; font-weight: bold">${succes}</h3>
+                <%
+                    }
+                %>
+
 
             </form>
 

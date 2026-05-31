@@ -14,7 +14,8 @@ public class Projet {
     private double budgetMin;
     private double budgetMax;
     private StatutProjet projetStatut;
-
+    private Domaine domaine;
+    private Localite localite;
     /*
     private List<Etape> etapes;            // Relation "Contenir" (1..*)
     private List<Commentaire> commentaires; // Relation "Concerner" (1..*)
@@ -165,5 +166,28 @@ public class Projet {
     public void setProjetStatut(StatutProjet projetStatut) {
         this.projetStatut = projetStatut;
     }
+
+    public void setDomaine(Domaine domaine) {
+        this.domaine = domaine;
+    }
+
+    /**
+     * @return String return the description
+     */
+    public Localite getLocalite() {
+        return localite;
+    }
+
+    public void setLocalite(Localite localite) {
+        this.localite = localite;
+    }
+
+    /**
+     * @return String return the description
+     */
+    public Domaine getDomaine() {
+        return domaine;
+    }
+
 
 }

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="main.java.model.classes.*" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -13,12 +14,70 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/accueilClient.css">
     </head>
 <body>
+<h2>Projet en cours</h2>
+<%
+    ProjetClient projetClient= (ProjetClient) request.getAttribute("projetClientOpt");
+%>
 <div class="cards-container">
 
 </div>
 
     <section class="content">
+
         <div class="cards-container">
+            <% if(projetClient == null) {%>
+            <div class="dashboard-card progress-card">
+
+                <h2>Ma progression</h2>
+
+                <div class="card-value">
+                    0 <span>%</span>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card depense-card">
+
+                <h2>Dépenses faites</h2>
+
+                <div class="money-content">
+
+                    <div class="card-value money">
+                        0 F CFA
+                    </div>
+
+                    <img src="${pageContext.request.contextPath}/assets/img/money.png" alt="money" class="money-icon">
+
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card preview-card">
+
+                <h2>Dépenses prévu</h2>
+
+                <div class="money-content">
+
+                    <div class="card-value money">
+                        0 F CFA
+                    </div>
+
+                    <img src="${pageContext.request.contextPath}/assets/img/money.png" alt="money" class="money-icon">
+
+                </div>
+
+            </div>
+            <div class="project-card">
+                <div class="project-header">
+                    <h2>Pas de projet en cours</h2>
+                    <p>Faites une demande de recommandation afin de commencer un projet</p>
+                </div>
+            </div>
+
+            <% } else { %>
+
 
             <!-- CARD 1 -->
             <div class="dashboard-card progress-card">
@@ -56,7 +115,7 @@
                 <div class="money-content">
 
                     <div class="card-value money">
-                        20 000 F CFA
+                        <%= projetClient.getProjet().getBudgetMax() %> F CFA
                     </div>
 
                     <img src="${pageContext.request.contextPath}/assets/img/money.png" alt="money" class="money-icon">
@@ -76,19 +135,17 @@
                 <div>
 
                     <h2 class="project-title">
-                        Application de gestion agricole
+                            <%=projetClient.getProjet().getTitre() %>
                     </h2>
 
                     <p class="project-description">
-                        Plateforme permettant aux utilisateurs
-                        de suivre leurs activités agricoles,
-                        leurs dépenses et leurs revenus.
+                            <%=projetClient.getProjet().getDescription()%>
                     </p>
 
                 </div>
 
                 <div class="project-status">
-                    En cours
+                        <%= projetClient.getStatut() %>
                 </div>
 
             </div>
@@ -101,7 +158,7 @@
 
                     <h3>Durée</h3>
 
-                    <p>6 mois</p>
+                    <p><%= projetClient.getProjet().getDuree() %> mois</p>
 
                 </div>
 
@@ -109,7 +166,7 @@
 
                     <h3>Étapes</h3>
 
-                    <p>12 étapes</p>
+                    <p>${nbreEtape}</p>
 
                 </div>
 
@@ -117,7 +174,7 @@
 
                     <h3>Domaine</h3>
 
-                    <p>Agriculture</p>
+                    <p><%= projetClient.getProjet().getDomaine().getDomaine() %></p>
 
                 </div>
 
@@ -125,13 +182,14 @@
 
                     <h3>Budget</h3>
 
-                    <p>150 000 F CFA</p>
+                    <p><%= projetClient.getProjet().getBudgetMax() %> F CFA</p>
 
                 </div>
 
             </div>
 
         </div>
+        <% } %>
 
     </section>
 

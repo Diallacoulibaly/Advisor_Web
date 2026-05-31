@@ -177,4 +177,42 @@ public class EtapeDaoImplement implements EtapeDao {
             return false;
         }
     }
+
+    @Override
+    public List<Etape> getByProjetId(int idProjet) {
+        String sql= "SELECT * FROM etape WHERE idProjet = ? ORDER BY ordre ASC";
+        List<Etape> etapeList = new ArrayList<>();
+        try(Connection conn= ConnectBD.getConnection(); PreparedStatement ps= conn.prepareStatement(sql)){
+            ps.setInt(1, idProjet);
+            try (ResultSet rs = ps.executeQuery()){
+                while (rs.next()) {
+                    Etape etape = new Etape();
+                    etape.setIdEtape(rs.getInt("id"));
+                    etape.setTitre(rs.getString("titre"));
+                    etape.setDescription(rs.getString("description"));
+                    etape.setOrdre(rs.getInt("ordre"));
+                    etapeList.add(etape);
+                }
+            }
+        } catch (SQLException e){
+            e.printStackTrace(System.out);
+        }
+        return etapeList;
+    }
+
+    @Override
+    public int count_etape(int idProjet) {
+        String sql = "SELECT COUNT(*) FROM etape WHERE idProjet = ?";
+        try(Connection connection= ConnectBD.getConnection(); PreparedStatement ps= connection.prepareStatement(sql)) {
+           ps.setInt(1, idProjet);
+           try (ResultSet rs = ps.executeQuery()){
+               if (rs.next()) {
+                   return rs.getInt(1);
+               }
+           }
+        } catch (SQLException e){
+            e.printStackTrace(System.out);
+        }
+        return 0;
+    }
 }
