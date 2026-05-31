@@ -103,4 +103,14 @@ public class EtapeServiceImplement implements EtapeService {
     public boolean verification(int idEtape) {
         return etapeDao.verif_etape(idEtape);
     }
+
+    @Override
+    public List<Etape> ListeEtapesByProjet(int idProjet) {
+        return etapeDao.getByProjetId(idProjet);
+    }
+
+    @Override
+    public int countEtapes(int idProjet) {
+        return etapeDao.count_etape(idProjet);
+    }
 }

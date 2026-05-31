@@ -12,18 +12,23 @@ import java.util.Optional;
 
 public class ProjetClientServiceImplement implements ProjetClientService {
 
-    private ProjetClientDAO projetClientRepository= new ProjetClientDAOImplement();
+    private final ProjetClientDAO projetClientRepository;
 
 
-    public ProjetClientServiceImplement(ProjetClientDAOImplement clientProjetTable){
+    public ProjetClientServiceImplement(ProjetClientDAO clientProjetTable){
         this.projetClientRepository= clientProjetTable;
     }
 
 
 
     @Override
-    public void add(ProjetClient projetClient) {
-        projetClientRepository.save(projetClient);
+    public boolean add(ProjetClient projetClient) {
+        int idClient = projetClient.getClient().getIdUtilisateur();
+        if(projetClientRepository.hasProjetEnCours(idClient)) {
+            throw new IllegalStateException(
+                    "Vous avez déjà un projet en cours");
+        }
+        return projetClientRepository.save(projetClient);
     }
 
     @Override
@@ -42,8 +47,14 @@ public class ProjetClientServiceImplement implements ProjetClientService {
         return projetClientRepository.getByClient(idClient);
     }
 
+
     @Override
     public Optional<ProjetClient> getById(int id) {
         return projetClientRepository.getById(id);
+    }
+
+    @Override
+    public Optional<ProjetClient> getByClientEncours(int id) {
+        return projetClientRepository.getProjetEnCours(id);
     }
 }

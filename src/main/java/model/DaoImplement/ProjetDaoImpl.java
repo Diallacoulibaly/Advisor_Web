@@ -1,6 +1,8 @@
 package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
+import main.java.model.classes.Domaine;
+import main.java.model.classes.Localite;
 import main.java.model.classes.Projet;
 import main.java.model.dao.ProjetDao;
 import main.java.model.enums.Niveau;
@@ -68,7 +70,7 @@ public class ProjetDaoImpl implements ProjetDao {
 
     @Override
     public Optional<Projet> getById(int id)  {
-        String sql = "SELECT * FROM Projet WHERE id = ?";
+        String sql = "SELECT p.id AS projetId, p.titre AS titre, p.niveau AS niveau, p.budgetMin AS budgetMin, p.budgetMax AS budgetMax, p.description AS description, p.duree AS duree, d.id AS domaineId, d.domaine AS domaine, l.id AS localiteId, l.regionClient AS region FROM projet p JOIN domaine d ON d.id= p.idDomaine JOIN localite l ON l.id=p.idlocalite WHERE p.id = ?";
         try (Connection conn = ConnectBD.getConnection()) {
             assert conn != null;
             try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -121,13 +123,19 @@ public class ProjetDaoImpl implements ProjetDao {
     // pour éviter la répétition de code
     private Projet mapResultSetToProjet(ResultSet rs) throws SQLException {
         Projet p = new Projet();
-        p.setId(rs.getInt("id"));
+        Domaine domaine= new Domaine(rs.getInt("domaineId"), rs.getString("domaine"));
+        Localite localite= new Localite();
+        localite.setId(rs.getInt("localiteId"));
+        localite.setRegionClient(rs.getString("region"));
+        p.setId(rs.getInt("projetId"));
         p.setTitre(rs.getString("titre"));
         p.setDescription(rs.getString("description"));
         p.setDuree(rs.getFloat("duree"));
         p.setNiveau(Niveau.valueOf(rs.getString("niveau")));
         p.setBudgetMin(rs.getDouble("budgetMin"));
         p.setBudgetMax(rs.getDouble("budgetMax"));
+        p.setDomaine(domaine);
+        p.setLocalite(localite);
         return p;
     }
 }

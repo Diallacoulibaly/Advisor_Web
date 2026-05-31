@@ -64,6 +64,7 @@ public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurD
             if (rs.next()) {
 
                 Utilisateur utilisateur = new Utilisateur(
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("email"),
