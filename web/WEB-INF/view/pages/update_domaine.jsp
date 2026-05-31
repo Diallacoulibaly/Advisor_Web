@@ -19,5 +19,6 @@
     <input type="submit" value="Modifier">
 
 </form>
+<a href="domaines" class="btn-retour">Retour à la liste</a>
 </body>
 </html>
