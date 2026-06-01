@@ -1,0 +1,124 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-color:white;
+    color:black;
+    padding:30px;
+}
+
+h1{
+    text-align:center;
+    color:#0066cc;
+    margin-bottom:20px;
+}
+
+/* Bouton Ajouter */
+.btn-ajout{
+    display:inline-block;
+    background-color:#0066cc;
+    color:white;
+    text-decoration:none;
+    padding:10px 20px;
+    border-radius:5px;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+.btn-ajout:hover{
+    background-color:#0052a3;
+}
+
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background-color:white;
+}
+
+th{
+    background-color:#0066cc;
+    color:white;
+    padding:12px;
+}
+
+td{
+    border:1px solid #dcdcdc;
+    padding:10px;
+    color:black;
+}
+
+tr:nth-child(even){
+    background-color:#f7f9fc;
+}
+
+
+.edit{
+    color:#0066cc;
+    text-decoration:none;
+    font-weight:bold;
+    margin-right:15px;
+}
+
+.delete{
+    color:red;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.edit:hover,
+.delete:hover{
+    text-decoration:underline;
+}
+.container{
+    width:400px;
+    margin:50px auto;
+    background-color:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+input[type="text"]{
+    width:100%;
+    padding:12px;
+    border:1px solid #dcdcdc;
+    border-radius:5px;
+    font-size:16px;
+}
+
+button{
+    background-color:#0066cc;
+    color:white;
+    border:none;
+    padding:12px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+button:hover{
+    background-color:#0052a3;
+}
+.btn-retour{
+    display:inline-block;
+    margin-bottom:15px;
+    color:#0066cc;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.btn-retour:hover{
+    text-decoration:underline;
+}

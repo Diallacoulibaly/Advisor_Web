@@ -7,6 +7,7 @@ public class Client extends Utilisateur {
     private Niveau niveau = Niveau.DEBUTANT;
     private Localite localite;
     private int  budgetApporte;
+    private Domaine domaine;
 
     public Client() {
 
@@ -44,6 +45,14 @@ public class Client extends Utilisateur {
 
     public void setLocalite(Localite localite) {
         this.localite = localite;
+    }
+
+    public Domaine getDomaine() {
+        return domaine;
+    }
+
+    public void setDomaine(Domaine domaine) {
+        this.domaine = domaine;
     }
 
 }

@@ -1,0 +1,155 @@
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background: white;
+    color:#1d2b4f;
+
+}
+
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 50px;
+}
+
+header section{
+    display:flex;
+    gap:20px;
+
+
+}
+section .icone_fa{
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    align-items: flex-start;
+}
+
+.icone_fa i{
+    color:#2563eb;
+    width: 100px;
+
+
+
+}
+.icone_fa p{
+    margin-top: 15px;
+   margin-left: -10px;
+
+    font-size:15px;
+    line-height:1.5;
+
+
+}
+
+main{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:50px;
+    min-height:70vh;
+}
+
+.left{
+    width:40%;
+    margin-top: -150px;
+}
+
+.left h1{
+    font-size:70px;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.left p{
+    font-size:22px;
+    line-height:1.5;
+}
+
+.right{
+    width:50%;
+    text-align:center;
+}
+
+.right img{
+    width:100%;
+    max-width:700px;
+}
+
+
+.btn-container{
+    margin-top:30px;
+    display:flex;
+    gap:20px;
+}
+
+.btn{
+    padding:15px 30px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.btn-connecter{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-inscrire{
+    border:2px solid #2563eb;
+    color:#2563eb;
+}
+
+
+footer{
+    background:#1C3579;
+    color:white;
+    display:flex;
+    justify-content:space-around;
+    padding:40px 20px;
+    border-top-left-radius:40px;
+    border-top-right-radius:40px;
+}
+
+footer section{
+    width:250px;
+}
+
+footer h1{
+    font-size:25px;
+    margin-bottom:10px;
+}
+
+footer p{
+    line-height:1.5;
+}
+.icone_fas {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.texte {
+    display: flex;
+    flex-direction: column;
+}
+
+.texte h1,
+.texte p {
+    margin: 0;
+}
+
+.icone_fas i {
+    font-size: 3rem;
+    color: white;
+    width: 60px;
+    text-align: center;
+}

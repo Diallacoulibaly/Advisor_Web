@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>layout</title>
-    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/layout.css">
 </head>
 <body>
     <div class="layout">
@@ -27,7 +27,7 @@
             <section class="dynamic-content">
 
 
-                <jsp:include page="${pageContent}" />
+                <jsp:include page="../pages/${pageContent}" />
 
             </section>
 

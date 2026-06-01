@@ -4,6 +4,10 @@ out/
 !**/src/test/**/out/
 .kotlin
 
+.smarttomcat/*
+
+.smarttomcat/
+
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -26,9 +30,10 @@ bin/
 ### VS Code ###
 .vscode/
 web/WEB-INF/classes/
-web/WEB-INF/lib/jakar*
 
 ### Mac OS ###
 .DS_Store
 
 
+### Database ###
+src/main/java/Database/ConnectBD.java
