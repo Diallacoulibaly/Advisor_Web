@@ -10,7 +10,7 @@ public class ConnectBD {
             "jdbc:mysql://localhost:3306/advisor";
 
     private static final String USER = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "isma@1604";
 
     public static Connection getConnection() {
 

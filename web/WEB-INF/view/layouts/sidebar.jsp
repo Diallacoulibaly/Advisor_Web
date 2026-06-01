@@ -90,7 +90,7 @@
             </div>
 
             <div class="onglet-titre">
-                <a href="#" class="a">Deconnexion</a>
+                <a href="${pageContext.request.contextPath}/deconnexion" class="a">Deconnexion</a>
             </div>
 
         </div>
