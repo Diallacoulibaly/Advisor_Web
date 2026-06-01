@@ -27,6 +27,7 @@
         <td> <%= i+1 %> </td>
         <td> <%= projets.get(i).getTitre() %> </td>
         <td> <%= projets.get(i).getBudgetMin() %> </td>
+
         <td> <%= projets.get(i).getBudgetMax() %> </td>
         <td> <%= projets.get(i).getDuree() %> Jours </td>
     </tr>
@@ -39,4 +40,5 @@
 </table>
 
 </body>
+
 </html>
