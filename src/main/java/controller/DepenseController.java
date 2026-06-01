@@ -1,32 +1,33 @@
 package main.java.controller;
 
-import main.java.model.DaoImplement.DepenseDaoImplement;
-import main.java.model.ServiceImplemente.DepenseServiceImplement;
+import main.java.model.classes.Activite;
 import main.java.model.classes.Depense;
+import main.java.model.ServiceImplemente.DepenseImplement;
+import main.java.model.dao.DepenseDao;
+import main.java.model.DaoImplement.DepenseDaoImplement;
 import main.java.model.service.DepenseService;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
 @WebServlet("/depenses")
-public class DepenseServlet extends HttpServlet {
+public class DepenseController extends HttpServlet {
 
     private DepenseService depenseService;
 
     @Override
     public void init() {
-        depenseService = new DepenseServiceImplement(new DepenseDaoImplement());
+        // CORRECTION: instanciation correcte du DAO et du service
+        DepenseDao depenseDao = new DepenseDaoImplement();
+        depenseService = new DepenseImplement(depenseDao);
     }
 
-    // ─── GET ──────────────────────────────────────────────────────────────────
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,38 +36,30 @@ public class DepenseServlet extends HttpServlet {
         if (action == null) action = "liste";
 
         switch (action) {
-
-            // ── Afficher toutes les dépenses ──────────────────────────────────
             case "liste" -> {
-                List<Depense> depenses = depenseService.getAllDepenses();
+                List<Depense> depenses = depenseService.getAll();
                 request.setAttribute("depenses", depenses);
-                request.getRequestDispatcher("/depenses.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/depenses/liste.jsp").forward(request, response);
             }
-
-            // ── Supprimer une dépense ─────────────────────────────────────────
             case "supprimer" -> {
                 String idParam = request.getParameter("id");
-                if (idParam != null) {
-                    depenseService.deleteDepense(Integer.parseInt(idParam));
+                if (idParam != null && !idParam.isEmpty()) {
+                    depenseService.delete(Integer.parseInt(idParam));
                 }
                 response.sendRedirect(request.getContextPath() + "/depenses?action=liste");
             }
-
-            // ── Formulaire modifier (pré-remplissage) ─────────────────────────
             case "formulaire" -> {
                 String idParam = request.getParameter("id");
-                if (idParam != null) {
-                    Optional<Depense> depense = depenseService.getDepenseById(Integer.parseInt(idParam));
+                if (idParam != null && !idParam.isEmpty()) {
+                    Optional<Depense> depense = depenseService.getById(Integer.parseInt(idParam));
                     depense.ifPresent(d -> request.setAttribute("depense", d));
                 }
-                request.getRequestDispatcher("/depenses.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/views/depenses/form.jsp").forward(request, response);
             }
-
             default -> response.sendRedirect(request.getContextPath() + "/depenses?action=liste");
         }
     }
 
-    // ─── POST ─────────────────────────────────────────────────────────────────
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -80,49 +73,48 @@ public class DepenseServlet extends HttpServlet {
         }
 
         switch (action) {
-
-            // ── Ajouter une nouvelle dépense ──────────────────────────────────
             case "ajouter" -> {
                 try {
-                    double montant       = Double.parseDouble(request.getParameter("montant"));
-                    String description   = request.getParameter("description");
-                    Date   date          = Date.valueOf(request.getParameter("date")); // format attendu : YYYY-MM-DD
-                    String idActiviteStr = request.getParameter("idActivite");
-                    Integer idActivite   = (idActiviteStr != null && !idActiviteStr.isEmpty())
-                            ? Integer.parseInt(idActiviteStr) : null;
+                    double montant = Double.parseDouble(request.getParameter("montant"));
+                    String description = request.getParameter("description");
+                    Date date = Date.valueOf(request.getParameter("date"));
 
-                    Depense depense = new Depense(null, montant, description, date, idActivite);
-                    depenseService.addDepense(depense);
+                    // CORRECTION: récupération de l'activité si nécessaire
+                    String activiteIdParam = request.getParameter("idActivite");
+                    Depense depense;
+                    if (activiteIdParam != null && !activiteIdParam.isEmpty()) {
+                        Activite activite = new Activite();
+                        activite.setId(Integer.parseInt(activiteIdParam));
+                        depense = new Depense(null, montant, description, date, activite);
+                    } else {
+                        depense = new Depense(null, montant, description, date);
+                    }
 
+                    depenseService.add(depense);
                 } catch (Exception e) {
                     request.setAttribute("erreur", "Données invalides : " + e.getMessage());
-                    request.getRequestDispatcher("/depenses.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/views/depenses/form.jsp").forward(request, response);
                     return;
                 }
             }
-
-            // ── Modifier une dépense existante ────────────────────────────────
             case "modifier" -> {
                 try {
-                    int    id            = Integer.parseInt(request.getParameter("id"));
-                    double montant       = Double.parseDouble(request.getParameter("montant"));
-                    String description   = request.getParameter("description");
-                    Date   date          = Date.valueOf(request.getParameter("date"));
-                    String idActiviteStr = request.getParameter("idActivite");
-                    Integer idActivite   = (idActiviteStr != null && !idActiviteStr.isEmpty())
-                            ? Integer.parseInt(idActiviteStr) : null;
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    double montant = Double.parseDouble(request.getParameter("montant"));
+                    String description = request.getParameter("description");
+                    Date date = Date.valueOf(request.getParameter("date"));
 
-                    depenseService.updateDepense(id, montant, description, date, idActivite);
-
+                    // CORRECTION: créer un objet Depense complet pour la modification
+                    Depense depense = new Depense(id, montant, description, date);
+                    depenseService.update(depense);
                 } catch (Exception e) {
                     request.setAttribute("erreur", "Données invalides : " + e.getMessage());
-                    request.getRequestDispatcher("/depenses.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/views/depenses/form.jsp").forward(request, response);
                     return;
                 }
             }
         }
 
-        // Pattern PRG : toujours rediriger après un POST
         response.sendRedirect(request.getContextPath() + "/depenses?action=liste");
     }
 }

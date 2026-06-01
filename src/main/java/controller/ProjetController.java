@@ -51,7 +51,7 @@ public class ProjetController extends HttpServlet {
             default:
                 List<Projet> liste = service.getAllProjets();
                 request.setAttribute("projets", liste);
-                request.getRequestDispatcher("/WEB-INF/view/projets.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/view/Projets.jsp").forward(request, response);
                 break;
         }
     }
