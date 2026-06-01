@@ -1,4 +1,4 @@
-/*package main.java.model.DaoImplement;
+package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
 import main.java.model.classes.Utilisateur;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
+public class UtilisateurDaoImplement implements main.java.model.dao.UtilisateurDao {
 
     @Override
     public void add(Utilisateur utilisateur) {
@@ -50,7 +50,7 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
     @Override
     public Optional<Utilisateur> getById(int id) {
 
-        String sql = "SELECT * FROM utilisateur WHERE id = ?";
+        String sql = "SELECT * FROM Utilisateur WHERE id = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -64,6 +64,7 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
             if (rs.next()) {
 
                 Utilisateur utilisateur = new Utilisateur(
+                        rs.getInt("id"),
                         rs.getString("nom"),
                         rs.getString("prenom"),
                         rs.getString("email"),
@@ -88,7 +89,7 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
     @Override
     public Optional<Utilisateur> getByEmail(String email) {
 
-        String sql = "SELECT * FROM utilisateur WHERE email = ?";
+        String sql = "SELECT * FROM Utilisateur WHERE email = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -129,7 +130,7 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
 
         List<Utilisateur> utilisateurs = new ArrayList<>();
 
-        String sql = "SELECT * FROM utilisateur";
+        String sql = "SELECT * FROM Utilisateur";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -167,7 +168,7 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
 
         List<Utilisateur> utilisateurs = new ArrayList<>();
 
-        String sql = "SELECT * FROM utilisateur WHERE role = ?";
+        String sql = "SELECT * FROM Utilisateur WHERE role = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -271,7 +272,7 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
     @Override
     public int delete(int id) {
 
-        String sql = "DELETE FROM utilisateur WHERE id = ?";
+        String sql = "DELETE FROM Utilisateur WHERE id = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -295,7 +296,7 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
     @Override
     public boolean existsByEmail(String email) {
 
-        String sql = "SELECT COUNT(*) FROM utilisateur WHERE email = ?";
+        String sql = "SELECT COUNT(*) FROM Utilisateur WHERE email = ?";
 
         try (
                 Connection conn = ConnectBD.getConnection();
@@ -317,8 +318,3 @@ public class UtilisateurDaoImplement implements model.dao.UtilisateurDao {
         return false;
     }
 }
-
-
-
-
- */

@@ -1,12 +1,8 @@
 /*package main.java.model.DaoImplement;
 
-package DAOimplementation;
 
-import DAO.ClientCompetenceRepository;
-import BD.ConnexionBdd;
-import Models.Client;
-import Models.ClientCompetence;
-import Models.Competence;
+
+import main.java.model.dao.ClientCompetence;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -137,9 +133,4 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
         }
     }
 }
-
-
-
-
-
- */
+*/

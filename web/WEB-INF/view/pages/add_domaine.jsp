@@ -8,15 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+
     <title>Add Domaine</title>
 </head>
 <body>
+<div class="container">
+
 <h1>Formulaire d'ajout de domaine</h1>
-<form action="domaines" method="post">
+<form action="domaines?actions=addDomaine" method="post">
     <input type="text" name="domaine" id="" placeholder="Entrez un domaine">
 
     <button type="submit">Ajouter</button>
 
 </form>
+</div>
 </body>
 </html>

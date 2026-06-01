@@ -13,7 +13,10 @@ import java.util.Optional;
 
 public class ClientServiceImplement implements ClientService {
 
-    private ClientDAO clientRepository=new ClientDAOImplement();
+    private ClientDAO clientRepository;
+    public ClientServiceImplement(ClientDAO clientRepository) {
+        this.clientRepository = clientRepository;
+    }
     
 
     @Override

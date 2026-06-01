@@ -1,11 +1,11 @@
 package main.java.model.DaoImplement;
 
-
-
-
 import main.java.Database.ConnectBD;
+import main.java.model.classes.Domaine;
+import main.java.model.classes.Localite;
 import main.java.model.classes.Projet;
 import main.java.model.dao.ProjetDao;
+import main.java.model.enums.Niveau;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,95 +17,8 @@ public class ProjetDaoImpl implements ProjetDao {
     public ProjetDaoImpl() {}
 
     @Override
-    public void add(Projet projet) {
-        String query = "INSERT INTO projets (titre, description, duree, budgetMin, budgetMax) VALUES (?, ?, ?, ?, ?)";
-        try (
-                Connection connection= ConnectBD.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
-        ) {
-            statement.setString(1, projet.getTitre());
-            statement.setString(2, projet.getDescription());
-            statement.setFloat(3, projet.getDuree());
-            statement.setDouble(4, projet.getBudgetMin());
-            statement.setDouble(5, projet.getBudgetMax());
-            //statement.setString(6, projet.getProjetStatut().name());
-
-            statement.executeUpdate();
-
-            // Récupération de l'ID auto-généré par la base de données
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    projet.setId(generatedKeys.getInt(1));
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de l'ajout du projet : " + e.getMessage());
-        }
-    }
-
-    @Override
-    public Optional<Projet> getById(int id) {
-        String query = "SELECT * FROM projets WHERE id = ?";
-        try (Connection connection= ConnectBD.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    Projet projet = mapResultSetToProjet(resultSet);
-                    return Optional.of(projet);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération par ID : " + e.getMessage());
-        }
-        return Optional.empty();
-    }
-
-
-    @Override
-    public List<Projet> getAll() {
-        List<Projet> projets = new ArrayList<>();
-        String query = "SELECT * FROM projet";
-        try (Connection connection= ConnectBD.getConnection();Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
-                projets.add(mapResultSetToProjet(resultSet));
-            }
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération de tous les projets : " + e.getMessage());
-        }
-        return projets;
-    }
-
-    @Override
-    public void update(int id) {
-        // Note : En JDBC pur, pour faire un update avec uniquement l'ID, on applique une logique fixe
-        // Idéalement, il faudrait passer l'objet Projet entier. Exemple ici de passage au statut TERMINE par l'ID :
-        String query = "UPDATE projets SET statut = ? WHERE id = ?";
-        try (Connection connection= ConnectBD.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            //statement.setString(1, StatutProjet.Termine.name());
-            statement.setInt(2, id);
-            statement.executeUpdate();
-            System.out.println("Projet ID " + id + " mis à jour (Statut: TERMINE).");
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la mise à jour du projet : " + e.getMessage());
-        }
-    }
-
-    @Override
-    public int delete(int id) {
-        String query = "DELETE FROM projets WHERE id = ?";
-        try (Connection connection= ConnectBD.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, id);
-            return statement.executeUpdate(); // Retourne le nombre de lignes supprimées (1 si succès, 0 si aucun)
-        } catch (SQLException e) {
-            System.out.println("Erreur lors de la suppression du projet : " + e.getMessage());
-            return 0;
-        }
-    }
-
-    @Override
     public boolean existsByTitre(String titre) {
-        String query = "SELECT COUNT(*) FROM projets WHERE titre = ?";
+        String query = "SELECT COUNT(*) FROM projet WHERE titre = ?";
         try (Connection connection= ConnectBD.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, titre);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -119,43 +32,110 @@ public class ProjetDaoImpl implements ProjetDao {
         return false;
     }
 
-
     @Override
-    public List<Projet> getProjetsByClient(int clientId) {
-        List<Projet> projets = new ArrayList<>();
-        // Jointure SQL utilisant la table d'association projets_clients (ProjetClient)
-        String query = "SELECT p.* FROM projets p " +
-                "JOIN projets_clients pc ON p.id = pc.projet_id " +
-                "WHERE pc.client_id = ?";
-        try (Connection connection= ConnectBD.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, clientId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    projets.add(mapResultSetToProjet(resultSet));
-                }
+    public void add(Projet p) {
+        String sql = "INSERT INTO Projet (titre, description, duree, niveau, budgetMin, budgetMax) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = ConnectBD.getConnection()) {
+            assert conn != null;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, p.getTitre());
+                ps.setString(2, p.getDescription());
+                ps.setFloat(3, p.getDuree());
+                ps.setString(4, p.getNiveau().name());
+                ps.setDouble(5, p.getBudgetMin());
+                ps.setDouble(6, p.getBudgetMax());
+                ps.executeUpdate();
             }
         } catch (SQLException e) {
-            System.out.println("Erreur lors de la récupération des projets du client : " + e.getMessage());
+            System.out.println("Erreur lors de l'ajout du projet : " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Projet> getAll() {
+        List<Projet> projets = new ArrayList<>();
+        String sql = "SELECT * FROM Projet";
+        try (Connection conn = ConnectBD.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Projet p = mapResultSetToProjet(rs);
+                projets.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération des projets : " + e.getMessage());
         }
         return projets;
     }
 
-    // Méthode utilitaire privée pour transformer une ligne de la base de données en objet Java Projet
-    private Projet mapResultSetToProjet(ResultSet resultSet) throws SQLException {
-        Projet projet = new Projet();
-        projet.setId(resultSet.getInt("id"));
-        projet.setTitre(resultSet.getString("titre"));
-        projet.setDescription(resultSet.getString("description"));
-        projet.setDuree(resultSet.getFloat("duree"));
-        projet.setBudgetMin(resultSet.getDouble("budgetMin"));
-        projet.setBudgetMax(resultSet.getDouble("budgetMax"));
+    @Override
+    public Optional<Projet> getById(int id)  {
+        String sql = "SELECT p.id AS projetId, p.titre AS titre, p.niveau AS niveau, p.budgetMin AS budgetMin, p.budgetMax AS budgetMax, p.description AS description, p.duree AS duree, d.id AS domaineId, d.domaine AS domaine, l.id AS localiteId, l.regionClient AS region FROM projet p JOIN domaine d ON d.id= p.idDomaine JOIN localite l ON l.id=p.idlocalite WHERE p.id = ?";
+        try (Connection conn = ConnectBD.getConnection()) {
+            assert conn != null;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) return Optional.of(mapResultSetToProjet(rs));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la récupération du projet : " + e.getMessage());
+        }
+        return Optional.empty();
+    }
 
-        // Conversion de la chaîne de caractères SQL en Enum Java
-        //String statutStr = resultSet.getString("statut");
-        //if (statutStr != null) {
-        //projet.setProjetStatut(StatutProjet.valueOf(statutStr));
-        //}
+    @Override
+    public void update(Projet p) {
+        String sql = "UPDATE Projet SET titre=?, description=?, duree=?, niveau=?, budgetMin=?, budgetMax=? WHERE id=?";
+        try (Connection conn = ConnectBD.getConnection()) {
+            assert conn != null;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, p.getTitre());
+                ps.setString(2, p.getDescription());
+                ps.setFloat(3, p.getDuree());
+                ps.setString(4, p.getNiveau().name());
+                ps.setDouble(5, p.getBudgetMin());
+                ps.setDouble(6, p.getBudgetMax());
+                ps.setInt(7, p.getId());
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'update' : " + e.getMessage());
+        }
+    }
 
-        return projet;
+    @Override
+    public void delete(int id) {
+        String sql = "DELETE FROM Projet WHERE id = ?";
+        try (Connection conn = ConnectBD.getConnection()) {
+            assert conn != null;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, id);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la suppression du projet : " + e.getMessage());
+        }
+    }
+
+
+    // pour éviter la répétition de code
+    private Projet mapResultSetToProjet(ResultSet rs) throws SQLException {
+        Projet p = new Projet();
+        Domaine domaine= new Domaine(rs.getInt("domaineId"), rs.getString("domaine"));
+        Localite localite= new Localite();
+        localite.setId(rs.getInt("localiteId"));
+        localite.setRegionClient(rs.getString("region"));
+        p.setId(rs.getInt("projetId"));
+        p.setTitre(rs.getString("titre"));
+        p.setDescription(rs.getString("description"));
+        p.setDuree(rs.getFloat("duree"));
+        p.setNiveau(Niveau.valueOf(rs.getString("niveau")));
+        p.setBudgetMin(rs.getDouble("budgetMin"));
+        p.setBudgetMax(rs.getDouble("budgetMax"));
+        p.setDomaine(domaine);
+        p.setLocalite(localite);
+        return p;
     }
 }

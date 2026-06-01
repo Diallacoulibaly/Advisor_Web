@@ -28,18 +28,52 @@ public class DomaineController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String actions=req.getParameter("actions");
+        if (actions==null) actions = "listeDomaine";
 
-        List<Domaine> domaines = domaineService.afficher();
-        req.setAttribute("domaines" ,domaines);
-        req.getRequestDispatcher("/WEB-INF/view/index_domaine.jsp").forward(req,resp);
+        switch (actions) {
+            case "addDomaine":
+                req.getRequestDispatcher("/WEB-INF/view/pages/add_domaine.jsp").forward(req, resp);
+                break;
+            case "editDomaine":
+                int id=Integer.parseInt(req.getParameter("id"));
+                Domaine d=domaineService.getById(id);
+                req.setAttribute("domaine",d);
+                req.getRequestDispatcher("/WEB-INF/view/pages/update_domaine.jsp").forward(req,resp);
+                break;
+            case "deleteDomaine":
+                int idD=Integer.parseInt(req.getParameter("id")) ;
+                domaineService.supprimer(idD);
+                resp.sendRedirect("domaines");
+                break;
+            default:
+                List<Domaine> domaines = domaineService.afficher();
+                req.setAttribute("domaines" ,domaines);
+                req.getRequestDispatcher("/WEB-INF/view/pages/index_domaine.jsp").forward(req,resp);
+                break;
 
+
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       String domaine=req.getParameter("domaine");
-       domaineService.ajouter(domaine);
-       resp.sendRedirect("domaines");
+        String actions=req.getParameter("actions");
+        if (!actions.isEmpty()){
+            if (actions.equalsIgnoreCase("addDomaine")){
+                String domaine=req.getParameter("domaine");
+                domaineService.ajouter(domaine);
+                resp.sendRedirect("domaines");
+
+            }
+            else if (actions.equalsIgnoreCase("updateDomaine")){
+                int id=Integer.parseInt(req.getParameter("id"));
+                String nom=req.getParameter("domaine");
+                domaineService.modifier(id,nom);
+                resp.sendRedirect("domaines");
+            }
+        }
+
     }
 
 

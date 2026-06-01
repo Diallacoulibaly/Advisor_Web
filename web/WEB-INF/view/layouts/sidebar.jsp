@@ -27,14 +27,17 @@
 
         <nav class="menu">
 
-            <div class="onglet-section active">
+            <div class="onglet-section
+<%= "accueil".equals(request.getAttribute("menuActif"))
+        ? "active"
+        : "" %>">
 
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/home.png" alt="Accueil" class="icon">
                 </div>
 
                 <div class="onglet-titre">
-                    <a href="#" class="a">Accueil</a>
+                    <a href="${pageContext.request.contextPath}/client" class="a">Accueil</a>
                 </div>
 
             </div>
@@ -63,19 +66,34 @@
 
             </div>
 
-            <div class="onglet-section">
+            <div class="onglet-section
+<%= "mes_projets".equals(request.getAttribute("menuActif"))
+        ? "active"
+        : "" %>">
 
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/Project.png" alt="Projet" class="icon">
                 </div>
 
                 <div class="onglet-titre">
-                    <a href="#" class="a">Mes projets</a>
+                    <a href="${pageContext.request.contextPath}/mes_projets" class="a">Mes projets</a>
                 </div>
 
             </div>
 
         </nav>
+
+        <div class="onglet-section deconnexion">
+
+            <div class="onglet-img">
+                <img src="${pageContext.request.contextPath}/assets/img/decon.png" alt="deconnexion" class="icon">
+            </div>
+
+            <div class="onglet-titre">
+                <a href="#" class="a">Deconnexion</a>
+            </div>
+
+        </div>
 
     </aside>
 

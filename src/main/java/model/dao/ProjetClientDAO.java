@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProjetClientDAO {
-    void save(ProjetClient projetclient);
+    boolean save(ProjetClient projetclient);
 
     void changerStatut(int id, StatutProjet statutProjet);
 
@@ -18,5 +18,8 @@ public interface ProjetClientDAO {
     List<ProjetClient> getAll();
 
     List<ProjetClient> getByClient(int idClient);
+
+    Optional<ProjetClient> getProjetEnCours(int idClient);
+    boolean hasProjetEnCours(int idClient);
 
 }
