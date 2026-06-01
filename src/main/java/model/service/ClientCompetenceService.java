@@ -16,4 +16,7 @@ public interface ClientCompetenceService {
     void delete(int id);
 
 }
-*/
+
+
+
+ */

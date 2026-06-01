@@ -53,4 +53,6 @@ public class ClientCompetenceServiceImplement {
         clientCompetenceRepository.delete(id);
     }
 }
-*/
+
+
+ */

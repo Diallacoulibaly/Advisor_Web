@@ -138,4 +138,8 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
     }
 }
 
-*/
+
+
+
+
+ */
