@@ -1,8 +1,12 @@
-/*package main.java.model.DaoImplement;
+package main.java.model.DaoImplement;
 
 
+import main.java.model.classes.Client;
+import main.java.model.classes.ClientCompetence;
+import main.java.model.classes.Competence;
+import main.java.model.dao.ClientCompetenceDao;
 
-import main.java.model.dao.ClientCompetence;
+import main.java.Database.ConnectBD;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,19 +14,19 @@ import java.util.List;
 
 
 
-public class ClientCompetenceDaoImplement implements ClientCompetenceRepository {
+public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
 
     @Override
     public void add(ClientCompetence clientCompetence) {
 
         String sql = "INSERT INTO ClientCompetence (idClient, idCompetence) VALUES (?, ?)";
 
-        try (Connection cnn = ConnexionBdd.getConnection();
+        try (Connection cnn = ConnectBD.getConnection();
              PreparedStatement stml = cnn.prepareStatement(sql)) {
 
             stml.setInt(1, clientCompetence.getClient().getIdUtilisateur());
 
-            stml.setInt(2, clientCompetence.getCompetence().getIdCompetence());
+            stml.setInt(2, clientCompetence.getCompetence().getId());
 
             stml.executeUpdate();
 
@@ -37,11 +41,11 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
     @Override
     public List<ClientCompetence> getAll() {
 
-        List<Models.ClientCompetence> list = new ArrayList<>();
+        List<ClientCompetence> list = new ArrayList<>();
 
         String sql = "SELECT * FROM ClientCompetence";
 
-        try (Connection cnn = ConnexionBdd.getConnection();
+        try (Connection cnn = ConnectBD.getConnection();
              PreparedStatement stml = cnn.prepareStatement(sql);
              ResultSet rs = stml.executeQuery()) {
 
@@ -52,7 +56,7 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
                 Competence c = new Competence();
                 cc.setId(rs.getInt("id"));
                 cl.setIdUtilisateur(rs.getInt("idClient"));
-                c.setIdCompetence(rs.getInt("idCompetence"));
+                c.setId(rs.getInt("idCompetence"));
                 cc.setClient(cl);
                 cc.setCompetence(c);
                 list.add(cc);
@@ -73,12 +77,12 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
         String sql = "UPDATE ClientCompetence " +
                 "SET idClient = ?, idCompetence = ? " +
                 "WHERE id = ?";
-        try (Connection cnn = ConnexionBdd.getConnection();
+        try (Connection cnn = ConnectBD.getConnection();
              PreparedStatement stml = cnn.prepareStatement(sql)) {
 
             stml.setInt(1, clientCompetence.getClient().getIdUtilisateur());
 
-            stml.setInt(2, clientCompetence.getCompetence().getIdCompetence());
+            stml.setInt(2, clientCompetence.getCompetence().getId());
 
             stml.setInt(3, clientCompetence.getId());
 
@@ -97,7 +101,7 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
         List<Integer> skillIds = new ArrayList<>();
         String sql = "SELECT idCompetence FROM ClientCompetence WHERE idClient = ?";
 
-        try (Connection conn = ConnexionBdd.getConnection();
+        try (Connection conn = ConnectBD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idClient);
 
@@ -118,7 +122,7 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
 
         String sql = "DELETE FROM ClientCompetence WHERE id = ?";
 
-        try (Connection cnn = ConnexionBdd.getConnection();
+        try (Connection cnn = ConnectBD.getConnection();
              PreparedStatement stml = cnn.prepareStatement(sql)) {
 
             stml.setInt(1, id);
@@ -133,4 +137,3 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceRepository 
         }
     }
 }
-*/

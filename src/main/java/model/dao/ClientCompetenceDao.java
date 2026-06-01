@@ -1,9 +1,11 @@
 package main.java.model.dao;
 
+import main.java.model.classes.ClientCompetence;
+
 import java.sql.SQLException;
 import java.util.List;
 
-public interface ClientCompetence {
+public interface ClientCompetenceDao {
     void add(ClientCompetence clientCompetence);
     List<ClientCompetence> getAll();
     void update(ClientCompetence clientCompetence);
