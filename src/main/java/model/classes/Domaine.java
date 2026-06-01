@@ -17,6 +17,7 @@ public class Domaine {
     public int getId(){
         return id;
     }
+
     public String  getDomaine(){
         return domaine;
     }

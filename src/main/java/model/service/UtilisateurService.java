@@ -16,7 +16,7 @@ public interface UtilisateurService {
 
     void getUtilisateursByRole(Role role);
 
-    Object authentifierUtilisateur(String email, String motDePasse);
+    int authentifierUtilisateur(String email, String motDePasse);
 
     void updateUtilisateur(int id, String nom, String prenom, String email, Integer telephone);
 
