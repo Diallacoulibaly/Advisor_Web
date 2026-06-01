@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>Formulaire de Modification</h1>
-<form action="update-domaine" method="post">
+<form action="domaines?actions=updateDomaine" method="post">
     <input type="hidden" name="id" id="" value="<%=d.getId()%>" >
     <input type="text" name="domaine" id="" value="<%=d.getDomaine()%>" >
     <input type="submit" value="Modifier">
