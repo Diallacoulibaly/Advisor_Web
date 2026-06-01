@@ -65,3 +65,4 @@ public class ActiviteServiceImplement implements ActiviteService {
         activiteDao.supprimerActivite(id);
     }
 }
+

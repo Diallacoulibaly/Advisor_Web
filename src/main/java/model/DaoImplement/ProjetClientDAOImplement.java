@@ -1,10 +1,7 @@
 package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
-import main.java.model.classes.Client;
-import main.java.model.classes.Localite;
-import main.java.model.classes.Projet;
-import main.java.model.classes.ProjetClient;
+import main.java.model.classes.*;
 import main.java.model.dao.ProjetClientDAO;
 import main.java.model.enums.Niveau;
 import main.java.model.enums.Satifaction;
@@ -16,33 +13,63 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProjetClientDAOImplement implements ProjetClientDAO {
-    @Override
-    public void save(ProjetClient projetClient) {
 
+    @Override
+    public boolean save(ProjetClient projetClient) {
         String sql = """
-                INSERT INTO ProjetClient
+                INSERT INTO projetClient
                 (idClient, idProjet, statut, satisfaction)
                 VALUES (?, ?, ?, ?)
                 """;
+        try (Connection connection= ConnectBD.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)){
 
-        try (
-                Connection conn = ConnectBD.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)
-        ) {
 
-            stmt.setInt(1, projetClient.getClient().getIdUtilisateur());
+                    stmt.setInt(1, projetClient.getClient().getIdUtilisateur());
 
-            stmt.setInt(2, projetClient.getProjet().getId());
+                    stmt.setInt(2, projetClient.getProjet().getId());
 
-            stmt.setString(3, projetClient.getStatut().name());
+                    stmt.setString(3, StatutProjet.ENCOURS.name());
 
-            stmt.setString(4, projetClient.getSatisfaction().name());
+                    stmt.setString(4, projetClient.getSatisfaction().name());
 
-            stmt.executeUpdate();
+                    int row=stmt.executeUpdate();
 
-        } catch (SQLException e) {
+                    return row>0;
+            }
+
+        catch (SQLException e) {
             throw new RuntimeException(
                     "Erreur lors de l'ajout du projet", e);
+        }
+    }
+
+    @Override
+    public boolean hasProjetEnCours(int idClient) {
+
+        String sql = """
+            SELECT 1
+            FROM projetClient
+            WHERE idClient = ?
+            AND statut = ?
+            LIMIT 1
+            """;
+
+        try (Connection connection = ConnectBD.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, idClient);
+            ps.setString(2, StatutProjet.ENCOURS.name());
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                return rs.next();
+            }
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(
+                    "Erreur lors de la vérification du projet en cours",
+                    e);
         }
     }
 
@@ -50,7 +77,7 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
     public void changerStatut(int id, StatutProjet statutProjet) {
 
         String sql = """
-                UPDATE ProjetClient
+                UPDATE projetClient
                 SET
                 statut = ?,
                 WHERE id = ?
@@ -95,12 +122,13 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
     public Optional<ProjetClient> getById(int id) {
 
         String sql = """
-                SELECT u.id AS idUser, u.nom AS nom, u.prenom AS prenom, u.email AS email, c.budgetApporte AS budget, c.niveau AS niveau, p.id AS idProjet, p.titre AS titre, pc.id AS idProjetClient, pc.debut AS debut, pc.statut AS statut, pc.satisfaction AS satisfaction, l.id AS idLocalite, l.regionClient AS region
+                SELECT u.id AS idUser, u.nom AS nom, u.prenom AS prenom, u.email AS email, c.budgetApporte AS budget, c.niveau AS niveau, p.id AS idProjet, p.description AS description, p.titre AS titre,p.budgetMax AS budgetPrevu, p.duree AS duree, pc.id AS idProjetClient, pc.debut AS debut, pc.statut AS statut, pc.satisfaction AS satisfaction, l.id AS idLocalite, l.regionClient AS region, d.domaine AS domaine, d.id AS domaineId
                 FROM ProjetClient pc 
                 JOIN client c ON c.id= pc.idClient
                 JOIN projet p ON p.id=pc.idProjet
                 JOIN utilisateur u ON u.id=c.id
                 JOIN localite l ON c.idLocalite=l.id
+                JOIN domaine d ON d.id=p.idDomaine
                 WHERE pc.id=?
                 """;
 
@@ -130,12 +158,13 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
     public List<ProjetClient> getAll() {
 
         String sql = """
-                SELECT u.id AS idUser, u.nom AS nom, u.prenom AS prenom, u.email AS email, c.budgetApporte AS budget, c.niveau AS niveau, p.id AS idProjet, p.titre AS titre, pc.id AS idProjetClient, pc.debut AS debut, pc.statut AS statut, pc.satisfaction AS satisfaction, l.id AS idLocalite, l.regionClient AS region
+                SELECT u.id AS idUser, u.nom AS nom, u.prenom AS prenom, u.email AS email, c.budgetApporte AS budget, c.niveau AS niveau, p.id AS idProjet, p.titre AS titre, p.description AS description, p.budgetMax AS budgetPrevu, p.duree AS duree, pc.id AS idProjetClient, pc.debut AS debut, pc.statut AS statut, pc.satisfaction AS satisfaction, l.id AS idLocalite, l.regionClient AS region, d.domaine AS domaine, d.id AS domaineId
                 FROM ProjetClient pc 
                 JOIN client c ON c.id= pc.idClient
                 JOIN projet p ON p.id=pc.idProjet
                 JOIN utilisateur u ON u.id=c.id
                 JOIN localite l ON c.idLocalite=l.id
+                JOIN domaine d ON d.id=p.idDomaine
                 """;
 
         List<ProjetClient> projets = new ArrayList<>();
@@ -162,12 +191,13 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
     public List<ProjetClient> getByClient(int idClient) {
 
         String sql = """
-                SELECT u.id AS idUser, u.nom AS nom, u.prenom AS prenom, u.email AS email, c.budgetApporte AS budget, c.niveau AS niveau, p.id AS idProjet, p.titre AS titre, pc.id AS idProjetClient, pc.debut AS debut, pc.statut AS statut, pc.satisfaction AS satisfaction, l.id AS idLocalite, l.regionClient AS region
+                SELECT u.id AS idUser, u.nom AS nom, u.prenom AS prenom, u.email AS email, c.budgetApporte AS budget, c.niveau AS niveau, p.id AS idProjet, p.titre AS titre,p.budgetMax AS budgetPrevu, p.duree AS duree, p.description AS description, pc.id AS idProjetClient, pc.debut AS debut, pc.statut AS statut, pc.satisfaction AS satisfaction, l.id AS idLocalite, l.regionClient AS region, d.domaine AS domaine, d.id AS domaineId
                 FROM ProjetClient pc 
                 JOIN client c ON c.id= pc.idClient
                 JOIN projet p ON p.id=pc.idProjet
                 JOIN utilisateur u ON u.id=c.id
                 JOIN localite l ON c.idLocalite=l.id
+                JOIN domaine d ON d.id=p.idDomaine
                 WHERE pc.idClient=?
                 """;
 
@@ -211,11 +241,16 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
         localite.setRegionClient(rs.getString("region"));
         client.setLocalite(localite);
         Projet projet = new Projet();
-
+        Domaine domaine= new Domaine(rs.getInt("domaineId"), rs.getString("domaine"));
         projet.setId(rs.getInt("idProjet"));
         projet.setTitre(rs.getString("titre"));
-
+        projet.setDescription(rs.getString("description"));
+        projet.setBudgetMax(rs.getInt("budgetPrevu"));
+        projet.setDuree(rs.getFloat("duree"));
+        projet.setLocalite(localite);
+        projet.setDomaine(domaine);
         projetClient.setId(rs.getInt("idProjetClient"));
+
 
         Timestamp debut = rs.getTimestamp("debut");
         if (debut != null) {
@@ -229,6 +264,41 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
         projetClient.setClient(client);
 
         return projetClient;
+    }
+
+    @Override
+    public Optional<ProjetClient> getProjetEnCours(int idClient) {
+        String sql = """
+                SELECT u.id AS idUser, u.nom AS nom, u.prenom AS prenom, u.email AS email, c.budgetApporte AS budget, c.niveau AS niveau, p.id AS idProjet, p.titre AS titre, p.budgetMax AS budgetPrevu, p.description AS description,  p.duree AS duree, pc.id AS idProjetClient, pc.debut AS debut, pc.statut AS statut, pc.satisfaction AS satisfaction, l.id AS idLocalite, l.regionClient AS region, d.domaine AS domaine, d.id AS domaineId
+                FROM ProjetClient pc 
+                JOIN client c ON c.id= pc.idClient
+                JOIN projet p ON p.id=pc.idProjet
+                JOIN utilisateur u ON u.id=c.id
+                JOIN localite l ON c.idLocalite=l.id
+                JOIN domaine d ON d.id=p.idDomaine
+                WHERE pc.idClient=? AND pc.statut="ENCOURS"
+                """;
+
+
+
+        try (
+                Connection conn = ConnectBD.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+        ) {
+
+            stmt.setInt(1, idClient);
+            try (ResultSet rs = stmt.executeQuery();){
+                if (rs.next()) {
+                    return Optional.of(mapProjetClient(rs));
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(
+                    "Erreur récupération projets", e);
+        }
+
+        return Optional.empty();
     }
 
 

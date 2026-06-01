@@ -22,7 +22,7 @@
 
             <h1>Creer un compte</h1>
 
-            <form action="inscription" method="post">
+            <form action="client" method="post">
 
                 <div class="input-group">
                     <input type="text" placeholder="Prenom" name="prenom">
@@ -47,11 +47,17 @@
                     <span class="eye-icon">👁</span>
 
                 </div>
-                <a href="">
+                <a href="${pageContext.request.contextPath}/client">
                     <button type="submit" class="btn-inscription" >
                         Inscription
                     </button>
                 </a>
+
+                <% if (request.getAttribute("erreur")!= null) {%>
+                <h3 style="color: red; font-weight: bold">${erreur}</h3>
+                <%
+                    }
+                %>
 
 
             </form>
@@ -74,6 +80,8 @@
                         Connection
                     </button>
                 </a>
+
+
 
 
             </div>

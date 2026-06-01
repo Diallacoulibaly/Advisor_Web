@@ -255,33 +255,33 @@ public class UtilisateurServiceImplement implements UtilisateurService {
     }
 
     @Override
-    public Object authentifierUtilisateur(String email, String motDePasse) {
+    public int authentifierUtilisateur(String email, String motDePasse) {
         try {
             // VALIDATION : Vérifier qu'email et mot de passe sont fournis.
             if(email == null || email.trim().isEmpty() || motDePasse == null || motDePasse.trim().isEmpty()) {
                 System.out.println("Email et mot de passe sont obligatoires.");
-                return false;
+                return 0;
             }
 
             // RÉCUPÉRATION : Chercher l'utilisateur par email.
             Optional<Utilisateur> utilisateurOpt = utilisateurRepository.getByEmail(email);
             if(utilisateurOpt.isEmpty()) {
                 System.out.println("Utilisateur non trouvé.");
-                return false;
+                return 0;
             }
 
             // AUTHENTIFICATION : Utiliser la méthode seConnecter() du modèle.
             Utilisateur utilisateur = utilisateurOpt.get();
             if(utilisateur.seConnecter(email, motDePasse)) {
                 System.out.println("Authentification réussie pour : " + utilisateur.getNom() + " " + utilisateur.getPrenom());
-                return utilisateur;
+                return utilisateur.getIdUtilisateur();
             } else {
                 System.out.println("Email ou mot de passe incorrect.");
-                return false;
+                return 0;
             }
         } catch (Exception e) {
             System.out.println("Erreur lors de l'authentification : " + e.getMessage());
-            return false;
+            return 0;
         }
     }
 }

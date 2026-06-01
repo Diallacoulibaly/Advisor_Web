@@ -15,5 +15,7 @@ public interface EtapeService {
     boolean miseAjour(Etape etape);
     boolean suppression(int idEtape);
     boolean verification(int idEtape);
+    List<Etape> ListeEtapesByProjet(int idProjet);
+    int countEtapes(int idProjet);
 
 }

@@ -8,10 +8,12 @@ import main.java.model.classes.Etape;
 public interface EtapeDao {
 
 
-    void ajout_etape(Etape etape);
+    boolean ajout_etape(Etape etape);
     Optional<Etape> rech_etape(int idEtape);
     List<Etape> Liste_etape();
     boolean mise_a_jour_etape(Etape etape);
     boolean suppr_etape(int idEtape);
     boolean verif_etape(int idEtape);
+    List<Etape> getByProjetId(int idProjet);
+    int count_etape(int idProjet);
 }

@@ -3,6 +3,7 @@ package main.java.model.ServiceImplemente;
 import java.util.List;
 import java.util.Optional;
 
+import main.java.model.dao.EtapeDao;
 import main.java.model.service.EtapeService;
 import main.java.model.classes.Etape;
 
@@ -101,5 +102,15 @@ public class EtapeServiceImplement implements EtapeService {
     @Override
     public boolean verification(int idEtape) {
         return etapeDao.verif_etape(idEtape);
+    }
+
+    @Override
+    public List<Etape> ListeEtapesByProjet(int idProjet) {
+        return etapeDao.getByProjetId(idProjet);
+    }
+
+    @Override
+    public int countEtapes(int idProjet) {
+        return etapeDao.count_etape(idProjet);
     }
 }
