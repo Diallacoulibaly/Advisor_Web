@@ -10,12 +10,13 @@ To change this template use File | Settings | File Templates.
 <head>
     <title>Pré Accueil</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/pre_accueil.css">
 </head>
 
 
 <body>
-<header>Les icones d'entête
-    <img src="" alt="image du logo"/>
+<header>
+    <img src="${pageContext.request.contextPath}/assets/img/logo_preaccueil.png" alt="image du logo"/>
     <section>
         <i class="fa-regular fa-lightbulb"></i>
         <i class="fa-regular fa-calendar"></i>
@@ -32,12 +33,12 @@ To change this template use File | Settings | File Templates.
         </p>
 
         <div class="btn-container">
-            <a href="#" class="btn btn-primary">Se connecter</a>
-            <a href="#" class="btn btn-secondary">S'inscrire</a>
+            <a href="#" class="btn btn-connecter">Se connecter</a>
+            <a href="#" class="btn btn-inscrire">S'inscrire</a>
         </div>
     </section>
     <section class="right">
-        <img src="" alt="image du pre_accueil"/>
+        <img src="${pageContext.request.contextPath}/assets/img/pre_accueil.png" alt="image du pre_accueil"/>
     </section>
 </main>
 <footer>
