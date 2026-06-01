@@ -7,8 +7,9 @@
 
 body{
     font-family: Arial, sans-serif;
-    background: #f5f7fb;
+    background: white;
     color:#1d2b4f;
+
 }
 
 
@@ -22,8 +23,32 @@ header{
 header section{
     display:flex;
     gap:20px;
+
+
+}
+section .icone_fa{
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    align-items: flex-start;
 }
 
+.icone_fa i{
+    color:#2563eb;
+    width: 100px;
+
+
+
+}
+.icone_fa p{
+    margin-top: 15px;
+   margin-left: -10px;
+
+    font-size:15px;
+    line-height:1.5;
+
+
+}
 
 main{
     display:flex;
@@ -34,7 +59,8 @@ main{
 }
 
 .left{
-    width:50%;
+    width:40%;
+    margin-top: -150px;
 }
 
 .left h1{
@@ -72,19 +98,19 @@ main{
     font-weight:bold;
 }
 
-.btn-primary{
+.btn-connecter{
     background:#2563eb;
     color:white;
 }
 
-.btn-secondary{
+.btn-inscrire{
     border:2px solid #2563eb;
     color:#2563eb;
 }
 
 
 footer{
-    background:#0f2d66;
+    background:#1C3579;
     color:white;
     display:flex;
     justify-content:space-around;
@@ -104,4 +130,26 @@ footer h1{
 
 footer p{
     line-height:1.5;
+}
+.icone_fas {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.texte {
+    display: flex;
+    flex-direction: column;
+}
+
+.texte h1,
+.texte p {
+    margin: 0;
+}
+
+.icone_fas i {
+    font-size: 3rem;
+    color: white;
+    width: 60px;
+    text-align: center;
 }

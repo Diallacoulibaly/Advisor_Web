@@ -18,7 +18,6 @@ import java.util.Optional;
 @WebServlet("/etape")
 public class ServeletEtape extends HttpServlet {
 
-
     private EtapeDaoImplement etapeDao;
     private EtapeServiceImplement service;
 
@@ -34,12 +33,16 @@ public class ServeletEtape extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        if ("modifier".equals(action)) {
-            // Afficher le formulaire de modification
+        //Redirection vers le formulaire d'ajout
+        if ("ajouter".equals(action)) {
+            request.getRequestDispatcher("/WEB-INF/view/ajout_etape.jsp").forward(request, response);
+        }
+        //Redirection vers le formulaire de modification
+        else if ("modifier".equals(action)) {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Optional<Etape> etapeOpt = service.etape(id);
-                if (etapeOpt.isPresent()) { // Vérifie si l'étape existe dans l'Optional
+                if (etapeOpt.isPresent()) {
                     request.setAttribute("etape", etapeOpt.get());
                     request.getRequestDispatcher("/WEB-INF/view/modif_etape.jsp").forward(request, response);
                 } else {
@@ -49,8 +52,8 @@ public class ServeletEtape extends HttpServlet {
                 response.sendRedirect("etape");
             }
         }
+        //Supprimer directement
         else if ("supprimer".equals(action)) {
-            // Suppression directe
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
                 service.suppression(id);
@@ -59,8 +62,8 @@ public class ServeletEtape extends HttpServlet {
                 response.sendRedirect("etape");
             }
         }
+        //Affichage de la liste par defaut
         else {
-            // Affichage par défaut : liste des étapes
             List<Etape> etapes = service.Les_etapes();
             request.setAttribute("etapes", etapes);
             request.getRequestDispatcher("/WEB-INF/view/liste_etapes.jsp").forward(request, response);
@@ -74,7 +77,35 @@ public class ServeletEtape extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
-        if ("enregistrerModif".equals(action)) {
+        if ("Ajout".equals(action)) {
+            try {
+                String titre = request.getParameter("titre");
+                String description = request.getParameter("description");
+                int ordre = Integer.parseInt(request.getParameter("ordre"));
+                StatutEtape statut = StatutEtape.valueOf(request.getParameter("statut"));
+                int projetId = Integer.parseInt(request.getParameter("projetId"));
+
+                Projet projet = new Projet();
+                projet.setId(projetId);
+
+                //Instanciation sans ID (géré par auto-incrément de la BDD)
+                Etape nouvelleEtape = new Etape(0, titre, description, ordre, statut, projet);
+
+                boolean success = service.ajoutt(nouvelleEtape);
+
+                if (success) {
+                    response.sendRedirect("etape");
+                } else {
+                    request.setAttribute("error", "Erreur lors de la création de l'étape");
+                    request.getRequestDispatcher("/WEB-INF/view/ajout_etape.jsp").forward(request, response);
+                }
+            } catch (Exception e) {
+                request.setAttribute("error", "Données invalides : " + e.getMessage());
+                request.getRequestDispatcher("/WEB-INF/view/ajout_etape.jsp").forward(request, response);
+            }
+        }
+        //Traitement de la modification
+        else if ("Modif".equals(action)) {
             try {
                 int id = Integer.parseInt(request.getParameter("idEtape"));
                 String titre = request.getParameter("titre");
