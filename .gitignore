@@ -5,6 +5,8 @@ out/
 .kotlin
 .idea/libraries/*
 
+.smarttomcat/
+
 ### Eclipse ###
 .apt_generated
 .classpath
