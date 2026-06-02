@@ -14,9 +14,8 @@ import main.java.model.dao.ActiviteDao;
 import java.io.IOException;
 import java.util.List;
 
+@WebServlet("/etape_activite")
 public class ActiviteEtapeController extends HttpServlet {
-    @WebServlet("/etape_activite")
-    public class ActiviteController extends HttpServlet {
         private ActiviteServiceImplement activiteServiceImplement;
 
         @Override
@@ -30,6 +29,7 @@ public class ActiviteEtapeController extends HttpServlet {
             int idEtape = Integer.parseInt(req.getParameter("idEtape"));
             List<Activite> activiteList = activiteServiceImplement.getActiviteByEtape(idEtape);
             req.setAttribute("activiteList", activiteList);
+            req.setAttribute("idEtape",idEtape);
             req.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(req, resp);
 
         }
@@ -51,4 +51,4 @@ public class ActiviteEtapeController extends HttpServlet {
 //            }
 //        }
     }
-}
+

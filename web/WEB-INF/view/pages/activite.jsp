@@ -12,7 +12,9 @@
     <title>Activite</title>
 </head>
 <body>
-    <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList"); %>
+    <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList");
+    Integer idEtape=(Integer) request.getAttribute("idEtape");
+    %>
 
     <h1> Liste des activités </h1>
     <ol>
@@ -31,8 +33,10 @@
                 <button type="submit"> Supprimer </button>
             </form>
         </>
+
         <% } %>
     </ol>
 
+    <button><a href="commentaires?actions=addCmt&idEtape=<%=idEtape%>">Ajouter un commentaire</a></button>
 </body>
 </html>
