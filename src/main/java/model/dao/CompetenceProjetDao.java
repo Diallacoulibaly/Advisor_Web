@@ -10,4 +10,5 @@ public interface CompetenceProjetDao {
     boolean mise_a_jour_CP(CompetenceProjet cp);
     boolean suppr_CP(int id);
     boolean verif_CP(int id);
+    boolean suppr_CP(int idCompetence, int idProjet);
 }

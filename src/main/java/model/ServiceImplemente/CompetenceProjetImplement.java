@@ -1,93 +1,70 @@
 package main.java.model.ServiceImplemente;
 
-import main.java.model.service.CompetenceProjetService;
 import main.java.model.dao.CompetenceProjetDao;
+import main.java.model.service.CompetenceProjetService;
+import main.java.model.service.CompetenceService; // 1. Correction : Ajout du point-virgule
 import main.java.model.classes.CompetenceProjet;
-import java.util.List;
-import java.util.Optional;
 
+import java.util.List;
+
+// 2. Correction : Implémente l'interface de Service et non du DAO
 public class CompetenceProjetImplement implements CompetenceProjetService {
 
     private final CompetenceProjetDao competenceProjetDao;
 
+    // 3. Correction : Le nom du constructeur correspond au nom de la classe
     public CompetenceProjetImplement(CompetenceProjetDao competenceProjetDao) {
         this.competenceProjetDao = competenceProjetDao;
     }
 
     // Ajouter
-    @Override
-    public boolean ajouter(CompetenceProjet cp) {
+    public boolean ajouter(CompetenceProjet cp) { // Correspond à votre interface Service
         if (cp == null) {
             System.out.println("L'association Competence-Projet ne peut pas être nulle.");
             return false;
         }
-        if (cp.getCompetenceId() <= 0) {
-            System.out.println("L'ID de la compétence est obligatoire et doit être positif.");
-            return false;
-        }
-        if (cp.getIdProjet() <= 0) {
-            System.out.println("L'ID du projet est obligatoire et doit être positif.");
+        if (cp.getCompetenceId() <= 0 || cp.getIdProjet() <= 0) {
+            System.out.println("Les IDs de compétence et de projet doivent être positifs.");
             return false;
         }
 
-        try {
-            // Correction : add_CP retourne void. On l'appelle directement.
-            competenceProjetDao.add_CP(cp);
-            System.out.println("Compétence associée au projet avec succès.");
-            return true;
-        } catch (Exception e) {
-            System.out.println("Échec de l'association de la compétence : " + e.getMessage());
-            return false;
-        }
+        boolean result = competenceProjetDao.add_CP(cp);
+        System.out.println(result ? "Compétence associée avec succès." : "Échec de l'association.");
+        return result;
     }
 
-    // Rechercher
-    @Override
     public List<Integer> rechercher(int idProjet) {
         if (idProjet <= 0) {
             System.out.println("L'ID du projet doit être un entier positif.");
-            return List.of(); // Retourne une liste vide
+            return List.of();
         }
         return competenceProjetDao.rech_CP(idProjet);
     }
 
     // Liste
-    @Override
     public List<CompetenceProjet> lister() {
         return competenceProjetDao.ListeCP();
     }
 
     // Mise à jour
-    @Override
     public boolean mettre_a_jour(CompetenceProjet cp) {
         if (cp == null || cp.getCompetenceId() <= 0 || cp.getIdProjet() <= 0) {
-            System.out.println("Les IDs de compétence et de projet sont obligatoires pour la mise à jour.");
+            System.out.println("Les IDs de compétence et de projet sont obligatoires.");
             return false;
         }
-
-        boolean updated = competenceProjetDao.mise_a_jour_CP(cp);
-        System.out.println(updated ? "Association mise à jour avec succès."
-                : "Échec de la mise à jour.");
-        return updated;
+        return competenceProjetDao.mise_a_jour_CP(cp);
     }
 
-    // Suppression
-    @Override
-    public boolean supprimer(int id) {
-        if (id <= 0) {
-            System.out.println("L'ID doit être un entier positif.");
+    public boolean supprimer(int idCompetence, int idProjet) {
+        if (idCompetence <= 0 || idProjet <= 0) {
+            System.out.println("Les identifiants doivent être positifs.");
             return false;
         }
-
-        boolean deleted = competenceProjetDao.suppr_CP(id);
-        System.out.println(deleted ? "Association supprimée avec succès."
-                : "Échec de la suppression.");
-        return deleted;
+        return competenceProjetDao.suppr_CP(idCompetence, idProjet);
     }
 
     // Verification
-    @Override
-    public boolean verifier(int id) {
-        return competenceProjetDao.verif_CP(id);
+    public boolean verifier(int idCompetence) {
+        return competenceProjetDao.verif_CP(idCompetence);
     }
 }

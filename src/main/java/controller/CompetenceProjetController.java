@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/competenceProjet")
-public class ServeletCompetenceProjet extends HttpServlet {
+public class CompetenceProjetController extends HttpServlet {
 
     private CompetenceProjetDao competenceProjetDao;
     private CompetenceProjetService service;
@@ -23,7 +23,7 @@ public class ServeletCompetenceProjet extends HttpServlet {
     @Override
     public void init() {
         competenceProjetDao = new CompetenceProjetDaoImplement();
-        service = new CompetenceProjetImplement(competenceProjetDao);
+        service = new CompetenceProjetService(competenceProjetDao);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ServeletCompetenceProjet extends HttpServlet {
 
         //Redirection vers le formulaire d'ajout
         if ("ajouter".equals(action)) {
-            request.getRequestDispatcher("/WEB-INF/view/add_competence_projet.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/ajout_competence_projet.jsp").forward(request, response);
         }
         //Redirction vers le formulaire de modification
         else if ("modifier".equals(action)) {
@@ -60,7 +60,7 @@ public class ServeletCompetenceProjet extends HttpServlet {
                 response.sendRedirect("competenceProjet");
             }
         }
-        // 3. SUPPRESSION DIRECTE (GET)
+        //Suppression direct
         else if ("supprimer".equals(action)) {
             try {
                 int id = Integer.parseInt(request.getParameter("id"));
@@ -109,7 +109,7 @@ public class ServeletCompetenceProjet extends HttpServlet {
         }
 
         //Traitement de la modification
-        else if ("enregistrerModif".equals(action)) {
+        else if ("ModifCP".equals(action)) {
             try {
                 //Nouvelles valeurs saisies dans le formulaire
                 int nouvelleCompetenceId = Integer.parseInt(request.getParameter("competenceId"));
