@@ -1,20 +1,18 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kalandew20
-  Date: 26/05/2026
-  Time: 10:37
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Ajouter une localité</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/localite.css">
 </head>
 <body>
-<h1>Formulaire d'ajout de localité</h1>
-<form action="localites?action=add" method="post">
-    <input type="text" name="regionClient" id="">
-    <input type="submit" value="Ajouter">
-</form>
+<div class="container">
+    <a href="localites" class="btn-retour">← Retour à la liste</a>
+    <h1>Ajout de localité</h1>
+    <form action="localites" method="post">
+        <input type="hidden" name="action" value="add">
+        <input type="text" name="regionClient" placeholder="Nom de la région/localité" required>
+        <button type="submit">Ajouter</button>
+    </form>
+</div>
 </body>
 </html>
