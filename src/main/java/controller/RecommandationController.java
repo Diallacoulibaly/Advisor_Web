@@ -14,6 +14,7 @@ import main.java.model.enums.Niveau;
 import main.java.utils.VerifySession;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/addRecommandation")
@@ -23,6 +24,7 @@ public class RecommandationController extends HttpServlet{
     private DomaineImplement domaineImplement;
     private CompetenceServiceImplement competenceServiceImplement;
     private ClientServiceImplement clientServiceImplement;
+    private ClientCompetenceServiceImplement clientCompetenceServiceImplement;
     
 
     public void init(){
@@ -30,7 +32,7 @@ public class RecommandationController extends HttpServlet{
         CompetenceProjetDao cpd = new CompetenceProjetDaoImplement();
         ClientCompetenceDao ccd = new ClientCompetenceDaoImplement();
         reco = new RecommandationImpl(projetDao, cpd, ccd);
-
+        ClientCompetenceDao clientCompetenceDao= new ClientCompetenceDaoImplement();
         ClientDAO clientDAO = new ClientDAOImplement();
         clientServiceImplement = new ClientServiceImplement(clientDAO);
 
@@ -41,6 +43,7 @@ public class RecommandationController extends HttpServlet{
         localiteServiceImplemente= new LocaliteServiceImplemente(localiteDao);
         domaineImplement= new DomaineImplement(domaineDao);
         competenceServiceImplement= new CompetenceServiceImplement(competenceDao);
+        clientCompetenceServiceImplement= new ClientCompetenceServiceImplement(clientCompetenceDao);
 
     }
 
@@ -53,6 +56,7 @@ public class RecommandationController extends HttpServlet{
         req.setAttribute("domaines", domaines);
         req.setAttribute("competences", competences);
         req.setAttribute("pageContent", "formRecomm.jsp");
+        req.setAttribute("menuActif", "recommandation");
         req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
     }
 
@@ -62,32 +66,53 @@ public class RecommandationController extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
         try {
-            String competence = request.getParameter("competence");
+
+            Utilisateur user = VerifySession.verifyUser(request, response);
             Niveau niveau = Niveau.valueOf(request.getParameter("niveau"));
             int budget = Integer.parseInt(request.getParameter("budget"));
             int idLocalite = Integer.parseInt(request.getParameter("idLocalite"));
             int idDomaine = Integer.parseInt(request.getParameter("idDomaine"));
+            String [] competences= request.getParameterValues("competences");
+            List<Integer> competencesId= new ArrayList<>();
 
-            Localite localite = new Localite(); localite.setId(idLocalite);
-            Domaine domaine = new Domaine(); domaine.setId(idDomaine);
+            for(String id : competences){
+                competencesId.add((Integer.parseInt(id)));
+            }
 
-            Utilisateur client = VerifySession.verifyUser(request, response);
-            boolean updateSuccess = clientServiceImplement.addInfoClient(client.getIdUtilisateur(), niveau, localite, domaine, budget);
+            clientCompetenceServiceImplement.addListClientCompetence(clientCompetenceServiceImplement.filterSkills(competencesId, user.getIdUtilisateur()), user.getIdUtilisateur());
+
+
+
+            Localite localite = new Localite();
+            localite = localiteServiceImplemente.getById(idLocalite);
+            Domaine domaine = new Domaine();
+            domaine = domaineImplement.getById(idDomaine);
+
+
+            boolean updateSuccess = clientServiceImplement.addInfoClient(user.getIdUtilisateur(), niveau, localite, domaine, budget);
 
             if (updateSuccess) {
-                List<Projet> recommandations = reco.suggererProjets((Client) client);
+                Client client = new Client();
+                client.setBudgetApporte(budget);
+                client.setIdUtilisateur(user.getIdUtilisateur());
+                client.setLocalite(localite);
+                client.setDomaine(domaine);
+
+
+                List<Projet> recommandations = reco.suggererProjets(client);
                 request.setAttribute("recommandations", recommandations);
-                request.getRequestDispatcher("/WEB-INF/view/pages/recommandations.jsp").forward(request, response);
+                request.setAttribute("pageContent", "recommandations.jsp");
+                request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
             } else {
                 request.setAttribute("error", "Données incorrectes - Client non mis à jour");
                 request.setAttribute("pageContent", "formRecomm.jsp");
-                request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").include(request, response);
+                request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
             }
 
         } catch (Exception e) {
             request.setAttribute("error", "Un problème est survenu : " + e.getMessage());
             request.setAttribute("pageContent", "formRecomm.jsp");
-            request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").include(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
         }
     }
 

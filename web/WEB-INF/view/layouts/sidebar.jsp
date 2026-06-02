@@ -48,8 +48,10 @@
                     <img src="${pageContext.request.contextPath}/assets/img/recom.png" alt="Recommandations" class="icon">
                 </div>
 
-                <div class="onglet-titre">
-                    <a href="#" class="a">Recommandations</a>
+                <div class="onglet-titre <%= "recommandation".equals(request.getAttribute("menuActif"))
+        ? "active"
+        : "" %>" >
+                    <a href="${pageContext.request.contextPath}/addRecommandation" class="a">Recommandations</a>
                 </div>
 
             </div>

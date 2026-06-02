@@ -14,4 +14,9 @@ public interface ClientCompetenceService {
 
     void delete(int idClient, int idCompetence);
 
+    List<Integer> filterSkills(List<Integer> competences, int id);
+
+    void addListClientCompetence(List<Integer> competencesId, int id);
+
+
 }
