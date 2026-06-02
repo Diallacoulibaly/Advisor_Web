@@ -3,7 +3,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .kotlin
-.idea/libraries/*
+
+.smarttomcat/*
+
+.smarttomcat/
 
 ### Eclipse ###
 .apt_generated
