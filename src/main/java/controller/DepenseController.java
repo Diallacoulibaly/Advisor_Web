@@ -90,12 +90,10 @@ public class DepenseController extends HttpServlet {
                         depense = new Depense(null, montant, description, date);
                     }
 
-
-
                     depenseService.add(depense);
                 } catch (Exception e) {
                     request.setAttribute("erreur", "Données invalides : " + e.getMessage());
-                    request.getRequestDispatcher("/WEB-INF/views/depenses/form.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(request, response);
                     return;
                 }
             }
@@ -111,7 +109,7 @@ public class DepenseController extends HttpServlet {
                     depenseService.update(depense);
                 } catch (Exception e) {
                     request.setAttribute("erreur", "Données invalides : " + e.getMessage());
-                    request.getRequestDispatcher("/WEB-INF/views/depenses/form.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(request, response);
                     return;
                 }
             }
