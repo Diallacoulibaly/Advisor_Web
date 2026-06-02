@@ -65,6 +65,7 @@ public class CommentaireController extends HttpServlet {
             if (actions.equalsIgnoreCase("addCmt")){
                 String cmt=req.getParameter("cmt");
                 int idEtape=Integer.parseInt(req.getParameter("idEtape")) ;
+                System.out.println("ggggg:"+idEtape);
                 Etape etape=new Etape();
                 etape.setIdEtape(idEtape);
                 commentaireService.ajouter(cmt,etape);
