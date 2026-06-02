@@ -97,6 +97,9 @@ main{
     text-decoration:none;
     font-weight:bold;
 }
+.btn:hover{
+    transform: translateY(-5px);
+}
 
 .btn-connecter{
     background:#2563eb;
@@ -154,4 +157,19 @@ footer p{
 
 
     text-align: center;
+}
+
+.icone_fas:hover{
+    transform: translateY(-5px);
+}
+.icone_fa{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.icone_fa:last-child{
+    border-bottom: none;
 }
