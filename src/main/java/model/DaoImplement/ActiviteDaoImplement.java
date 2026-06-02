@@ -69,13 +69,13 @@ public class ActiviteDaoImplement implements ActiviteDao {
     }
 
     @Override
-    public List<Activite> getActiviteByEtape(Etape etape) {
+    public List<Activite> getActiviteByEtape(int idEtape) {
         List<Activite> activites = new ArrayList<>();
 
         String sql = "SELECT * FROM Activite WHERE idEtape=?";
         try(Connection connection = ConnectBD.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, etape.getIdEtape());
+            ps.setInt(1, idEtape);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()){
@@ -86,7 +86,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
                         Statut.valueOf(rs.getString("statut")),
-                        etape
+                        null
                 );
                 activites.add(activite);
             }

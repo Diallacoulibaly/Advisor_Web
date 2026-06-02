@@ -27,27 +27,27 @@ public class ActiviteEtapeController extends HttpServlet {
 
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            List<Activite> activiteList = activiteServiceImplement.getActiviteByEtape();
+            List<Activite> activiteList = activiteServiceImplement.getActiviteByEtape(1);
             req.setAttribute("activiteList", activiteList);
-            req.getRequestDispatcher("/WEB-INF/view/pages/etape_activite.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(req, resp);
 
         }
 
-        @Override
-        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            String action = req.getParameter("action");
-
-            if (action.equals("terminer")){
-                int id = Integer.parseInt(req.getParameter("id"));
-                activiteServiceImplement.marquerTerminer(id);
-                resp.sendRedirect("activite");
-
-            } else if (action.equals("supprimer")) {
-                int id = Integer.parseInt(req.getParameter("id"));
-                activiteServiceImplement.supprimerActivite(id);
-                resp.sendRedirect("activite");
-
-            }
-        }
+//        @Override
+//        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//            String action = req.getParameter("action");
+//
+//            if (action.equals("terminer")){
+//                int id = Integer.parseInt(req.getParameter("id"));
+//                activiteServiceImplement.marquerTerminer(id);
+//                resp.sendRedirect("activite");
+//
+//            } else if (action.equals("supprimer")) {
+//                int id = Integer.parseInt(req.getParameter("id"));
+//                activiteServiceImplement.supprimerActivite(id);
+//                resp.sendRedirect("activite");
+//
+//            }
+//        }
     }
 }
