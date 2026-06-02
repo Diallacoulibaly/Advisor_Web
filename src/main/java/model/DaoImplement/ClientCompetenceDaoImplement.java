@@ -1,8 +1,8 @@
-package main.java.model.dao.daoimplementation;
+package main.java.model.DaoImplement;
 
 import main.java.model.classes.ClientCompetence;
 import main.java.model.dao.ClientCompetenceDao;
-import main.java.util.ConnectBD;
+import main.java.Database.ConnectBD;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -98,5 +98,26 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Integer> getSkillsByClient(int idClient) throws SQLException {
+        List<Integer> skillIds = new ArrayList<>();
+        String sql = "SELECT idCompetence FROM ClientCompetence WHERE idClient = ?";
+
+        try (Connection conn = ConnectBD.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idClient);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    skillIds.add(rs.getInt("idCompetence"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur : " + e.getMessage());
+            throw e;
+        }
+        return skillIds;
     }
 }

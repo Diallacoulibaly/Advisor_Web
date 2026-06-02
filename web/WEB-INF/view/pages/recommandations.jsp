@@ -18,59 +18,10 @@
 
 
 <%
-    List<Projet> recos = (List<Projet>) request.getAttribute("recommandations);
+    List<Projet> recos = (List<Projet>) request.getAttribute("recommandations");
 %>
 
 <div class="detail-projet-container">
-
-    <div class="project-header">
-
-        <h1>
-            <%= projet.getTitre() %>
-        </h1>
-
-        <p class="description">
-            <%= projet.getDescription() %>
-        </p>
-
-    </div>
-
-    <div class="project-infos">
-
-        <div class="info-card">
-
-            <span>Domaine</span>
-
-            <strong>
-                <%= projet.getDomaine()
-                        .getDomaine() %>
-            </strong>
-
-        </div>
-
-        <div class="info-card">
-
-            <span>Durée</span>
-
-            <strong>
-                <%= projet.getDuree() %>
-                mois
-            </strong>
-
-        </div>
-
-        <div class="info-card">
-
-            <span>Budget estimé</span>
-
-            <strong>
-                <%= projet.getBudgetMax() %>
-                FCFA
-            </strong>
-
-        </div>
-
-    </div>
 
     <div class="section-title">
 
@@ -86,23 +37,23 @@
 
         <a class="etape-card"
 
-           href="activitesEtape?idEtape=<%= projet.getIdEtap() %>">
+           href="#">
 
             <div class="numero">
 
-                Étape <%= etape.getOrdre() %>
+                x
 
             </div>
 
             <h3>
 
-                <%= etape.getTitre() %>
+                <%= projet.getTitre() %>
 
             </h3>
 
             <p>
 
-                <%= etape.getDescription() %>
+                <%= projet.getDescription() %>
 
             </p>
 
