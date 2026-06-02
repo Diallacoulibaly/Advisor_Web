@@ -32,8 +32,8 @@ public class ActiviteServiceImplement implements ActiviteService {
     }
 
     @Override
-    public List<Activite> getActiviteByEtape(Etape etape) {
-        return activiteDao.getActiviteByEtape(etape);
+    public List<Activite> getActiviteByEtape(int idEtape) {
+        return activiteDao.getActiviteByEtape(idEtape);
     }
 
     @Override

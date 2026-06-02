@@ -36,7 +36,7 @@
             for (Etape item : etapes) {
     %>
     <tr>
-        <a href="activite?idEtape=<%=item.getIdEtape()%>">
+        <a href="activite?idEtape=<%=item.getIdEtape() & titre%>">
         <td><%= item.getOrdre() %></td>
         <td><%= item.getTitre() %></td>
         <td><%= item.getDescription() %></td>
