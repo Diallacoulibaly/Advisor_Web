@@ -69,6 +69,35 @@ public class ActiviteDaoImplement implements ActiviteDao {
     }
 
     @Override
+    public List<Activite> getActiviteByEtape(int idEtape) {
+        List<Activite> activites = new ArrayList<>();
+
+        String sql = "SELECT * FROM Activite WHERE idEtape=?";
+        try(Connection connection = ConnectBD.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, idEtape);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                Activite activite = new Activite(
+                        rs.getInt("id"),
+                        rs.getString("titre"),
+                        rs.getString("description"),
+                        rs.getInt("duree"),
+                        rs.getInt("ordre"),
+                        Statut.valueOf(rs.getString("statut")),
+                        null
+                );
+                activites.add(activite);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return activites;
+    }
+
+    @Override
     public void modifierActivite(Activite activite) {
         String sql = "UPDATE activite SET titre=?, description=?, ordre=?, duree=?, montant_activite=?, statut=? WHERE id=?";
         try(Connection connection = ConnectBD.getConnection();

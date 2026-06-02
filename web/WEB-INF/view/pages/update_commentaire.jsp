@@ -15,7 +15,7 @@
 <h1>Formulaire de Modification</h1>
 <form action="commentaires?actions=updateCmt" method="post">
     <input type="hidden" name="id" id="" value="<%=c.getId()%>" >
-    <input type="text" name="domaine" id="" value="<%=c.getMessage()%>" >
+    <input type="text" name="cmt" id="" value="<%=c.getMessage()%>" >
     <input type="submit" value="Modifier">
 
 </form>
