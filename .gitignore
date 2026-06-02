@@ -36,7 +36,6 @@ web/WEB-INF/classes/
 
 
 ### Database ###
-#src/main/java/Database/*
 
 web/WEB-INF/view/Projets.jsp
 web/WEB-INF/view/projets.jsp
