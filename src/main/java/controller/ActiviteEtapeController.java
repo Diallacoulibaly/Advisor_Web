@@ -29,11 +29,10 @@ public class ActiviteEtapeController extends HttpServlet {
             int idEtape = Integer.parseInt(req.getParameter("idEtape"));
             String titreEtape = req.getParameter("titreEtape");
 
-            req.setAttribute("titreEtape", titreEtape);
-
             List<Activite> activiteList = activiteServiceImplement.getActiviteByEtape(idEtape);
             req.setAttribute("activiteList", activiteList);
             req.setAttribute("idEtape",idEtape);
+            req.setAttribute("titreEtape", titreEtape);
             req.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(req, resp);
 
         }
