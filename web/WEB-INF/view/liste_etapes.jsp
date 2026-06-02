@@ -3,29 +3,20 @@
 <%@ page import="main.java.model.classes.Etape" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    // Récupération de la liste (gérée au pluriel par la première servlet)
     List<Etape> etapes = (List<Etape>) request.getAttribute("etapes");
 %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Liste des Étapes</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 30px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
-        th { background-color: #f4f4f4; }
-        .btn { padding: 8px 12px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; }
-        .btn-edit { color: #007bff; text-decoration: none; font-weight: bold; }
-        .btn-delete { color: #dc3545; text-decoration: none; font-weight: bold; margin-left: 10px; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/stylee.css">
 </head>
 <body>
 
 <h1>La liste des Étapes</h1>
 
 <div style="margin-bottom: 20px;">
-    <a href="ajout_etape" class="btn">Ajout d'une étape</a>
+    <a href="etape?action=ajouter" class="btn">Ajouter une nouvelle etape</a>
 </div>
 
 <table>
@@ -51,9 +42,8 @@
         <td><%= item.getStatutEtape() != null ? item.getStatutEtape().name() : "NON SPÉCIFIÉ" %></td>
         <td><%= item.getProjet() != null ? item.getProjet().getId() : "Aucun" %></td>
         <td>
-            <!-- Paramètres d'action attendus par la première servlet -->
             <a class="btn-edit" href="etape?action=modifier&id=<%= item.getIdEtape() %>">Modifier</a>
-            <a class="btn-delete" href="etape?action=supprimer&id=<%= item.getIdEtape() %>" onclick="return confirm('Supprimer cette étape ?');">Supprimer</a>
+            <a class="btn-delete" href="etape?action=supprimer&id=<%= item.getIdEtape() %>" onclick="confirmerSuppression(event)">Supprimer</a>
         </td>
     </tr>
     <%
@@ -69,5 +59,7 @@
     </tbody>
 </table>
 
+
+<script src="${pageContext.request.contextPath}/assets/js/script.js"></script>
 </body>
 </html>

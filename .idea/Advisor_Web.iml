@@ -19,8 +19,16 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="mysql-connector-j-9.7.01" level="project" />
-    <orderEntry type="library" name="mysql-connector-j-9.7.0" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/web/WEB-INF/lib/mysql-connector-j-9.7.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 10.1.16" level="application_server_libraries" />
     <orderEntry type="library" name="jakarta.servlet-api-6.0.0" level="project" />
   </component>
 </module>
