@@ -13,7 +13,7 @@
 
     <title>La liste des domaines</title>
 
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/domaine.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/domaine.css">
 </head>
 
 <body>
