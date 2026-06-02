@@ -1,3 +1,4 @@
+
 <%@ page import="java.util.List" %>
 <%@ page import="main.java.model.classes.Etape" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -35,11 +36,17 @@
             for (Etape item : etapes) {
     %>
     <tr>
+
         <td><%= item.getOrdre() %></td>
-        <td><%= item.getTitre() %></td>
-        <td><%= item.getDescription() %></td>
+            <td>
+                <a href="etape_activite?idEtape=<%= item.getIdEtape() %>">
+                    <%= item.getTitre() %>
+                </a>
+            </td>
+
+            <td><%= item.getDescription() %></td>
         <td><%= item.getStatutEtape() != null ? item.getStatutEtape().name() : "NON SPÉCIFIÉ" %></td>
-        <td><%= item.getProjet() != null ? item.getProjet().getId() : "Aucun" %></td>
+            <td><%= item.getProjet() != null ? item.getProjet().getId() : "Aucun" %></td></a>
         <td>
             <a class="btn-edit" href="etape?action=modifier&id=<%= item.getIdEtape() %>">Modifier</a>
             <a class="btn-delete" href="etape?action=supprimer&id=<%= item.getIdEtape() %>" onclick="confirmerSuppression(event)">Supprimer</a>
