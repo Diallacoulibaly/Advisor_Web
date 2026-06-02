@@ -14,7 +14,7 @@
 <body>
     <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList"); %>
 
-    <h1> Liste des activités </h1>
+    <h1> Liste des activités de l'étape : <% request.getAttribute("titreEtape");%></h1>
     <ol>
         <% for (Activite activite : activiteList){ %>
         <li>
