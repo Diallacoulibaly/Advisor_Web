@@ -3,7 +3,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .kotlin
-.idea/libraries/*
+
+.smarttomcat/*
+
+.smarttomcat/
 
 ### Eclipse ###
 .apt_generated
@@ -27,7 +30,6 @@ bin/
 ### VS Code ###
 .vscode/
 web/WEB-INF/classes/
-web/WEB-INF/lib/jakar*
 
 ### Mac OS ###
 .DS_Store

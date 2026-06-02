@@ -1,28 +1,22 @@
+<%@ page import="main.java.model.enums.StatutEtape" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Ajouter une Étape</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 30px; }
-        .form-group { margin-bottom: 15px; width: 300px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, textarea, select { width: 100%; padding: 8px; box-sizing: border-box; }
-        button { padding: 10px 15px; background-color: #28a745; color: white; border: none; cursor: pointer; }
-        .error { color: red; margin-bottom: 15px; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/stylee.css">
 </head>
 <body>
 
-<h2>Ajouter une nouvelle étape</h2>
+<h1>Ajouter une nouvelle Étape</h1>
 
-<!-- Affichage de l'erreur en cas d'échec de la servlet AjoutEtape -->
-<% String error = (String) request.getAttribute("error"); %>
-<% if (error != null) { %>
-<p class="error"><%= error %></p>
+<%-- Affichage des messages d'erreur --%>
+<% String error = (String) request.getAttribute("error");
+    if (error != null) { %>
+<div class="error-msg"><%= error %></div>
 <% } %>
 
-<form action="${pageContext.request.contextPath}/ajout_etape" method="post">
+<form action="etape?action=Ajout" method="post" style="max-width: 500px;">
     <div class="form-group">
         <label for="titre">Titre :</label>
         <input type="text" id="titre" name="titre" required>
@@ -30,29 +24,32 @@
 
     <div class="form-group">
         <label for="description">Description :</label>
-        <textarea id="description" name="description" rows="3" required></textarea>
+        <textarea id="description" name="description" rows="4" required></textarea>
     </div>
 
     <div class="form-group">
         <label for="ordre">Ordre :</label>
-        <input type="number" id="ordre" name="ordre" required>
+        <input type="number" id="ordre" name="ordre" min="1" required>
     </div>
 
     <div class="form-group">
         <label for="statut">Statut :</label>
-        <select id="statut" name="statut">
-            <option value="ENCOURS">En cours</option>
-            <option value="TERMINE">Terminé</option>
+        <select id="statut" name="statut" required>
+            <% for (StatutEtape statut : StatutEtape.values()) { %>
+            <option value="<%= statut.name() %>"><%= statut.name() %></option>
+            <% } %>
         </select>
     </div>
 
     <div class="form-group">
-        <label for="projetId">ID Projet :</label>
+        <label for="projetId">ID du Projet :</label>
         <input type="number" id="projetId" name="projetId" required>
     </div>
 
-    <button type="submit">Enregistrer l'étape</button>
-    <a href="${pageContext.request.contextPath}/etape" style="margin-left:10px;">Annuler</a>
+    <div style="margin-top: 20px;">
+        <button type="submit" class="btn">Enregistrer</button>
+        <a href="etape" class="btn" style="background-color: #6c757d;">Annuler</a>
+    </div>
 </form>
 
 </body>

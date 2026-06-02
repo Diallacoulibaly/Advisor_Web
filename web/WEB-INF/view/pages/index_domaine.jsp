@@ -12,14 +12,18 @@
 <head>
 
     <title>La liste des domaines</title>
+
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/domaine.css">
 </head>
+
 <body>
 
 
-<a href="domaines?actions=addDomaine">
+<a href="domaines?actions=addDomaine" class="btn-ajout">
     <button>Ajouter un Domaine</button>
 </a>
 <h1>La liste des domaines</h1>
+<h1 style="color:red">TEST CSS</h1>
 <table border="1">
     <tr>
 
@@ -41,14 +45,14 @@
         </td>
 
         <td>
-            <a href="domaines?actions=editDomaine&id=<%= domaines.get(i).getId() %>">
+            <a class="edit" href="domaines?actions=editDomaine&id=<%= domaines.get(i).getId() %>">
 
                 Modifier
 
             </a>
 
 
-            <a href="domaines?actions=deleteDomaine&id=<%= domaines.get(i).getId() %>">
+            <a class="delete" href="domaines?actions=deleteDomaine&id=<%= domaines.get(i).getId() %>">
 
                 Supprimer
 

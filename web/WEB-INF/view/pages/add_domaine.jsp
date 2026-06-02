@@ -12,6 +12,8 @@
     <title>Add Domaine</title>
 </head>
 <body>
+<div class="container">
+
 <h1>Formulaire d'ajout de domaine</h1>
 <form action="domaines?actions=addDomaine" method="post">
     <input type="text" name="domaine" id="" placeholder="Entrez un domaine">
@@ -19,5 +21,6 @@
     <button type="submit">Ajouter</button>
 
 </form>
+</div>
 </body>
 </html>
