@@ -27,7 +27,6 @@ bin/
 ### VS Code ###
 .vscode/
 web/WEB-INF/classes/
-web/WEB-INF/lib/jakar*
 
 ### Mac OS ###
 .DS_Store
@@ -35,3 +34,6 @@ web/WEB-INF/lib/jakar*
 
 ### Database ###
 src/main/java/Database/ConnectBD.java
+
+web/WEB-INF/view/Projets.jsp
+web/WEB-INF/view/projets.jsp
