@@ -8,7 +8,7 @@ import java.util.List;
 public interface ClientCompetenceDao {
     void add(ClientCompetence clientCompetence);
     List<ClientCompetence> getAll();
-    void update(ClientCompetence clientCompetence);
-    void delete(int id);
+    void update(ClientCompetence cc, int oldIdClient, int oldIdCompetence);
+    void delete(int idClient, int idCompetence);
     List<Integer> getSkillsByClient(int idClient) throws SQLException;
 }
