@@ -22,7 +22,7 @@
 
         <div class="left-section">
 
-            <h1>Creer un compte</h1>
+            <h1>Créer un compte</h1>
 
             <form action="client" method="post">
 
