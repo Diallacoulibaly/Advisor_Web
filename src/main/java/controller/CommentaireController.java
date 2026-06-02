@@ -11,6 +11,7 @@ import main.java.model.ServiceImplemente.CommentaireServiceImplement;
 import main.java.model.ServiceImplemente.DomaineImplement;
 import main.java.model.classes.Commentaire;
 import main.java.model.classes.Domaine;
+import main.java.model.classes.Etape;
 import main.java.model.dao.CommentaireDao;
 import main.java.model.dao.DomaineDao;
 import main.java.model.service.CommentaireService;
@@ -63,7 +64,10 @@ public class CommentaireController extends HttpServlet {
         if (!actions.isEmpty()){
             if (actions.equalsIgnoreCase("addCmt")){
                 String cmt=req.getParameter("cmt");
-                commentaireService.ajouter(cmt);
+                int idEtape=Integer.parseInt(req.getParameter("idEtape")) ;
+                Etape etape=new Etape();
+                etape.setIdEtape(idEtape);
+                commentaireService.ajouter(cmt,etape);
                 resp.sendRedirect("commentaires");
 
             }
