@@ -50,8 +50,9 @@ public class ClientCompetenceController extends HttpServlet {
 
         req.setAttribute("clients", clients);
         req.setAttribute("competences", competences);
+        System.out.println("la taille:"+clients.size());
 
-        req.getRequestDispatcher("/WEB-INF/view/clientCompetence/form.jsp")
+        req.getRequestDispatcher("/WEB-INF/view/pages/ClientCompetence.jsp")
                 .forward(req, resp);
     }
 
@@ -59,16 +60,23 @@ public class ClientCompetenceController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+        System.out.println("=== doPost appelé ===");
+
         Integer clientId =
                 Integer.parseInt(req.getParameter("clientId"));
 
         Integer competenceId =
                 Integer.parseInt(req.getParameter("competenceId"));
 
+        System.out.println("clientId = " + clientId);
+        System.out.println("competenceId = " + competenceId);
+
         ClientCompetence clientCompetence =
                 new ClientCompetence(clientId, competenceId);
 
         clientCompetenceService.add(clientCompetence);
+
+        System.out.println("Ajout effectué");
 
         resp.sendRedirect("clientCompetences");
     }
