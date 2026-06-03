@@ -1,7 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="main.java.model.classes.Activite" %>
-<%@ page import="main.java.model.classes.Depense" %>
-<%--
+<%@ page import="main.java.model.classes.Activite" %><%--
   Created by IntelliJ IDEA.
   User: Cute Boy
   Date: 28/05/2026
@@ -11,6 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/activite.css">
+
     <title>Activite</title>
 </head>
 <body>
@@ -23,42 +23,31 @@
     }</style>
     <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList");
     Integer idEtape=(Integer) request.getAttribute("idEtape");
-    List<Depense> depenseList = (List<Depense>) request.getAttribute("depense");
     %>
 
     <h1> Liste des activités </h1>
     <ol>
-        <% for (Activite activite : activiteList)
-
-        { %>
+        <% for (Activite activite : activiteList){ %>
         <li>
             <%= activite.getTitre() %>
-            <form action="depenses" method="post" class="form-depense">
-                <input type="hidden" name="action" value="ajouter">
-                <input type="hidden" name="idActivite" value="<%= activite.getId() %>">
-                <input type="hidden" name="idEtape" value="<%= idEtape %>">
-                <label for="montant">Montant :</label>
-                <input type="number" id="montant" name="montant" placeholder="Saisir le montant">
-                <label for="montant">Description :</label>
-                <textarea id="description" name="description" rows="4" cols="30" placeholder=""></textarea>
-                <button type="submit">Enregistrer</button>
-            </form>
             <form action="activite" method="post">
                 <input type="hidden" name="action" value="terminer">
                 <input type="hidden" name="id" value="<%= activite.getId()%>">
                 <button type="submit"> Terminer </button>
             </form>
 
-            <form action="activite" method="post">
-                <input type="hidden" name="action" value="supprimer">
-                <input type="hidden" name="id" value="<%= activite.getId()%>">
-                <button type="submit"> Supprimer </button>
-            </form>
-        </>
+<%--                <form action="activite" method="post">--%>
+<%--                    <input type="hidden" name="action" value="supprimer">--%>
+<%--                    <input type="hidden" name="id" value="<%= activite.getId()%>">--%>
+<%--                    <button type="submit"> Supprimer </button>--%>
+<%--                </form>--%>
+            </li>
 
-        <% } %>
-    </ol>
+            <% } %>
+        </ol>
 
-    <button><a href="commentaires?actions=addCmt&idEtape=<%=idEtape%>">Ajouter un commentaire</a></button>
+        <button class="commentaire"><a href="commentaires?actions=addCmt&idEtape=<%=idEtape%>">Ajouter un commentaire</a></button>
+            </div>
+    </section>
 </body>
 </html>
