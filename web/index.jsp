@@ -17,32 +17,49 @@ To change this template use File | Settings | File Templates.
 <body>
 <header>
     <img src="${pageContext.request.contextPath}/assets/img/logo_preaccueil.png" alt="image du logo"/>
-    <section class="icone_container">
+    <div class="etapes">
+        <h5 class="etapes-titre">De l'Idée à la Réalisation</h5>
+
+
+        <section class="icone_container">
 
         <div class="icone_fa">
-
             <i class="fa-regular fa-lightbulb"></i>
             <p>Idée</p>
         </div>
-      <div class="icone_fa">
-          <i class="fa-regular fa-calendar"></i>
-          <p>Planification</p>
-      </div>
+
+        <div class="lignes"></div>
+
+        <div class="icone_fa">
+            <i class="fa-regular fa-calendar"></i>
+            <p>Planification</p>
+        </div>
+
+        <div class="lignes"></div>
+
         <div class="icone_fa">
             <i class="fa-solid fa-gear"></i>
             <p>Exécution</p>
         </div>
+
+        <div class="lignes"></div>
+
         <div class="icone_fa">
             <i class="fa-regular fa-circle-check"></i>
             <p>Réalisation</p>
-
         </div>
 
+
     </section>
+    </div>
 </header>
 <main>
     <section class="left">
         <h1>Advisor</h1>
+        <p class="sous-titre">
+            Accompagnez vos idées, suivez vos projets et
+            <span class="bleu">réalisez </span> vos ambitions.
+        </p>
         <p>
             Advisor est une application qui aide les personnes à choisir des projets adaptés à leur profil, à recevoir des recommandations intelligentes et à suivre leur progression
             jusqu’à la réalisation complète, tout en gérant le budget et les différentes étapes.
@@ -81,6 +98,7 @@ To change this template use File | Settings | File Templates.
             <p>Atteignez vos objectifs et concrétisez vos idées.</p>
         </div>
     </section>
+
 </footer>
 </body>
 </html>
