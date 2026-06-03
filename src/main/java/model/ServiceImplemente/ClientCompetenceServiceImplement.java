@@ -4,6 +4,7 @@ import main.java.model.classes.ClientCompetence;
 import main.java.model.dao.ClientCompetenceDao;
 import main.java.model.service.ClientCompetenceService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ClientCompetenceServiceImplement implements ClientCompetenceService {
@@ -52,4 +53,32 @@ public class ClientCompetenceServiceImplement implements ClientCompetenceService
 
         clientCompetenceRepository.delete(idClient, idCompetence);
     }
+
+    @Override
+    public List<Integer> filterSkills(List<Integer> competences, int id) {
+        try{
+            List<Integer> exitsSkills= clientCompetenceRepository.getSkillsByClient(id);
+            if(exitsSkills.isEmpty()){
+                return competences;
+            }
+            exitsSkills.forEach(competences::remove);
+            return  competences;
+        } catch (SQLException e){
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    @Override
+    public void addListClientCompetence(List<Integer> competencesId, int id) {
+        try {
+            competencesId.forEach(idC -> {
+                ClientCompetence clientCompetence= new ClientCompetence(id, idC);
+                clientCompetenceRepository.add(clientCompetence);
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+
