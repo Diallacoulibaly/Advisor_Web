@@ -31,7 +31,7 @@ header{
 }
 
 .icone_fa i{
-    font-size:30px;
+    font-size:20px;
     color:#2563eb;
 }
 
@@ -63,7 +63,7 @@ main{
 }
 
 .left p{
-    font-size:25px;
+    font-size:20px;
     line-height:1.7;
     margin-top: 10px;
 }
@@ -165,7 +165,7 @@ footer section{
     line-height:1.6;
 }
 .lignes{
-    width:80px;
+    width:40px;
     border-top:2px dashed #2563eb;
 }
 .etapes{
@@ -176,7 +176,7 @@ footer section{
 
 .etapes-titre{
     margin-bottom:40px;
-    font-size:20px;
+    font-size:15px;
 }
 .bleu{
     color:#2563eb;
