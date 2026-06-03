@@ -27,12 +27,13 @@ public class RecommandationController extends HttpServlet{
     private ClientCompetenceServiceImplement clientCompetenceServiceImplement;
     private HistoriqueServiceImplement historiqueServiceImplement;
     private HistoriqueProjetServiceImplement historiqueProjetServiceImplement;
-
+    private EtapeServiceImplement etapeServiceImplement;
 
     public void init(){
         ProjetDao projetDao = new ProjetDaoImpl();
         CompetenceProjetDao cpd = new CompetenceProjetDaoImplement();
         ClientCompetenceDao ccd = new ClientCompetenceDaoImplement();
+        EtapeDao etapeDao= new EtapeDaoImplement();
         reco = new RecommandationImpl(projetDao, cpd, ccd);
 
         ClientDAO clientDAO = new ClientDAOImplement();
@@ -51,7 +52,7 @@ public class RecommandationController extends HttpServlet{
         domaineImplement= new DomaineImplement(domaineDao);
         competenceServiceImplement= new CompetenceServiceImplement(competenceDao);
         clientCompetenceServiceImplement= new ClientCompetenceServiceImplement(ccd);
-
+        etapeServiceImplement= new EtapeServiceImplement(etapeDao);
     }
 
     @Override
@@ -114,14 +115,21 @@ public class RecommandationController extends HttpServlet{
                     historique.setIdClient(client.getIdUtilisateur());
                     int idHist = historiqueServiceImplement.ajouterHistorique(historique);
 
+                    List<Map<String, Object>> listeObjects = new ArrayList<>();
                     for (Projet p : recommandations) {
+                        Map<String, Object> projetEtape = new HashMap<>();;
                         HistoriqueProjet hp = new HistoriqueProjet(idHist, p.getId());
                         historiqueProjetServiceImplement.add(hp);
+                        int etap= etapeServiceImplement.countEtapes(p.getId());
+                        projetEtape.put("projet", p);
+                        projetEtape.put("etape", etap);
+                        listeObjects.put(projetEtape);
                     }
 
 
                 }
-                request.setAttribute("recommandations", recommandations);
+                
+                request.setAttribute("recommandations", listeObjects);
                 request.setAttribute("pageContent", "recommandations.jsp");
                 request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
             } else {
