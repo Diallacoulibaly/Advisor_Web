@@ -12,54 +12,78 @@
 <html>
 <head>
     <title>Activite</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/activite.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <style>
-        .form-depense {
-        display: flex;
-        flex-direction: column;
-        width: 300px;
-        gap: 10px;
-    }</style>
+
     <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList");
     Integer idEtape=(Integer) request.getAttribute("idEtape");
-    List<Depense> depenseList = (List<Depense>) request.getAttribute("depense");
     %>
-
-    <h1> Liste des activités </h1>
+    <div class="etape">
+        <h1> Etape <%= idEtape %></h1>
+        <p class="description"> Description de l'étape ...</p>
+    </div>
+    <div class="bodyy">
+    <div class="titre">
+        <h2> Activités </h2>
+        <div class="sey">
+        <h2> Dépenses (F CFA) </h2>
+        <h2> Description </h2>
+        </div>
+    </div>
     <ol>
         <% for (Activite activite : activiteList)
 
         { %>
         <li>
-            <%= activite.getTitre() %>
+
+
             <form action="depenses" method="post" class="form-depense">
+                <div class="check">
+
+                    <div class="check-title" >
+                    <input type="checkbox" name="valider">
+                    <span><%= activite.getTitre() %></span>
+                    </div>
                 <input type="hidden" name="action" value="ajouter">
                 <input type="hidden" name="idActivite" value="<%= activite.getId() %>">
                 <input type="hidden" name="idEtape" value="<%= idEtape %>">
-                <label for="montant">Montant :</label>
-                <input type="number" id="montant" name="montant" placeholder="Saisir le montant">
-                <label for="montant">Description :</label>
-                <textarea id="description" name="description" rows="4" cols="30" placeholder=""></textarea>
-                <button type="submit">Enregistrer</button>
-            </form>
-            <form action="activite" method="post">
-                <input type="hidden" name="action" value="terminer">
-                <input type="hidden" name="id" value="<%= activite.getId()%>">
-                <button type="submit"> Terminer </button>
-            </form>
 
-            <form action="activite" method="post">
-                <input type="hidden" name="action" value="supprimer">
-                <input type="hidden" name="id" value="<%= activite.getId()%>">
-                <button type="submit"> Supprimer </button>
+                <input class="inp-depense" type="number" id="montant" name="montant" placeholder=" Saisir le montant">
+
+                <textarea class="inp-desc" id="description" name="description" rows="4" cols="30" placeholder=""></textarea>
+                    <button class="save" type="submit"> Enregistrer </button>
+                </div>
+
             </form>
+<%--            <form action="activite" method="post">--%>
+<%--                <input type="hidden" name="action" value="terminer">--%>
+<%--                <input type="hidden" name="id" value="<%= activite.getId()%>">--%>
+<%--                <button type="submit"> Terminer </button>--%>
+<%--            </form>--%>
+
+<%--            <form action="activite" method="post">--%>
+<%--                <input type="hidden" name="action" value="supprimer">--%>
+<%--                <input type="hidden" name="id" value="<%= activite.getId()%>">--%>
+<%--                <button type="submit"> Supprimer </button>--%>
+<%--            </form>--%>
         </>
 
         <% } %>
     </ol>
 
-
-    <button><a href="commentaires?actions=addCmt&idEtape=<%=idEtape%>">Ajouter un commentaire</a></button>
+    <div class="btn">
+        <button class="coment-btn">
+            <div class="btnpd">
+            <a href="commentaires?actions=addCmt&idEtape=<%=idEtape%>">
+                <i class="fa-solid fa-comments fa-lg"></i>Commentaire (étape)
+            </a>
+            </div>
+        </button>
+        <button class="finish-btn"> <div class="btnpd">Etape terminée <i class="fa-regular fa-circle-check fa-lg"></i>
+        </div></button>
+    </div>
+    </div>
 </body>
 </html>
