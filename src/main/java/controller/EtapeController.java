@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @WebServlet("/etape")
-public class ServeletEtape extends HttpServlet {
+public class EtapeController extends HttpServlet {
 
     private EtapeDaoImplement etapeDao;
     private EtapeServiceImplement service;

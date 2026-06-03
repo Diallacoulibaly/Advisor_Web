@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kalandew12
-  Date: 01/06/2026
-  Time: 14:04
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page import="java.util.List" %>
 <%@ page import="main.java.model.classes.CompetenceProjet" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -42,10 +35,8 @@
         <td><%= cp.getCompetenceId() %></td>
         <td><%= cp.getIdProjet() %></td>
         <td>
-            <!-- Passage des deux identifiants clés pour la modification -->
             <a class="btn-edit" href="competenceProjet?action=modifier&competenceId=<%= cp.getCompetenceId() %>&projetId=<%= cp.getIdProjet() %>">Modifier</a>
 
-            <!-- Pour la suppression, adaptez selon le paramètre attendu par votre couche service -->
             <a class="btn-delete" href="competenceProjet?action=supprimer&competenceId=<%= cp.getCompetenceId() %>&projetId=<%= cp.getIdProjet() %>" onclick="confirmerSuppression(event)">Supprimer</a>
         </td>
     </tr>

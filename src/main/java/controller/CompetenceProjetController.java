@@ -5,25 +5,24 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import main.java.model.classes.CompetenceProjet;
 import main.java.model.DaoImplement.CompetenceProjetDaoImplement;
 import main.java.model.ServiceImplemente.CompetenceProjetImplement;
+import main.java.model.classes.CompetenceProjet;
 import main.java.model.dao.CompetenceProjetDao;
 import main.java.model.service.CompetenceProjetService;
 
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/competenceProjet")
-public class ServeletCompetenceProjet extends HttpServlet {
-
-    private CompetenceProjetDao competenceProjetDao;
+@WebServlet("/competenceprojet")
+public class CompetenceProjetController extends HttpServlet {
+    private CompetenceProjetDao cpDao;
     private CompetenceProjetService service;
 
     @Override
     public void init() {
-        competenceProjetDao = new CompetenceProjetDaoImplement();
-        service = new CompetenceProjetImplement(competenceProjetDao);
+        cpDao = new CompetenceProjetDaoImplement();
+        service = new CompetenceProjetImplement(cpDao);
     }
 
     @Override
@@ -32,46 +31,42 @@ public class ServeletCompetenceProjet extends HttpServlet {
 
         String action = request.getParameter("action");
 
-        //Redirection vers le formulaire d'ajout
         if ("ajouter".equals(action)) {
-            request.getRequestDispatcher("/WEB-INF/view/add_competence_projet.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/view/ajout_competence_projet.jsp").forward(request, response);
         }
-        //Redirction vers le formulaire de modification
         else if ("modifier".equals(action)) {
             try {
-                //Récupération des deux identifiants de la clé composite
                 int compId = Integer.parseInt(request.getParameter("competenceId"));
                 int projId = Integer.parseInt(request.getParameter("projetId"));
 
-                //Recherche de l'objet correspondant dans la liste complète
-                CompetenceProjet cpT = service.lister().stream()
-                        .filter(cp -> cp.getCompetenceId() == compId && cp.getIdProjet() == projId)
-                        .findFirst()
-                        .orElse(null);
+                CompetenceProjet cpT = service.rechercher(projId, compId);
 
                 if (cpT != null) {
                     request.setAttribute("competenceProjet", cpT);
+                    request.setAttribute("ancienCompetenceId", compId);
+                    request.setAttribute("ancienProjetId", projId);
+
                     request.getRequestDispatcher("/WEB-INF/view/modif_competence_projet.jsp").forward(request, response);
                 } else {
-                    response.sendRedirect("competenceProjet");
+                    response.sendRedirect("competenceprojet");
                 }
             } catch (Exception e) {
                 System.err.println("Erreur redirection modification : " + e.getMessage());
-                response.sendRedirect("competenceProjet");
+                response.sendRedirect("competenceprojet");
             }
         }
-        // 3. SUPPRESSION DIRECTE (GET)
         else if ("supprimer".equals(action)) {
             try {
-                int id = Integer.parseInt(request.getParameter("id"));
-                service.supprimer(id);
-                response.sendRedirect("competenceProjet");
+                int compId = Integer.parseInt(request.getParameter("competenceId"));
+                int projId = Integer.parseInt(request.getParameter("projetId"));
+
+                service.supprimer(projId, compId);
+                response.sendRedirect("competenceprojet");
             } catch (Exception e) {
-                response.sendRedirect("competenceProjet");
+                response.sendRedirect("competenceprojet");
             }
         }
-
-        //Affichage de la liste par defaut
+        // Affichage de la liste par défaut
         else {
             List<CompetenceProjet> liste = service.lister();
             request.setAttribute("competenceProjets", liste);
@@ -86,18 +81,17 @@ public class ServeletCompetenceProjet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
 
-        //Traitement de l'ajout
+        // Traitement de l'ajout
         if ("AjoutCP".equals(action)) {
             try {
                 int competenceId = Integer.parseInt(request.getParameter("competenceId"));
                 int projetId = Integer.parseInt(request.getParameter("projetId"));
 
                 CompetenceProjet cp = new CompetenceProjet(competenceId, projetId);
-
                 boolean success = service.ajouter(cp);
 
                 if (success) {
-                    response.sendRedirect("competenceProjet");
+                    response.sendRedirect("competenceprojet");
                 } else {
                     request.setAttribute("error", "Erreur lors de l'association de la compétence au projet.");
                     request.getRequestDispatcher("/WEB-INF/view/ajout_competence_projet.jsp").forward(request, response);
@@ -107,20 +101,21 @@ public class ServeletCompetenceProjet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/view/ajout_competence_projet.jsp").forward(request, response);
             }
         }
-
-        //Traitement de la modification
-        else if ("enregistrerModif".equals(action)) {
+        // Traitement de la modification
+        else if ("ModifCP".equals(action)) {
             try {
-                //Nouvelles valeurs saisies dans le formulaire
+                int ancienCompetenceId = Integer.parseInt(request.getParameter("ancienCompetenceId"));
+                int ancienProjetId = Integer.parseInt(request.getParameter("ancienProjetId"));
+
                 int nouvelleCompetenceId = Integer.parseInt(request.getParameter("competenceId"));
                 int nouveauProjetId = Integer.parseInt(request.getParameter("projetId"));
 
                 CompetenceProjet cp = new CompetenceProjet(nouvelleCompetenceId, nouveauProjetId);
 
-                boolean success = service.mettre_a_jour(cp);
+                boolean success = service.miseAjour(ancienProjetId, ancienCompetenceId, cp);
 
                 if (success) {
-                    response.sendRedirect("competenceProjet");
+                    response.sendRedirect("competenceprojet");
                 } else {
                     request.setAttribute("error", "Erreur lors de la mise à jour");
                     request.getRequestDispatcher("/WEB-INF/view/modif_competence_projet.jsp").forward(request, response);
@@ -130,7 +125,5 @@ public class ServeletCompetenceProjet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/view/modif_competence_projet.jsp").forward(request, response);
             }
         }
-
     }
 }
-
