@@ -4,11 +4,10 @@ import main.java.model.classes.CompetenceProjet;
 import java.util.List;
 
 public interface CompetenceProjetService {
-
     boolean ajouter(CompetenceProjet competenceProjet);
-    List<Integer> rechercher(int id);
+    CompetenceProjet rechercher(int idProjet, int idCompetence);
+    List<Integer> listerIdsCompetencesParProjet(int idProjet);
     List<CompetenceProjet> lister();
-    boolean mettre_a_jour(CompetenceProjet competenceProjet);
-    boolean supprimer(int id);
-    boolean verifier(int id);
+    boolean miseAjour(int ancienIdProjet, int ancienIdCompetence, CompetenceProjet nouvelleAssociation);
+    boolean supprimer(int idProjet, int idCompetence);
 }
