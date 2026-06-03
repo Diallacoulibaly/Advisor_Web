@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import main.java.model.DaoImplement.HistoriqueDaoImplement;
 import main.java.model.ServiceImplemente.HistoriqueServiceImplement;
-import main.java.model.classes.Activite;
 import main.java.model.classes.Historique;
 import main.java.model.dao.HistoriqueDao;
 
@@ -28,8 +27,11 @@ public class HistoriqueController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Historique> historiqueList = historiqueServiceImplement.afficherHistorique();
+
         req.setAttribute("historiqueList", historiqueList);
-        req.getRequestDispatcher("/WEB-INF/view/pages/historique.jsp").forward(req, resp);
+        req.setAttribute("pageContent", "historique.jsp");
+        req.setAttribute("menuActif", "historique");
+        req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
 
     }
 

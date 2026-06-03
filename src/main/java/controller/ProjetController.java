@@ -6,7 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import main.java.model.DaoImplement.DomaineDaoImplement;
+import main.java.model.DaoImplement.LocaliteDaoImplement;
 import main.java.model.ServiceImplemente.ProjetServiceImpl;
+import main.java.model.dao.DomaineDao;
+import main.java.model.dao.LocaliteDao;
 import main.java.model.dao.ProjetDao;
 import main.java.model.enums.Niveau;
 import main.java.model.DaoImplement.ProjetDaoImpl;
