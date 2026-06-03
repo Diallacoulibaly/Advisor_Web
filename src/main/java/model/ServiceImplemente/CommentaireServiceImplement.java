@@ -2,6 +2,7 @@ package main.java.model.ServiceImplemente;
 
 import main.java.model.classes.Commentaire;
 import main.java.model.classes.Domaine;
+import main.java.model.classes.Etape;
 import main.java.model.dao.CommentaireDao;
 import main.java.model.dao.DomaineDao;
 import main.java.model.service.CommentaireService;
@@ -14,12 +15,14 @@ public class CommentaireServiceImplement implements CommentaireService {
         this.commentaireDao=commentaireDao;
     }
     @Override
-    public void ajouter(String commentaire){
+    public void ajouter(String commentaire, Etape etape){
         if(commentaire==null||commentaire.trim().isEmpty()){
             System.out.println("message obligatoire");
             return;
         }
-        Commentaire c=new Commentaire(commentaire);
+        Commentaire c=new Commentaire();
+        c.setMessage(commentaire);
+        c.setEtape(etape);
         commentaireDao.ajoutCmt(c);
 
 

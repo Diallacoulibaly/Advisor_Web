@@ -3,6 +3,7 @@ package main.java.model.DaoImplement;
 import main.java.Database.ConnectBD;
 import main.java.model.classes.Commentaire;
 import main.java.model.classes.Domaine;
+import main.java.model.classes.Etape;
 import main.java.model.dao.CommentaireDao;
 
 import java.sql.*;
@@ -12,10 +13,11 @@ import java.util.List;
 public class CommentaireDaoImplement implements CommentaireDao {
     @Override
     public void ajoutCmt(Commentaire commentaire){
-        String sql="INSERT INTO commentaire (message) VALUE(?)";
+        String sql="INSERT INTO commentaire (idEtape,message) VALUE(?,?)";
         try(Connection cnn= ConnectBD.getConnection();
             PreparedStatement stml=cnn.prepareStatement(sql)) {
-            stml.setString(1,commentaire.getMessage());
+            stml.setInt(1,commentaire.getEtape().getIdEtape());
+            stml.setString(2,commentaire.getMessage());
             stml.executeUpdate();
             System.out.println("Commentaire ajouté avec succès");
 
@@ -34,10 +36,13 @@ public class CommentaireDaoImplement implements CommentaireDao {
             Statement stml=cnn.createStatement();
             ResultSet rs=stml.executeQuery(sql)){
             while (rs.next()){
+                Etape etape=new Etape();
+                etape.setIdEtape(rs.getInt("idEtape"));
                 Commentaire d=new Commentaire(
                         rs.getInt("id"),
                         rs.getString("message"),
-                        rs.getDate("date_cmt")
+                        rs.getDate("date_cmt"),
+                        etape
                 );
                 commentaireList.add(d);
 
@@ -60,10 +65,13 @@ public class CommentaireDaoImplement implements CommentaireDao {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    Etape etape=new Etape();
+                    etape.setIdEtape(rs.getInt("idEtape"));
                     Commentaire commentaire = new Commentaire(
                             rs.getInt("id"),
                             rs.getString("message"),
-                            rs.getDate("date_cmt")
+                            rs.getDate("date_cmt"),
+                            etape
                     );
                     return commentaire;
                 }
@@ -91,7 +99,7 @@ public class CommentaireDaoImplement implements CommentaireDao {
     }
     @Override
     public void supprimerCmt(int id){
-        String sql="DELETE  FROM message WHERE id=?";
+        String sql="DELETE  FROM commentaire WHERE id=?";
         try(Connection cnn=ConnectBD.getConnection();
             PreparedStatement stml=cnn.prepareStatement(sql)) {
             stml.setInt(1,id);
