@@ -115,21 +115,18 @@ public class RecommandationController extends HttpServlet{
                     historique.setIdClient(client.getIdUtilisateur());
                     int idHist = historiqueServiceImplement.ajouterHistorique(historique);
 
-                    List<Map<String, Object>> listeObjects = new ArrayList<>();
+
                     for (Projet p : recommandations) {
-                        Map<String, Object> projetEtape = new HashMap<>();;
+
                         HistoriqueProjet hp = new HistoriqueProjet(idHist, p.getId());
                         historiqueProjetServiceImplement.add(hp);
-                        int etap= etapeServiceImplement.countEtapes(p.getId());
-                        projetEtape.put("projet", p);
-                        projetEtape.put("etape", etap);
-                        listeObjects.put(projetEtape);
+
                     }
 
 
                 }
                 
-                request.setAttribute("recommandations", listeObjects);
+                request.setAttribute("recommandations", recommandations);
                 request.setAttribute("pageContent", "recommandations.jsp");
                 request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
             } else {

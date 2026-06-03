@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="onglet-titre">
-                    <a href="#" class="a">Historiques</a>
+                    <a href="${pageContext.request.contextPath}/historique" class="a">Historiques</a>
                 </div>
 
             </div>

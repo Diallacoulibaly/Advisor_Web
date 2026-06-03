@@ -55,7 +55,7 @@ public class ProjetClientController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Utilisateur user = (Utilisateur) req.getSession().getAttribute("user");
-        Integer idProjet = (Integer) req.getAttribute("idProjet");
+        int idProjet = (Integer.parseInt(req.getParameter("idProjet"))) ;
         
         Projet projet = new Projet(); 
         projet.setId(idProjet);
@@ -67,11 +67,10 @@ public class ProjetClientController extends HttpServlet {
         projetclient.setClient(client);
         projetclient.setProjet(projet);
         pcServiceImplement.add(projetclient);
-
-        
-        req.setAttribute("pageContent", "mes_projets.jsp");
-        req.setAttribute("menuActif", "mes_projets");
-        req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+        doGet(req, resp);
+//        req.setAttribute("pageContent", "mes_projets.jsp");
+//        req.setAttribute("menuActif", "mes_projets");
+//        req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
     }
 
 }
