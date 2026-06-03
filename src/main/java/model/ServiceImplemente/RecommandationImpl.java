@@ -23,14 +23,12 @@ public class RecommandationImpl {
         clientCompetenceDao = ccr;
     }
 
-    public int matchNiveau (Niveau niveau) {
-        int x = 0;
+    public int matchNiveau (String niveau) {
         switch (niveau) {
-            case DEBUTANT -> { x = 1; }
-            case INTERMEDIAIRE -> { x = 2; }
-            case EXPERT -> { x = 3; }
+            case "INTERMEDIAIRE" -> { return 2; }
+            case "EXPERT" -> { return  3; }
+            default -> { return 1; }
         }
-        return x;
     }
 
     public List<Projet> suggererProjets(Client client) throws SQLException {
@@ -53,20 +51,36 @@ public class RecommandationImpl {
                 for (Integer competence : competencesProjet) {
                     if (competencesClient.contains(competence)) {
                         competenceTrouvee = true;
+                        System.out.println(projet.getId()+ "Competence matche");
                         break;
                     }
                 }
                 // Si aucune compétence demandée, on suppose que tout le monde peut faire ce projet
-                if (competencesProjet.isEmpty()) { competenceTrouvee = true; }
+                if (competencesProjet.isEmpty()) {
+                    competenceTrouvee = true;
+                    System.out.println(projet.getId()+ "Competence matche");
+                }
 
-                if (matchNiveau(projet.getNiveau()) <= matchNiveau(client.getNiveau())) niveauCompatible = true;
+                System.out.println(projet.getNiveau().name() + " <- projet | client -> " +client.getNiveau().name());
+                if (matchNiveau(projet.getNiveau().toString()) <= matchNiveau(client.getNiveau().name())) {
+                    niveauCompatible = true;
 
-                if (projet.getLocalite().equals(client.getLocalite())) localiteCompatible = true;
+                    System.out.println(projet.getId()+ "Niveau matche");
+                }
 
-                if (projet.getDomaine().equals(client.getDomaine())) domaineCompatible = true;
+                if (projet.getLocalite()==null || projet.getLocalite().getRegionClient().equals(client.getLocalite().getRegionClient())) {
+                    localiteCompatible = true;
+                    System.out.println(projet.getId()+ "Localite matche");
+                }
+
+                if (projet.getDomaine().getDomaine().equals(client.getDomaine().getDomaine())) {
+                    domaineCompatible = true;
+                    System.out.println(projet.getId()+ "Domaine matche");
+                }
 
                 if (competenceTrouvee && niveauCompatible && localiteCompatible && domaineCompatible) {
                     projetsRecommandes.add(projet);
+                    System.out.println(projet.getTitre());
                 }
             }
         }

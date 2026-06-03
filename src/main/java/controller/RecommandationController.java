@@ -25,17 +25,24 @@ public class RecommandationController extends HttpServlet{
     private CompetenceServiceImplement competenceServiceImplement;
     private ClientServiceImplement clientServiceImplement;
     private ClientCompetenceServiceImplement clientCompetenceServiceImplement;
-    
+    private HistoriqueServiceImplement historiqueServiceImplement;
+    private HistoriqueProjetServiceImplement historiqueProjetServiceImplement;
+
 
     public void init(){
         ProjetDao projetDao = new ProjetDaoImpl();
         CompetenceProjetDao cpd = new CompetenceProjetDaoImplement();
         ClientCompetenceDao ccd = new ClientCompetenceDaoImplement();
         reco = new RecommandationImpl(projetDao, cpd, ccd);
-        ClientCompetenceDao clientCompetenceDao= new ClientCompetenceDaoImplement();
+
         ClientDAO clientDAO = new ClientDAOImplement();
         clientServiceImplement = new ClientServiceImplement(clientDAO);
 
+        HistoriqueDao historiqueDao = new HistoriqueDaoImplement();
+        historiqueServiceImplement = new HistoriqueServiceImplement(historiqueDao);
+
+        HistoriqueProjetDao hpd = new HistoriqueProjetDaoImplement();
+        historiqueProjetServiceImplement = new HistoriqueProjetServiceImplement(hpd);
 
         LocaliteDao localiteDao= new LocaliteDaoImplement();
         DomaineDao domaineDao= new DomaineDaoImplement();
@@ -43,7 +50,7 @@ public class RecommandationController extends HttpServlet{
         localiteServiceImplemente= new LocaliteServiceImplemente(localiteDao);
         domaineImplement= new DomaineImplement(domaineDao);
         competenceServiceImplement= new CompetenceServiceImplement(competenceDao);
-        clientCompetenceServiceImplement= new ClientCompetenceServiceImplement(clientCompetenceDao);
+        clientCompetenceServiceImplement= new ClientCompetenceServiceImplement(ccd);
 
     }
 
@@ -71,7 +78,9 @@ public class RecommandationController extends HttpServlet{
             Niveau niveau = Niveau.valueOf(request.getParameter("niveau"));
             int budget = Integer.parseInt(request.getParameter("budget"));
             int idLocalite = Integer.parseInt(request.getParameter("idLocalite"));
+
             int idDomaine = Integer.parseInt(request.getParameter("idDomaine"));
+
             String [] competences= request.getParameterValues("competences");
             List<Integer> competencesId= new ArrayList<>();
 
@@ -97,9 +106,21 @@ public class RecommandationController extends HttpServlet{
                 client.setIdUtilisateur(user.getIdUtilisateur());
                 client.setLocalite(localite);
                 client.setDomaine(domaine);
-
+                client.setNiveau(niveau);
 
                 List<Projet> recommandations = reco.suggererProjets(client);
+                if (!recommandations.isEmpty()) {
+                    Historique historique = new Historique();
+                    historique.setIdClient(client.getIdUtilisateur());
+                    int idHist = historiqueServiceImplement.ajouterHistorique(historique);
+
+                    for (Projet p : recommandations) {
+                        HistoriqueProjet hp = new HistoriqueProjet(idHist, p.getId());
+                        historiqueProjetServiceImplement.add(hp);
+                    }
+
+
+                }
                 request.setAttribute("recommandations", recommandations);
                 request.setAttribute("pageContent", "recommandations.jsp");
                 request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
