@@ -52,8 +52,8 @@
             <div class="card-header">
                 <h2><%= projet.getTitre() %></h2>
 
-                <form action="" method="post">
-                    <input type="hidden" name="idProjet" value="<%= projet.getId()>
+                <form action="mes_projets" method="post">
+                    <input type="hidden" name="idProjet" value="<%= projet.getId()%>">
                     <button type="submit" class="status">
                         Lancer ce projet
                     </button>
