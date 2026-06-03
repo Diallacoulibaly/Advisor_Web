@@ -70,11 +70,6 @@ public class EtapeServiceImplement implements EtapeService {
             return false;
         }
 
-        if (!etapeDao.verif_etape(etape.getIdEtape())) {
-            System.out.println("Aucune étape trouvée avec l'ID spécifié.");
-            return false;
-        }
-
         boolean updated = etapeDao.mise_a_jour_etape(etape);
         System.out.println(updated ? "Étape mise à jour avec succès." : "Erreur lors de la mise à jour de l'étape.");
         return updated;
@@ -88,21 +83,12 @@ public class EtapeServiceImplement implements EtapeService {
             return false;
         }
 
-        if (!etapeDao.verif_etape(idEtape)) {
-            System.out.println("Aucune étape trouvée avec l'ID spécifié.");
-            return false;
-        }
 
         boolean deleted = etapeDao.suppr_etape(idEtape);
         System.out.println(deleted ? "Étape supprimée avec succès." : "Erreur lors de la suppression de l'étape.");
         return deleted;
     }
 
-    //Verifier l'existance d'une étape
-    @Override
-    public boolean verification(int idEtape) {
-        return etapeDao.verif_etape(idEtape);
-    }
 
     @Override
     public List<Etape> ListeEtapesByProjet(int idProjet) {
