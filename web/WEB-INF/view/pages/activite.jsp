@@ -28,12 +28,17 @@
 
     <h1> Liste des activités </h1>
     <ol>
-        <% for (Activite activite : activiteList){ %>
+        <% for (Activite activite : activiteList)
+
+        { %>
         <li>
             <%= activite.getTitre() %>
-            <form action="depense" method="post" class="form-depense">
+            <form action="depenses" method="post" class="form-depense">
+                <input type="hidden" name="action" value="ajouter">
+                <input type="hidden" name="idActivite" value="<%= activite.getId() %>">
+                <input type="hidden" name="idEtape" value="<%= idEtape %>">
                 <label for="montant">Montant :</label>
-                <input type="number" id="montant" name="montant" step="0.01" placeholder="">
+                <input type="number" id="montant" name="montant" placeholder="Saisir le montant">
                 <label for="montant">Description :</label>
                 <textarea id="description" name="description" rows="4" cols="30" placeholder=""></textarea>
                 <button type="submit">Enregistrer</button>

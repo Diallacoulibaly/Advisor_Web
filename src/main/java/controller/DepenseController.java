@@ -66,6 +66,7 @@ public class DepenseController extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        String idEtape = request.getParameter("idEtape");
 
         if (action == null) {
             response.sendRedirect(request.getContextPath() + "/depenses?action=liste");
@@ -77,7 +78,7 @@ public class DepenseController extends HttpServlet {
                 try {
                     double montant = Double.parseDouble(request.getParameter("montant"));
                     String description = request.getParameter("description");
-                    Date date = Date.valueOf(request.getParameter("date"));
+                    Date date = new Date(System.currentTimeMillis());
 
                     // CORRECTION: récupération de l'activité si nécessaire
                     String activiteIdParam = request.getParameter("idActivite");
@@ -114,7 +115,9 @@ public class DepenseController extends HttpServlet {
                 }
             }
         }
-
-        response.sendRedirect(request.getContextPath() + "/depenses?action=liste");
+        response.sendRedirect(request.getContextPath() + "/etape_activite?idEtape="+ idEtape);
+        /*request.setAttribute("pageContent", "etape_activite.jsp");
+        request.setAttribute("menuActif", "accueil");
+        request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);*/
     }
 }
