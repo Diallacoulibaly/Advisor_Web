@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import main.java.model.DaoImplement.ActiviteDaoImplement;
 import main.java.model.ServiceImplemente.ActiviteServiceImplement;
 import main.java.model.classes.Activite;
+import main.java.model.classes.Etape;
 import main.java.model.dao.ActiviteDao;
 
 import java.io.IOException;
