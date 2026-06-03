@@ -14,9 +14,8 @@ public class HistoriqueServiceImplement implements HistoriqueService {
     }
 
     @Override
-    public void ajouterHistorique(Historique historique) {
-        historiqueDao.ajouterHistorique(historique);
-
+    public int ajouterHistorique(Historique historique) {
+        return historiqueDao.ajouterHistorique(historique);
     }
 
     @Override
