@@ -1,0 +1,25 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:white;
+    color:#1d2b4f;
+}
+
+.etape {
+    color: black;
+    width: 831px;
+    height: 139px;
+    border: #2E58CC solid;
+    border-radius: 20px;
+    background-color: rgba(46, 88, 204, 0.1);
+    margin: 1% auto 0;
+    padding: 10px;
+}
+.description{
+    margin-top: 1%;
+}

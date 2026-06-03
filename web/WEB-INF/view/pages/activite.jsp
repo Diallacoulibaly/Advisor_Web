@@ -9,9 +9,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/activite.css">
+
     <title>Activite</title>
 </head>
 <body>
+    <style>
+        .form-depense {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        gap: 10px;
+    }</style>
     <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList");
     Integer idEtape=(Integer) request.getAttribute("idEtape");
     %>
@@ -27,16 +36,18 @@
                 <button type="submit"> Terminer </button>
             </form>
 
-            <form action="activite" method="post">
-                <input type="hidden" name="action" value="supprimer">
-                <input type="hidden" name="id" value="<%= activite.getId()%>">
-                <button type="submit"> Supprimer </button>
-            </form>
-        </>
+<%--                <form action="activite" method="post">--%>
+<%--                    <input type="hidden" name="action" value="supprimer">--%>
+<%--                    <input type="hidden" name="id" value="<%= activite.getId()%>">--%>
+<%--                    <button type="submit"> Supprimer </button>--%>
+<%--                </form>--%>
+            </li>
 
-        <% } %>
-    </ol>
+            <% } %>
+        </ol>
 
-    <button><a href="commentaires?actions=addCmt&idEtape=<%=idEtape%>">Ajouter un commentaire</a></button>
+        <button class="commentaire"><a href="commentaires?actions=addCmt&idEtape=<%=idEtape%>">Ajouter un commentaire</a></button>
+            </div>
+    </section>
 </body>
 </html>
