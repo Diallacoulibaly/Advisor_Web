@@ -19,6 +19,7 @@
 
     <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList");
     Integer idEtape=(Integer) request.getAttribute("idEtape");
+    String titreEtape = (String) request.getAttribute("titreEtape");
     %>
     <div class="etape">
         <h1> Etape <%= idEtape %></h1>

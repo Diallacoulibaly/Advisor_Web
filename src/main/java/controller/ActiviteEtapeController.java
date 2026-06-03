@@ -27,9 +27,11 @@ public class ActiviteEtapeController extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             int idEtape = Integer.parseInt(req.getParameter("idEtape"));
+            String etapeTitre = req.getParameter("titreEtape");
             List<Activite> activiteList = activiteServiceImplement.getActiviteByEtape(idEtape);
             req.setAttribute("activiteList", activiteList);
             req.setAttribute("idEtape",idEtape);
+            req.setAttribute("titreEtape", etapeTitre);
 
             req.setAttribute("pageContent","activite.jsp");
             req.setAttribute("menuActif", "mes_projets");
