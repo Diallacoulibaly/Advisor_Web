@@ -30,7 +30,11 @@ public class ActiviteEtapeController extends HttpServlet {
             List<Activite> activiteList = activiteServiceImplement.getActiviteByEtape(idEtape);
             req.setAttribute("activiteList", activiteList);
             req.setAttribute("idEtape",idEtape);
-            req.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(req, resp);
+
+            req.setAttribute("pageContent","activite.jsp");
+            req.setAttribute("menuActif", "mes_projets");
+
+            req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req,resp);
 
         }
 
