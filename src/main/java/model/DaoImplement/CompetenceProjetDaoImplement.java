@@ -12,7 +12,7 @@ public class CompetenceProjetDaoImplement implements CompetenceProjetDao {
     // Ajout
     @Override
     public boolean add_CP(CompetenceProjet cp) {
-        String sql = "INSERT INTO CompetenceProjet (competenceId, projetId) VALUES (?, ?)";
+        String sql = "INSERT INTO CompetenceProjet (idCompetence, idProjet) VALUES (?, ?)";
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, cp.getCompetenceId());
@@ -28,14 +28,14 @@ public class CompetenceProjetDaoImplement implements CompetenceProjetDao {
     @Override
     public List<Integer> rech_CP(int idProjet) {
         List<Integer> listeCompetences = new ArrayList<>();
-        String sql = "SELECT competenceId FROM CompetenceProjet WHERE projetId = ?";
+        String sql = "SELECT idCompetence FROM CompetenceProjet WHERE idProjet = ?";
 
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idProjet);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    listeCompetences.add(rs.getInt("competenceId"));
+                    listeCompetences.add(rs.getInt("idCompetence"));
                 }
             }
         } catch (SQLException e) {
@@ -55,8 +55,8 @@ public class CompetenceProjetDaoImplement implements CompetenceProjetDao {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 CompetenceProjet cp = new CompetenceProjet(
-                        rs.getInt("competenceId"),
-                        rs.getInt("projetId")
+                        rs.getInt("idCompetence"),
+                        rs.getInt("idProjet")
                 );
 
                 liste.add(cp);
@@ -70,7 +70,7 @@ public class CompetenceProjetDaoImplement implements CompetenceProjetDao {
     // Mise à jour
     @Override
     public boolean mise_a_jour_CP(CompetenceProjet cp) {
-        String sql = "UPDATE CompetenceProjet SET competenceId = ?, projetId = ? WHERE id = ?";
+        String sql = "UPDATE CompetenceProjet SET idCompetence = ?, idProjet = ? WHERE id = ?";
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
