@@ -35,29 +35,13 @@
 
         <% for(Projet projet : recos){ %>
 
-        <a class="etape-card"
+        <div class="etape-card">
+            <div class="numero">Projet</div>
+            <h3><%= projet.getTitre() %></h3>
+            <p><%= projet.getDescription() %></p>
 
-           href="#">
-
-            <div class="numero">
-
-                x
-
-            </div>
-
-            <h3>
-
-                <%= projet.getTitre() %>
-
-            </h3>
-
-            <p>
-
-                <%= projet.getDescription() %>
-
-            </p>
-
-        </a>
+            
+        </div>
 
         <% } %>
 
