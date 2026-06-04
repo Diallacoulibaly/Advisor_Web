@@ -36,7 +36,10 @@ public class CommentaireController extends HttpServlet {
 
         switch (actions) {
             case "addCmt":
-                req.getRequestDispatcher("/WEB-INF/view/pages/add_commentaire.jsp").forward(req, resp);
+                req.setAttribute("pageContent", "add_commentaire.jsp");
+
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+
                 break;
             case "editCmt":
                 int id=Integer.parseInt(req.getParameter("id"));
