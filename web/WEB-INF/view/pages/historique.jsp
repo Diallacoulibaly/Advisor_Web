@@ -1,5 +1,6 @@
 <%@ page import="main.java.model.classes.Historique" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="main.java.model.classes.HistoriqueProjet" %><%--
   Created by IntelliJ IDEA.
   User: Cute Boy
   Date: 29/05/2026
@@ -12,12 +13,12 @@
     <title>Historique</title>
 </head>
 <body>
-    <% List<Historique> historiqueList = (List<Historique>) request.getAttribute("historiqueList"); %>
+    <% List<HistoriqueProjet> historiqueList = (List<HistoriqueProjet>) request.getAttribute("historiqueList"); %>
 
     <h1>Liste des historiques de projets </h1>
     <ol>
-        <% for (Historique historique : historiqueList ){%>
-            <li> <%= historique.getProjet().getTitre()%> |<%= historique.getProjet().getDescription()%> | <%= historique.getProjet().getDuree()%> | <%= historique.getProjet().getBudgetMin()%> | <%= historique.getProjet().getBudgetMax()%> | <%= historique.getDate()%></li>
+        <% for (HistoriqueProjet historique : historiqueList ){%>
+            <li> <%= historique.getProjet().getTitre()%> |<%= historique.getProjet().getDescription()%> | <%= historique.getProjet().getDuree()%> | <%= historique.getProjet().getBudgetMin()%> | <%= historique.getProjet().getBudgetMax()%> | <%= historique.getHistorique().getDate()%></li>
         <% } %>
     </ol>
 </body>

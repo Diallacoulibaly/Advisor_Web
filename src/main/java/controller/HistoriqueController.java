@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import main.java.model.DaoImplement.HistoriqueDaoImplement;
 import main.java.model.ServiceImplemente.HistoriqueServiceImplement;
 import main.java.model.classes.Historique;
+import main.java.model.classes.HistoriqueProjet;
 import main.java.model.classes.Utilisateur;
 import main.java.model.dao.HistoriqueDao;
 
@@ -36,7 +37,7 @@ public class HistoriqueController extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/view/pages/connexion.jsp").forward(req,resp);
             return;
         }
-        List<Historique> historiqueList = historiqueServiceImplement.afficherHistoriqueClient(utilisateur.getIdUtilisateur());
+        List<HistoriqueProjet> historiqueList = historiqueServiceImplement.afficherHistoriqueClient(utilisateur.getIdUtilisateur());
 
         req.setAttribute("historiqueList", historiqueList);
         req.setAttribute("pageContent", "historique.jsp");

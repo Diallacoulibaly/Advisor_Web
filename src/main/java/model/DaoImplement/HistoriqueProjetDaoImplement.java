@@ -1,6 +1,8 @@
 package main.java.model.DaoImplement;
 
+import main.java.model.classes.Historique;
 import main.java.model.classes.HistoriqueProjet;
+import main.java.model.classes.Projet;
 import main.java.model.dao.HistoriqueProjetDao;
 import main.java.Database.ConnectBD;
 
@@ -20,8 +22,8 @@ public class HistoriqueProjetDaoImplement implements HistoriqueProjetDao {
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, hp.getIdClient());
-            ps.setInt(2, hp.getIdCompetence());
+            ps.setInt(1, hp.getHistorique().getIdClient());
+            ps.setInt(2, hp.getProjet().getId());
 
             ps.executeUpdate();
 
@@ -42,12 +44,11 @@ public class HistoriqueProjetDaoImplement implements HistoriqueProjetDao {
              ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
-
-                HistoriqueProjet hp = new HistoriqueProjet(
-                        rs.getInt("idHistorique"),
-                        rs.getInt("idProjet")
-                );
-
+                Historique h=new Historique();
+                h.setId( rs.getInt("idHistorique"));
+                Projet p=new Projet();
+                p.setId(rs.getInt("idProjet"));
+                HistoriqueProjet hp = new HistoriqueProjet(h, p);
                 list.add(hp);
             }
 
