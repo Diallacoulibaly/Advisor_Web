@@ -25,8 +25,7 @@ public class ProjetClientServiceImplement implements ProjetClientService {
     public boolean add(ProjetClient projetClient) {
         int idClient = projetClient.getClient().getIdUtilisateur();
         if(projetClientRepository.hasProjetEnCours(idClient)) {
-            throw new IllegalStateException(
-                    "Vous avez déjà un projet en cours");
+            return false;
         }
         return projetClientRepository.save(projetClient);
     }

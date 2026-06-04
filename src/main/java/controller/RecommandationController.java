@@ -15,7 +15,9 @@ import main.java.utils.VerifySession;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/addRecommandation")
 public class RecommandationController extends HttpServlet{
@@ -63,8 +65,9 @@ public class RecommandationController extends HttpServlet{
         req.setAttribute("localites", localites);
         req.setAttribute("domaines", domaines);
         req.setAttribute("competences", competences);
-        req.setAttribute("pageContent", "formRecomm.jsp");
         req.setAttribute("menuActif", "recommandation");
+        req.setAttribute("pageContent", "formRecomm.jsp");
+
         req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
     }
 
@@ -115,19 +118,24 @@ public class RecommandationController extends HttpServlet{
                     historique.setIdClient(client.getIdUtilisateur());
                     int idHist = historiqueServiceImplement.ajouterHistorique(historique);
 
-
+                    Map<Integer, Integer> nbEtapesMap = new HashMap<>();
                     for (Projet p : recommandations) {
-
+                        nbEtapesMap.put(p.getId(), etapeServiceImplement.countEtapes(p.getId()));
                         HistoriqueProjet hp = new HistoriqueProjet(idHist, p.getId());
                         historiqueProjetServiceImplement.add(hp);
 
                     }
+                    request.setAttribute("NbreEtapes", nbEtapesMap);
+
 
 
                 }
                 
                 request.setAttribute("recommandations", recommandations);
+
                 request.setAttribute("pageContent", "recommandations.jsp");
+                request.setAttribute("menuActif", "recommandation");
+
                 request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
             } else {
                 request.setAttribute("error", "Données incorrectes - Client non mis à jour");
