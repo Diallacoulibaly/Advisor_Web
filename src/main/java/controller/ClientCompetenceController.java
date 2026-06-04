@@ -51,7 +51,7 @@ public class ClientCompetenceController extends HttpServlet {
         req.setAttribute("clients", clients);
         req.setAttribute("competences", competences);
 
-        req.getRequestDispatcher("/WEB-INF/view/clientCompetence/form.jsp")
+        req.getRequestDispatcher("/WEB-INF/view/pages/clientCompetence.jsp")
                 .forward(req, resp);
     }
 
