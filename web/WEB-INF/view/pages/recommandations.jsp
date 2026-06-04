@@ -9,13 +9,13 @@
 <%@ page import="java.util.List" %>
 
 <%@ page import="main.java.model.classes.*" %>
+<%@ page import="java.util.Map" %>
 
 
 <html>
 <head>
     <title>Projets recommandés</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/mes_projets.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/detailProjet.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/recommandation.css">
 
 </head>
 <body>
@@ -23,12 +23,15 @@
 
 <%
     List<Projet> projets = (List<Projet>) request.getAttribute("recommandations");
-    
+    Map<Integer, Integer> nbEtapesMap = (Map<Integer, Integer>) request.getAttribute("NbreEtapes");
+    String erreur= (String) request.getAttribute("erreur");
+
+
 %>
 
 <div class="mes-projets-container">
 
-    <h1>Ces projets pourraient vous intéresser</h1>
+
 
     <% if(projets == null || projets.isEmpty()) { %>
 
@@ -42,47 +45,77 @@
 
     </div>
     <% } else { %>
+    <h4  style="margin-bottom: 20px; color:#17253C;">Ces projets pourraient vous intéresser</h4>
 
     <div class="cards-container">
 
-        <% for(Projet projet : projets){ %>
+        <% for(Projet projet : projets){
+            int nbEt = nbEtapesMap.get(projet.getId());
+        %>
 
         <div class="project-card">
 
-            <div class="card-header">
-                <h2><%= projet.getTitre() %></h2>
+            <div class="project-top">
+
+                <h2 class="project-title">
+                    <%= projet.getTitre() %>
+                </h2>
 
                 <form action="mes_projets" method="post">
+
                     <input type="hidden" name="idProjet" value="<%= projet.getId()%>">
-                    <button type="submit" class="status">
-                        Lancer ce projet
-                    </button>
+
+                    <button type="submit" class="btn-launch">Lancer ce projet</button>
+
                 </form>
-                
+
             </div>
 
-            <div class="card-body">
+            <div class="project-description">
 
                 <%= projet.getDescription() %>
-            
-                <div class="info">
+
+            </div>
+
+            <div class="project-details">
+
+                <div class="detail-row">
+
                     <span>Domaine</span>
-                    <strong> <%= projet.getDomaine().getDomaine() %> </strong>
+
+                    <strong>
+                        <%= projet.getDomaine().getDomaine() %>
+                    </strong>
+
                 </div>
 
-                <div class="info">
+                <div class="detail-row">
+
                     <span>Localité</span>
-                    <strong> <%= projet.getLocalite().getRegionClient() %> </strong>
+
+                    <strong>
+                        <%= projet.getLocalite().getRegionClient() %>
+                    </strong>
+
                 </div>
 
-                <!-- <div class="info">
-                    <span>Nombre d'étapes</span>
-                    <strong> 3 </strong>
-                </div> -->
+                <div class="detail-row">
 
-                <div class="info">
                     <span>Durée</span>
-                    <strong> <%= projet.getDuree() %> mois </strong>
+
+                    <strong>
+                        <%= projet.getDuree() %> mois
+                    </strong>
+
+                </div>
+                <div class="detail-row">
+
+                    <span>Nombre d'étapes</span>
+
+                    <strong>
+                        <%= nbEt %>
+                    </strong>
+
                 </div>
 
             </div>
@@ -94,6 +127,8 @@
     </div>
 
     <% } %>
+
+
 
 </div>
 

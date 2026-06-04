@@ -15,7 +15,9 @@ import main.java.utils.VerifySession;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/addRecommandation")
 public class RecommandationController extends HttpServlet{
@@ -28,6 +30,7 @@ public class RecommandationController extends HttpServlet{
     private HistoriqueServiceImplement historiqueServiceImplement;
     private HistoriqueProjetServiceImplement historiqueProjetServiceImplement;
     private EtapeServiceImplement etapeServiceImplement;
+    private ProjetClientServiceImplement projetClientServiceImplement;
 
     public void init(){
         ProjetDao projetDao = new ProjetDaoImpl();
@@ -44,6 +47,9 @@ public class RecommandationController extends HttpServlet{
 
         HistoriqueProjetDao hpd = new HistoriqueProjetDaoImplement();
         historiqueProjetServiceImplement = new HistoriqueProjetServiceImplement(hpd);
+
+        ProjetClientDAO pcd = new ProjetClientDAOImplement();
+        projetClientServiceImplement = new ProjetClientServiceImplement(pcd);
 
         LocaliteDao localiteDao= new LocaliteDaoImplement();
         DomaineDao domaineDao= new DomaineDaoImplement();
@@ -63,8 +69,9 @@ public class RecommandationController extends HttpServlet{
         req.setAttribute("localites", localites);
         req.setAttribute("domaines", domaines);
         req.setAttribute("competences", competences);
-        req.setAttribute("pageContent", "formRecomm.jsp");
         req.setAttribute("menuActif", "recommandation");
+        req.setAttribute("pageContent", "formRecomm.jsp");
+
         req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
     }
 
@@ -93,10 +100,8 @@ public class RecommandationController extends HttpServlet{
 
 
 
-            Localite localite = new Localite();
-            localite = localiteServiceImplemente.getById(idLocalite);
-            Domaine domaine = new Domaine();
-            domaine = domaineImplement.getById(idDomaine);
+            Localite localite = localiteServiceImplemente.getById(idLocalite);
+            Domaine domaine = domaineImplement.getById(idDomaine);
 
 
             boolean updateSuccess = clientServiceImplement.addInfoClient(user.getIdUtilisateur(), niveau, localite, domaine, budget);
@@ -110,24 +115,37 @@ public class RecommandationController extends HttpServlet{
                 client.setNiveau(niveau);
 
                 List<Projet> recommandations = reco.suggererProjets(client);
+                List<ProjetClient> projetsClient = projetClientServiceImplement.getByClient(user.getIdUtilisateur());
+
+                for (ProjetClient pc : projetsClient) {
+                    recommandations.removeIf(p -> pc.getProjet().getId() == p.getId());
+                }
+
+
                 if (!recommandations.isEmpty()) {
                     Historique historique = new Historique();
                     historique.setIdClient(client.getIdUtilisateur());
                     int idHist = historiqueServiceImplement.ajouterHistorique(historique);
+                    historique.setId(idHist);
 
-
+                    Map<Integer, Integer> nbEtapesMap = new HashMap<>();
                     for (Projet p : recommandations) {
-
-                        HistoriqueProjet hp = new HistoriqueProjet(idHist, p.getId());
+                        nbEtapesMap.put(p.getId(), etapeServiceImplement.countEtapes(p.getId()));
+                        HistoriqueProjet hp = new HistoriqueProjet(historique, p);
                         historiqueProjetServiceImplement.add(hp);
 
                     }
+                    request.setAttribute("NbreEtapes", nbEtapesMap);
+
 
 
                 }
                 
                 request.setAttribute("recommandations", recommandations);
+
                 request.setAttribute("pageContent", "recommandations.jsp");
+                request.setAttribute("menuActif", "recommandation");
+
                 request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
             } else {
                 request.setAttribute("error", "Données incorrectes - Client non mis à jour");

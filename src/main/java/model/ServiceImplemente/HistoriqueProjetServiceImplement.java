@@ -20,7 +20,7 @@ public class HistoriqueProjetServiceImplement implements HistoriqueProjetService
     @Override
     public void add(HistoriqueProjet historiqueProjet) {
 
-        if (historiqueProjet.getIdCompetence() == null || historiqueProjet.getIdClient()==null ) {
+        if (historiqueProjet.getHistorique() == null || historiqueProjet.getProjet()==null ) {
             System.out.println("Erreur : objet HistoriqueProjet null");
             return;
         }

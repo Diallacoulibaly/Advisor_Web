@@ -42,21 +42,23 @@
 
             </div>
 
-            <div class="onglet-section">
+            <div class="onglet-section <%= "recommandation".equals(request.getAttribute("menuActif"))
+        ? "active"
+        : "" %>">
 
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/recom.png" alt="Recommandations" class="icon">
                 </div>
 
-                <div class="onglet-titre <%= "recommandation".equals(request.getAttribute("menuActif"))
-        ? "active"
-        : "" %>" >
+                <div class="onglet-titre" >
                     <a href="${pageContext.request.contextPath}/addRecommandation" class="a">Recommandations</a>
                 </div>
 
             </div>
 
-            <div class="onglet-section">
+            <div class="onglet-section <%= "historique".equals(request.getAttribute("menuActif"))
+        ? "active"
+        : "" %>">
 
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/hist.png" alt="Historique" class="icon">
