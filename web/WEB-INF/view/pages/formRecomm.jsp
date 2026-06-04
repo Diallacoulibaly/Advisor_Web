@@ -42,6 +42,11 @@
                 <p class="form-subtitle">
                     Obtenez des projets adaptés à votre profil
                 </p>
+                <% if (request.getAttribute("erreur")!= null) {%>
+                <h3 style="color: red; font-weight: bold">${erreur}</h3>
+                <%
+                    }
+                %>
 
             </div>
 
@@ -210,6 +215,8 @@
                 <%
                     }
                 %>
+
+
 
             </form>
 
