@@ -59,45 +59,32 @@ public class HistoriqueDaoImplement implements HistoriqueDao {
         return historiques;
     }
 
-    @Override
-    public List<HistoriqueProjet> afficherHistoriqueClient(int idClient) {
-        String sql = "SELECT p.titre as titre, p.description as description, p.duree as duree, p.budgetMin as budgetMin, p.budgetMax as budgetMax,  h.date as dateH,l.regionLocalite as localite ,d.domaine as domaine FROM client  cl INNER JOIN historique h ON h.idClient = cl.id INNER JOIN historiqueProjet as ph ON ph.idHistorique = h.id INNER JOIN projet as p ON p.id = ph.idProjet INNER JOIN domaine AS d ON d.id=p.idClient INNER JOIN localite AS l ON l.id=p.idLocalite WHERE cl.id = ?";
-
+    @Override public List<HistoriqueProjet> afficherHistoriqueClient(int idClient) { String sql = "SELECT p.titre as titre, p.description as description, p.duree as duree, p.budgetMin as budgetMin, p.budgetMax as budgetMax, h.date as dateH,l.regionClient as regionClient ,d.domaine as domaine FROM client cl INNER JOIN historique h ON h.idClient = cl.id INNER JOIN historiqueProjet as ph ON ph.idHistorique = h.id INNER JOIN projet as p ON p.id = ph.idProjet INNER JOIN domaine AS d ON d.id=p.idDomaine INNER JOIN localite AS l ON l.id=p.idLocalite WHERE cl.id = ?";
         List<HistoriqueProjet> historiquesP = new ArrayList<>();
         try(Connection connection = ConnectBD.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)
-            ) {
-            ps.setInt(1, idClient);
+            PreparedStatement ps = connection.prepareStatement(sql) )
+        { ps.setInt(1, idClient);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 HistoriqueProjet historiqueProjet= new HistoriqueProjet();
-
                 Projet projet = new Projet();
                 Historique historique= new Historique();
-                Domaine d=new Domaine();
-                Localite l=new Localite();
-
+                Domaine d=new Domaine(); Localite l=new Localite();
                 historique.setDate(rs.getDate("dateH").toLocalDate());
-
+                d.setDomaine(rs.getString("domaine"));
+                l.setRegionClient(rs.getString("regionClient"));
                 projet.setTitre(rs.getString("titre"));
                 projet.setDescription(rs.getString("description"));
                 projet.setDuree(rs.getInt("duree"));
                 projet.setBudgetMin(rs.getInt("budgetMin"));
                 projet.setBudgetMin(rs.getInt("budgetMax"));
-
+                projet.setDomaine(d); projet.setLocalite(l);
                 historiqueProjet.setHistorique(historique);
                 historiqueProjet.setProjet(projet);
-
                 historiquesP.add(historiqueProjet);
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return historiquesP;
-
-    }
-
+            } } catch (SQLException e)
+        { throw new RuntimeException(e);
+        } return historiquesP; }
     @Override
     public void supprimerHistorique(int id) {
 

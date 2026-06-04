@@ -18,7 +18,7 @@
     <h1>Liste des historiques de projets </h1>
     <ol>
         <% for (HistoriqueProjet historique : historiqueList ){%>
-            <li> <%= historique.getProjet().getTitre()%> |<%= historique.getProjet().getDescription()%> | <%= historique.getProjet().getDuree()%> | <%= historique.getProjet().getBudgetMin()%> | <%= historique.getProjet().getBudgetMax()%> | <%= historique.getHistorique().getDate()%></li>
+            <li> <%= historique.getProjet().getTitre()%> |<%= historique.getProjet().getDescription()%> | <%= historique.getProjet().getDuree()%> | <%= historique.getProjet().getBudgetMin()%> | <%= historique.getProjet().getBudgetMax()%> | <%= historique.getHistorique().getDate()%>|<%= historique.getProjet().getDomaine().getDomaine()%>|<%= historique.getProjet().getLocalite().getRegionClient()%></li>
         <% } %>
     </ol>
 </body>
