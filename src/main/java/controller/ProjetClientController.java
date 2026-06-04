@@ -73,8 +73,9 @@ public class ProjetClientController extends HttpServlet {
             if(!succes){
                 req.setAttribute("erreur", "Vous avez deja un projet en cours !!!");
 
-                req.setAttribute("pageContent", "recommandations.jsp");
-                 req.setAttribute("menuActif", "recommandation");
+                req.setAttribute("pageContent", "formRecomm.jsp");
+                req.setAttribute("menuActif", "recommandation");
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
                 return;
             }
             doGet(req, resp);

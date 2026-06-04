@@ -22,7 +22,7 @@ public class HistoriqueProjetDaoImplement implements HistoriqueProjetDao {
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, hp.getHistorique().getIdClient());
+            ps.setInt(1, hp.getHistorique().getId());
             ps.setInt(2, hp.getProjet().getId());
 
             ps.executeUpdate();
@@ -65,7 +65,7 @@ public class HistoriqueProjetDaoImplement implements HistoriqueProjetDao {
     @Override
     public List<Integer> getProjetsByHist(int idHistorique) {
         List<Integer> projetIds = new ArrayList<>();
-        String sql = "SELECT idProjet FROM historiqueprojet WHERE idHistorique = ?";
+        String sql = "SELECT distinct idProjet FROM historiqueprojet WHERE idHistorique = ?";
 
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

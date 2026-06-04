@@ -56,9 +56,9 @@
                     <%= projetClient.getProjet().getTitre() %>
                 </h2>
 
-                <span class="status">
-                            <%= projetClient.getStatut() %>
-                        </span>
+                <span class="status status-<%= projetClient.getStatut().name().toLowerCase() %>">
+    <%= projetClient.getStatut() %>
+</span>
 
             </div>
 

@@ -31,7 +31,7 @@
 
 <div class="mes-projets-container">
 
-    <h4  style="margin-bottom: 20px; color:#17253C;">Ces projets pourraient vous intéresser</h4>
+
 
     <% if(projets == null || projets.isEmpty()) { %>
 
@@ -45,6 +45,7 @@
 
     </div>
     <% } else { %>
+    <h4  style="margin-bottom: 20px; color:#17253C;">Ces projets pourraient vous intéresser</h4>
 
     <div class="cards-container">
 
@@ -127,11 +128,7 @@
 
     <% } %>
 
-    <% if (request.getAttribute("erreur")!= null) {%>
-    <h3 style="color: red; font-weight: bold">${erreur}</h3>
-    <%
-        }
-    %>
+
 
 </div>
 
