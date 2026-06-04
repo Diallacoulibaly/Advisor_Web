@@ -24,6 +24,11 @@ public class HistoriqueServiceImplement implements HistoriqueService {
     }
 
     @Override
+    public List<Historique> afficherHistoriqueClient(int idClient) {
+        return historiqueDao.afficherHistoriqueClient(idClient);
+    }
+
+    @Override
     public void supprimerHistorique(int id) {
         if(id <= 0){
             System.out.println("Erreur id historique incorrecte !!");
