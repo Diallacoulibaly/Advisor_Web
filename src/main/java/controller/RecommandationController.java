@@ -118,7 +118,7 @@ public class RecommandationController extends HttpServlet{
 
                     for (Projet p : recommandations) {
 
-                        HistoriqueProjet hp = new HistoriqueProjet(idHist, p.getId());
+                        HistoriqueProjet hp = new HistoriqueProjet(historique, p);
                         historiqueProjetServiceImplement.add(hp);
 
                     }

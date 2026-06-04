@@ -2,35 +2,38 @@ package main.java.model.classes;
 
 public class HistoriqueProjet {
 
-    private Integer idProjet;
-    private Integer idHistorique;
+    private Projet projet;
+    private Historique historique;
 
 
 
     public HistoriqueProjet() {}
 
-    public HistoriqueProjet(Integer idHistorique, Integer idProjet) {
-        this.idProjet = idProjet;
-        this.idHistorique = idHistorique;
+    public HistoriqueProjet(Historique historique, Projet projet) {
+        this.projet = projet;
+        this.historique = historique;
     }
 
 
 
     // Getters et Setters
-    public Integer getIdClient() {
-        return idProjet;
+
+    public void setProjet(Projet projet) {
+        this.projet = projet;
     }
 
-    public void setIdClient() {
-        this.idProjet = idProjet;
+    public Projet getProjet() {
+        return projet;
     }
 
-    public Integer getIdCompetence() {
-        return idHistorique;
+    public void setHistorique(Historique historique) {
+        this.historique = historique;
     }
 
-    public void SetIdHistorique(int id){
-        this.idHistorique = id;
+    public Historique getHistorique() {
+        return historique;
     }
+
+
 
 }
