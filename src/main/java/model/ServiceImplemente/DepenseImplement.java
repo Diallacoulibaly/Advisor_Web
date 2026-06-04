@@ -32,6 +32,15 @@ public class DepenseImplement implements DepenseService {
         }
         return depenseDao.getById(id);  // CORRECTION: retourner le résultat de la méthode
     }
+    @Override
+    public Optional<Depense> getByIdClient(int id) {
+        if (id <= 0) {  // CORRECTION: vérification plus stricte
+            System.out.println("L'id de la dépense doit être positif.");
+            return Optional.empty();
+        }
+        return depenseDao.getByIdClient(id);  // CORRECTION: retourner le résultat de la méthode
+    }
+
 
     @Override
     public List<Depense> getAll() {

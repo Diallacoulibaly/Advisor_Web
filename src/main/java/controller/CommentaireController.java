@@ -45,7 +45,11 @@ public class CommentaireController extends HttpServlet {
                 int id=Integer.parseInt(req.getParameter("id"));
                 Commentaire c=commentaireService.getById(id);
                 req.setAttribute("cmt",c);
-                req.getRequestDispatcher("/WEB-INF/view/pages/update_commentaire.jsp").forward(req,resp);
+
+                req.setAttribute("pageContent", "update_commentaire.jsp");
+
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+
                 break;
             case "deleteCmt":
                 int idD=Integer.parseInt(req.getParameter("id")) ;
@@ -55,7 +59,10 @@ public class CommentaireController extends HttpServlet {
             default:
                 List<Commentaire> cmt = commentaireService.afficher();
                 req.setAttribute("cmt" ,cmt);
-                req.getRequestDispatcher("/WEB-INF/view/pages/index_commentaire.jsp").forward(req,resp);
+                req.setAttribute("pageContent", "index_commentaire.jsp");
+
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+
                 break;
 
 
