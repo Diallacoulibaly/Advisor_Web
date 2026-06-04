@@ -54,23 +54,35 @@ public class ProjetClientController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Utilisateur user = (Utilisateur) req.getSession().getAttribute("user");
-        int idProjet = (Integer.parseInt(req.getParameter("idProjet"))) ;
-        
-        Projet projet = new Projet(); 
-        projet.setId(idProjet);
 
-        Client client = new Client();
-        client.setIdUtilisateur(user.getIdUtilisateur());
-        
-        ProjetClient projetclient = new ProjetClient();
-        projetclient.setClient(client);
-        projetclient.setProjet(projet);
-        pcServiceImplement.add(projetclient);
-        doGet(req, resp);
+
+            Utilisateur user = (Utilisateur) req.getSession().getAttribute("user");
+            int idProjet = (Integer.parseInt(req.getParameter("idProjet")));
+
+            Projet projet = new Projet();
+            projet.setId(idProjet);
+
+            Client client = new Client();
+            client.setIdUtilisateur(user.getIdUtilisateur());
+
+            ProjetClient projetclient = new ProjetClient();
+            projetclient.setClient(client);
+            projetclient.setProjet(projet);
+            boolean succes= pcServiceImplement.add(projetclient);
+            System.out.println(succes);
+            if(!succes){
+                req.setAttribute("erreur", "Vous avez deja un projet en cours !!!");
+
+                req.setAttribute("pageContent", "recommandations.jsp");
+                 req.setAttribute("menuActif", "recommandation");
+                return;
+            }
+            doGet(req, resp);
 //        req.setAttribute("pageContent", "mes_projets.jsp");
 //        req.setAttribute("menuActif", "mes_projets");
 //        req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+
+
     }
 
 }
