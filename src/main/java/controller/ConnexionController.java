@@ -30,6 +30,8 @@ public class ConnexionController extends HttpServlet {
     private UtilisateurServiceImplement utilisateurServiceImplement;
     private ProjetClientServiceImplement projetClientServiceImplement;
     private EtapeServiceImplement etapeServiceImplement;
+    private DepenseService depenseService;
+
 
     public void init(){
         EtapeDao etapeDao= new EtapeDaoImplement();
@@ -39,6 +41,8 @@ public class ConnexionController extends HttpServlet {
         projetClientServiceImplement= new ProjetClientServiceImplement(projetClientDAO);
         etapeServiceImplement= new EtapeServiceImplement(etapeDao);
         utilisateurServiceImplement= new UtilisateurServiceImplement(utilisateurDao);
+        DepenseDao depenseDao = new DepenseDaoImplement();
+        depenseService = new DepenseImplement(depenseDao);
     }
 
     @Override
@@ -71,6 +75,14 @@ public class ConnexionController extends HttpServlet {
             session.setAttribute("role", utilisateur.get().getRole());
 
             if (utilisateur.get().getRole() == Role.CLIENT) {
+                //envoie des depense du client
+                int idClient = utilisateur.get().getIdUtilisateur();
+
+                double totalDepense =
+                        depenseService.getTotalDepenseClient(idClient);
+
+                req.setAttribute("totalDepense", totalDepense);
+
                 Optional<ProjetClient> projetClientOpt= projetClientServiceImplement.getByClientEncours(utilisateur.get().getIdUtilisateur());
                 projetClientOpt.ifPresent(projetClient -> {
                     req.setAttribute("projetClientOpt", projetClient);
