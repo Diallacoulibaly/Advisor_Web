@@ -50,6 +50,7 @@
         <td>
             <a class="btn-edit" href="etape?action=modifier&id=<%= item.getIdEtape() %>">Modifier</a>
             <a class="btn-delete" href="etape?action=supprimer&id=<%= item.getIdEtape() %>" onclick="confirmerSuppression(event)">Supprimer</a>
+            <a class="btn-activite" href="etape_activite?idEtape=<%=item.getIdEtape()%>&titreEtape=<%= item.getTitre() %>"> Voir activités </a>
         </td>
     </tr>
     <%

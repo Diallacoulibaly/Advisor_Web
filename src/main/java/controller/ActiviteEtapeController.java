@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import main.java.model.DaoImplement.ActiviteDaoImplement;
 import main.java.model.ServiceImplemente.ActiviteServiceImplement;
 import main.java.model.classes.Activite;
+import main.java.model.classes.Etape;
 import main.java.model.dao.ActiviteDao;
 
 import java.io.IOException;
@@ -27,10 +28,16 @@ public class ActiviteEtapeController extends HttpServlet {
         @Override
         protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             int idEtape = Integer.parseInt(req.getParameter("idEtape"));
+            String etapeTitre = req.getParameter("titreEtape");
             List<Activite> activiteList = activiteServiceImplement.getActiviteByEtape(idEtape);
             req.setAttribute("activiteList", activiteList);
             req.setAttribute("idEtape",idEtape);
-            req.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(req, resp);
+            req.setAttribute("titreEtape", etapeTitre);
+
+            req.setAttribute("pageContent","activite.jsp");
+            req.setAttribute("menuActif", "mes_projets");
+
+            req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req,resp);
 
         }
 

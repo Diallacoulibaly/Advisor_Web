@@ -9,33 +9,49 @@ import java.util.List;
 
 public class CompetenceProjetDaoImplement implements CompetenceProjetDao {
 
-    // Ajout
     @Override
     public boolean add_CP(CompetenceProjet cp) {
-        String sql = "INSERT INTO CompetenceProjet (competenceId, projetId) VALUES (?, ?)";
+        String sql = "INSERT INTO CompetenceProjet (idCompetence, idProjet) VALUES (?, ?)";
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, cp.getCompetenceId());
             pstmt.setInt(2, cp.getIdProjet());
-            pstmt.executeUpdate();
+            int rows = pstmt.executeUpdate();
+            return rows > 0;
         } catch (SQLException e) {
             System.err.println("Erreur lors de l'ajout CompetenceProjet : " + e.getMessage());
+            return false;
         }
-        return false;
     }
 
-    // Rechercher : Retourne la liste des ID de compétences associées à un projet
+    @Override
+    public CompetenceProjet rech_CP(int idProjet, int idCompetence) {
+        String sql = "SELECT * FROM CompetenceProjet WHERE idProjet = ? AND idCompetence = ?";
+        try (Connection conn = ConnectBD.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idProjet);
+            ps.setInt(2, idCompetence);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new CompetenceProjet(rs.getInt("idCompetence"), rs.getInt("idProjet"));
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur de récupération CompetenceProjet : " + e.getMessage());
+        }
+        return null;
+    }
+
     @Override
     public List<Integer> rech_CP(int idProjet) {
         List<Integer> listeCompetences = new ArrayList<>();
-        String sql = "SELECT competenceId FROM CompetenceProjet WHERE projetId = ?";
-
+        String sql = "SELECT idCompetence FROM CompetenceProjet WHERE idProjet = ?";
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idProjet);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    listeCompetences.add(rs.getInt("competenceId"));
+                    listeCompetences.add(rs.getInt("idCompetence"));
                 }
             }
         } catch (SQLException e) {
@@ -44,22 +60,15 @@ public class CompetenceProjetDaoImplement implements CompetenceProjetDao {
         return listeCompetences;
     }
 
-    // Liste complète
     @Override
     public List<CompetenceProjet> ListeCP() {
         List<CompetenceProjet> liste = new ArrayList<>();
         String sql = "SELECT * FROM CompetenceProjet";
-
         try (Connection conn = ConnectBD.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                CompetenceProjet cp = new CompetenceProjet(
-                        rs.getInt("competenceId"),
-                        rs.getInt("projetId")
-                );
-
-                liste.add(cp);
+                liste.add(new CompetenceProjet(rs.getInt("idCompetence"), rs.getInt("idProjet")));
             }
         } catch (SQLException e) {
             System.err.println("Erreur récupération toutes les CompetenceProjet : " + e.getMessage());
@@ -67,16 +76,15 @@ public class CompetenceProjetDaoImplement implements CompetenceProjetDao {
         return liste;
     }
 
-    // Mise à jour
     @Override
-    public boolean mise_a_jour_CP(CompetenceProjet cp) {
-        String sql = "UPDATE CompetenceProjet SET competenceId = ?, projetId = ? WHERE id = ?";
+    public boolean mise_a_jour_CP(int ancienIdProjet, int ancienIdCompetence, CompetenceProjet nouvelleAssociation) {
+        String sql = "UPDATE CompetenceProjet SET idCompetence = ?, idProjet = ? WHERE idProjet = ? AND idCompetence = ?";
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, cp.getCompetenceId());
-            pstmt.setInt(2, cp.getIdProjet());
-
+            pstmt.setInt(1, nouvelleAssociation.getCompetenceId());
+            pstmt.setInt(2, nouvelleAssociation.getIdProjet());
+            pstmt.setInt(3, ancienIdProjet);
+            pstmt.setInt(4, ancienIdCompetence);
             int rows = pstmt.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
@@ -85,32 +93,17 @@ public class CompetenceProjetDaoImplement implements CompetenceProjetDao {
         }
     }
 
-    // Suppression
     @Override
-    public boolean suppr_CP(int id) {
-        String sql = "DELETE FROM CompetenceProjet WHERE id = ?";
+    public boolean suppr_CP(int idProjet, int idCompetence) {
+        String sql = "DELETE FROM CompetenceProjet WHERE idProjet = ? AND idCompetence = ?";
         try (Connection conn = ConnectBD.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, idProjet);
+            pstmt.setInt(2, idCompetence);
             int rows = pstmt.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
             System.err.println("Erreur suppression CompetenceProjet : " + e.getMessage());
-            return false;
-        }
-    }
-
-    // Vérification
-    @Override
-    public boolean verif_CP(int id) {
-        String sql = "SELECT 1 FROM CompetenceProjet WHERE id = ?";
-        try (Connection conn = ConnectBD.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next();
-            }
-        } catch (SQLException e) {
             return false;
         }
     }

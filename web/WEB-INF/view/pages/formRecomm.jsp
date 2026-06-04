@@ -205,6 +205,11 @@
                     Obtenir mes recommandations
 
                 </button>
+                <% if (request.getAttribute("error")!= null) {%>
+                <h3 style="color: red; font-weight: bold">${error}</h3>
+                <%
+                    }
+                %>
 
             </form>
 

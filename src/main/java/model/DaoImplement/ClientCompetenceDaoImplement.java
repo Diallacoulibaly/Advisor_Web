@@ -16,7 +16,7 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
     @Override
     public void add(ClientCompetence cc) {
 
-        String sql = "INSERT INTO client_competence (idClient, idCompetence) VALUES (?, ?)";
+        String sql = "INSERT INTO clientcompetence (idClient, idCompetence) VALUES (?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -36,7 +36,7 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
 
         List<ClientCompetence> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM client_competence";
+        String sql = "SELECT * FROM clientcompetence";
 
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
@@ -62,7 +62,7 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
     @Override
     public void update(ClientCompetence cc, int oldIdClient, int oldIdCompetence) {
 
-        String sql = "UPDATE client_competence SET idClient=?, idCompetence=? " +
+        String sql = "UPDATE clientcompetence SET idClient=?, idCompetence=? " +
                 "WHERE idClient=? AND idCompetence=?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -86,7 +86,7 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
     @Override
     public void delete(int idClient, int idCompetence) {
 
-        String sql = "DELETE FROM client_competence WHERE idClient=? AND idCompetence=?";
+        String sql = "DELETE FROM clientcompetence WHERE idClient=? AND idCompetence=?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
 
