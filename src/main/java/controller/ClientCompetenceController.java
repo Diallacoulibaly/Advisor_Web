@@ -52,7 +52,7 @@ public class ClientCompetenceController extends HttpServlet {
         req.setAttribute("competences", competences);
         System.out.println("la taille:"+clients.size());
 
-        req.getRequestDispatcher("/WEB-INF/view/pages/ClientCompetence.jsp")
+        req.getRequestDispatcher("/WEB-INF/view/pages/clientCompetence.jsp")
                 .forward(req, resp);
     }
 
