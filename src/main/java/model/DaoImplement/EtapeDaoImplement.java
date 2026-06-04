@@ -161,41 +161,6 @@ public class EtapeDaoImplement implements EtapeDao {
         return false;
     }
 
-    /*
-    public List<Etape> getEtapesByProjetId(int idProjet) {
-    List<Etape> liste = new ArrayList<>();
-    String sql = "SELECT * FROM Etape WHERE idProjet = ? ORDER BY ordre ASC";
-
-    try (Connection conn = ConnectBD.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        pstmt.setInt(1, idProjet);
-
-        try (ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                Projet p = new Projet();
-                p.setId(rs.getInt("idProjet"));
-
-                // Supposons que StatutEtape soit votre Enum
-                main.java.model.enums.StatutEtape statut = main.java.model.enums.StatutEtape.valueOf(rs.getString("statut"));
-
-                Etape etape = new Etape(
-                    rs.getInt("idEtape"),
-                    rs.getString("titre"),
-                    rs.getString("description"),
-                    rs.getInt("ordre"),
-                    statut,
-                    p
-                );
-                liste.add(etape);
-            }
-        }
-    } catch (SQLException e) {
-        System.err.println("Erreur récupération étapes par projet : " + e.getMessage());
-    }
-    return liste;
-}
-*/
 
     @Override
     public List<Etape> getByProjetId(int idProjet) {
@@ -205,11 +170,14 @@ public class EtapeDaoImplement implements EtapeDao {
             ps.setInt(1, idProjet);
             try (ResultSet rs = ps.executeQuery()){
                 while (rs.next()) {
+
+                    StatutEtape statut = StatutEtape.valueOf(rs.getString("statut"));
                     Etape etape = new Etape();
                     etape.setIdEtape(rs.getInt("id"));
                     etape.setTitre(rs.getString("titre"));
                     etape.setDescription(rs.getString("description"));
                     etape.setOrdre(rs.getInt("ordre"));
+                    etape.setStatutEtape(statut);
                     etapeList.add(etape);
                 }
             }
