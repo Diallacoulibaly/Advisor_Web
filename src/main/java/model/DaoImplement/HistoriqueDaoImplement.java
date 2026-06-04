@@ -2,6 +2,7 @@ package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
 import main.java.model.classes.Historique;
+import main.java.model.classes.Projet;
 import main.java.model.dao.HistoriqueDao;
 
 import java.sql.*;
@@ -47,6 +48,36 @@ public class HistoriqueDaoImplement implements HistoriqueDao {
                 historique.setDate(rs.getDate("date").toLocalDate());
                 historique.setIdClient(rs.getInt("idClient"));
                 historique.setDescriptionAction(rs.getString("descriptionAction"));
+
+                historiques.add(historique);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return historiques;
+    }
+
+    @Override
+    public List<Historique> afficherHistoriqueClient(int idClient) {
+        String sql = "SELECT titre, description, duree, budgetMin, budgetMax, date FROM client as cl INNER JOIN historique as h ON h.idClient = cl.id INNER JOIN historiqueProjet as ph ON ph.idHistorique = h.id INNER JOIN projet as p ON p.id = ph.idProjet WHERE cl.id = ?";
+        List<Historique> historiques = new ArrayList<>();
+
+        try(Connection connection = ConnectBD.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)
+            ) {
+            ps.setInt(1, idClient);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                Historique historique = new Historique();
+                Projet projet = new Projet();
+                historique.setDate(rs.getDate("date").toLocalDate());
+                projet.setTitre(rs.getString("titre"));
+                projet.setDescription(rs.getString("description"));
+                projet.setDuree(rs.getInt("duree"));
+                projet.setBudgetMin(rs.getInt("budgetMin"));
+                projet.setBudgetMin(rs.getInt("budgetMax"));
 
                 historiques.add(historique);
             }

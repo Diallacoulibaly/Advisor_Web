@@ -7,5 +7,6 @@ import java.util.List;
 public interface HistoriqueService {
     int ajouterHistorique(Historique historique);
     List<Historique> afficherHistorique();
+    List<Historique> afficherHistoriqueClient(int idClient);
     void supprimerHistorique(int id);
 }
