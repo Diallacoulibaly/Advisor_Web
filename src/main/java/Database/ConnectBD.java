@@ -10,6 +10,11 @@ public class ConnectBD {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "diallacoul";
 
+<<<<<<< HEAD
+    private static final String USER = "root";
+    private static final String PASSWORD = "";
+=======
+>>>>>>> 1b24f5fbc2bf9e8145ac4326b422117ebb9ed42c
 
     public static Connection getConnection() {
 

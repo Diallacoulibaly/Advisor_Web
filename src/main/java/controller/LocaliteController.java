@@ -20,13 +20,14 @@ public class LocaliteController extends HttpServlet {
         LocaliteDao l=new LocaliteDaoImplement();
          localiteServiceImplemente=new LocaliteServiceImplemente(l);
 
+
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       String action=req.getParameter("action");
-       if (action==null) action = "liste";
+       String actions=req.getParameter("actions");
+       if (actions==null) actions = "liste";
 
-       switch (action) {
+       switch (actions) {
            case "add":
                req.getRequestDispatcher("/WEB-INF/view/add_localite.jsp").forward(req, resp);
                break;
@@ -52,16 +53,16 @@ public class LocaliteController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        if (action != null && !action.isEmpty()) {
-            if (action.equalsIgnoreCase("add")) {
+        String actions = req.getParameter("actions");
+        if (actions != null && !actions.isEmpty()) {
+            if (actions.equalsIgnoreCase("add")) {
                String regionClient=req.getParameter("regionClient");
                Localite localite=new Localite();
                localite.setRegionClient(regionClient);
                localiteServiceImplemente.add(localite);
                resp.sendRedirect("localites");
            }
-           else if (action.equalsIgnoreCase("update")){
+           else if (actions.equalsIgnoreCase("update")){
                int id=Integer.parseInt(req.getParameter("id"));
                String regionClient=req.getParameter("regionClient");
                localiteServiceImplemente.update(id,regionClient);
