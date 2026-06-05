@@ -18,11 +18,11 @@
 
 <div class="container">
 
-    <div class="btn-container">
-        <a href="commentaires?actions=addCmt" class="btn-ajout">
-            Ajouter un commentaire
+    <!-- <div class="btn-container">
+        <a  href="${pageContext.request.contextPath}/etape_activite" class="btn-ajout">
+            Retour
         </a>
-    </div>
+    </div>-->
 
     <h1>Liste des commentaires</h1>
 
