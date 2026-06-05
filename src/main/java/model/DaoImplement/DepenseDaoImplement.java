@@ -1,8 +1,8 @@
 package main.java.model.DaoImplement;
 
-import com.mysql.cj.xdevapi.Client;
+
 import main.java.Database.ConnectBD;
-import main.java.model.classes.Depense;
+import main.java.model.classes.*;
 import main.java.model.classes.Activite;
 import main.java.model.dao.DepenseDao;
 
@@ -15,7 +15,7 @@ public class DepenseDaoImplement implements DepenseDao {
 
     private Depense mapRow(ResultSet rs) throws SQLException {
         Activite activite = new Activite();
-        Client client=new Client() ;
+        Client client= new Client();
         activite.setId(rs.getInt("idActivite"));
         return new Depense(
                 rs.getInt("id"),
@@ -38,7 +38,7 @@ public class DepenseDaoImplement implements DepenseDao {
             ps.setDate(3, depense.getDate());
             // CORRECTION: getActivite().getId() au lieu de getActivite() directement
             ps.setInt(4, depense.getActivite().getId());
-            ps.setInt(5,depense.getClient().getId());
+            ps.setInt(5,depense.getClient().getIdUtilisateur());
             ps.executeUpdate();
             System.out.println("Dépense ajoutée avec succès.");
 
@@ -114,7 +114,7 @@ public void update(Depense depense) {
         ps.setDate(3, depense.getDate());
         ps.setInt(4, depense.getActivite().getId());
         ps.setInt(5, depense.getIdDepense());
-        ps.setInt(6,depense.getClient().getId());
+        ps.setInt(6,depense.getClient().getIdUtilisateur());
 
         int lines = ps.executeUpdate();
         System.out.println(lines > 0 ? "Dépense modifiée." : "Aucune dépense modifiée.");

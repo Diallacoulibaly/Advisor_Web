@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import main.java.model.classes.Activite;
+import main.java.model.classes.Client;
 import main.java.model.classes.Depense;
 import main.java.model.ServiceImplemente.DepenseImplement;
 import main.java.model.dao.DepenseDao;
@@ -85,8 +86,9 @@ public class DepenseController extends HttpServlet {
                     Depense depense;
                     if (activiteIdParam != null && !activiteIdParam.isEmpty()) {
                         Activite activite = new Activite();
+                        Client client=new Client();
                         activite.setId(Integer.parseInt(activiteIdParam));
-                        depense = new Depense(null, montant, description, date, activite);
+                        depense = new Depense(null, montant, description, date, activite,client);
                     } else {
                         depense = new Depense(null, montant, description, date);
                     }

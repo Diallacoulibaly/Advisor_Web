@@ -16,5 +16,5 @@ public interface DepenseDao {
 
     void delete(int id);
 
-    public double getTotalDepenseClient(int idClient);
+     double getTotalDepenseClient(int idClient);
 }
