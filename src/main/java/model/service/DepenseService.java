@@ -8,6 +8,8 @@ public interface DepenseService {
 
     void add(Depense depense);
     Optional<Depense> getById(int id);
+    double getTotalDepenseClient(int id);
+
     List<Depense> getAll();
     void update(Depense depense);  // CORRECTION: reçoit un objet Depense
     void delete(int id);

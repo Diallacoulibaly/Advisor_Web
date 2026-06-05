@@ -1,67 +1,66 @@
 <%@ page import="java.util.List" %>
-<%@ page import="main.java.model.classes.Commentaire" %><%--
-
-  Created by IntelliJ IDEA.
-  User: kalandew20
-  Date: 01/06/2026
-  Time: 17:25
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="main.java.model.classes.Commentaire" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%List <Commentaire> c=(List<Commentaire>) request.getAttribute("cmt");%>
+
+<%
+    List<Commentaire> c = (List<Commentaire>) request.getAttribute("cmt");
+%>
+
 <html>
 <head>
-    <title>La liste des commentaires</title>
+    <title>Liste des commentaires</title>
+
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/commentaire.css">
 </head>
+
 <body>
-<a href="commentaires?actions=addCmt" class="btn-ajout">
-    <button>Ajouter un Domaine</button>
-</a>
-<h1>La liste des Commentaires</h1>
-<table border="1">
-    <tr>
 
-        <th>ID</th>
-        <th>MESSAGE</th>
-        <th>Actions</th>
+<div class="container">
 
-    </tr>
-    <% for (int i=0 ; i<c.size();i++){
-    %>
-    <tr>
+    <!-- <div class="btn-container">
+        <a  href="${pageContext.request.contextPath}/etape_activite" class="btn-ajout">
+            Retour
+        </a>
+    </div>-->
 
-        <td>
-            <%= i+1 %>
-        </td>
+    <h1>Liste des commentaires</h1>
 
-        <td>
-            <%= c.get(i).getMessage() %>
-        </td>
+    <table>
 
-        <td>
-            <a class="edit" href="commentaires?actions=editCmt&id=<%= c.get(i).getId() %>">
+        <tr>
+            <th>ID</th>
+            <th>Message</th>
+            <th>Actions</th>
+        </tr>
 
-                Modifier
+        <% for(int i = 0; i < c.size(); i++){ %>
 
-            </a>
+        <tr>
 
+            <td><%= i + 1 %></td>
 
-            <a class="delete" href="commentaires?actions=deleteCmt&id=<%= c.get(i).getId() %>">
+            <td><%= c.get(i).getMessage() %></td>
 
-                Supprimer
+            <td>
+                <a class="edit"
+                   href="commentaires?actions=editCmt&id=<%= c.get(i).getId() %>">
+                    Modifier
+                </a>
 
-            </a>
+                <a class="delete"
+                   href="commentaires?actions=deleteCmt&id=<%= c.get(i).getId() %>">
+                    Supprimer
+                </a>
+            </td>
 
-        </td>
+        </tr>
 
-    </tr>
+        <% } %>
 
-    <%
-        }
-    %>
+    </table>
 
-
-</table>
+</div>
 
 </body>
 </html>

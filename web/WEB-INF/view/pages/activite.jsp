@@ -49,6 +49,7 @@
                     </div>
                 <input type="hidden" name="action" value="ajouter">
                 <input type="hidden" name="idActivite" value="<%= activite.getId() %>">
+
                 <input type="hidden" name="idEtape" value="<%= idEtape %>">
 
                 <input class="inp-depense" type="number" id="montant" name="montant" placeholder=" Saisir le montant">

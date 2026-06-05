@@ -34,6 +34,15 @@ public class DepenseImplement implements DepenseService {
     }
 
     @Override
+    public double getTotalDepenseClient(int id) {
+        if (id <= 0) {  // CORRECTION: vérification plus stricte
+
+            return 0;
+        }
+        return depenseDao.getTotalDepenseClient(id);
+    }
+
+    @Override
     public List<Depense> getAll() {
         return depenseDao.getAll();
     }
