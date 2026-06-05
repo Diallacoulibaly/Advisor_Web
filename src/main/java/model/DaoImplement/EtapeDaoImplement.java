@@ -161,22 +161,41 @@ public class EtapeDaoImplement implements EtapeDao {
         return false;
     }
 
-    // VERIFICATION
-    public boolean verif_etape(int idEtape) {
-        String sql = "SELECT 1 FROM etape WHERE id = ?";
+    /*
+    public List<Etape> getEtapesByProjetId(int idProjet) {
+    List<Etape> liste = new ArrayList<>();
+    String sql = "SELECT * FROM Etape WHERE idProjet = ? ORDER BY ordre ASC";
 
-        try (Connection conn = ConnectBD.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    try (Connection conn = ConnectBD.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, idEtape);
-            ResultSet rs = stmt.executeQuery();
-            return rs.next();
-        } catch (Exception e) {
-            System.out.println("Erreur lors de la verification de l etape : " + e.getMessage());
-            e.printStackTrace();
-            return false;
+        pstmt.setInt(1, idProjet);
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            while (rs.next()) {
+                Projet p = new Projet();
+                p.setId(rs.getInt("idProjet"));
+
+                // Supposons que StatutEtape soit votre Enum
+                main.java.model.enums.StatutEtape statut = main.java.model.enums.StatutEtape.valueOf(rs.getString("statut"));
+
+                Etape etape = new Etape(
+                    rs.getInt("idEtape"),
+                    rs.getString("titre"),
+                    rs.getString("description"),
+                    rs.getInt("ordre"),
+                    statut,
+                    p
+                );
+                liste.add(etape);
+            }
         }
+    } catch (SQLException e) {
+        System.err.println("Erreur récupération étapes par projet : " + e.getMessage());
     }
+    return liste;
+}
+*/
 
     @Override
     public List<Etape> getByProjetId(int idProjet) {

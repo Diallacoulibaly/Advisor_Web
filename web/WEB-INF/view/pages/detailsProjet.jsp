@@ -89,8 +89,7 @@
         <% for(Etape etape : etapes){ %>
 
         <a class="etape-card"
-
-           href="activitesEtape?idEtape=<%= etape.getIdEtape() %>">
+           href="etape_activite?idEtape=<%= etape.getIdEtape() %>">
 
             <div class="numero">
 

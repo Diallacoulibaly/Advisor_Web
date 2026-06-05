@@ -1,0 +1,132 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:white;
+    color:#1d2b4f;
+}
+
+.etape {
+    color: black;
+    width: 831px;
+    height: 139px;
+    border: #2E58CC solid;
+    border-radius: 20px;
+    background-color: rgba(46, 88, 204, 0.1);
+    margin: 0 auto 0;
+    padding: 10px;
+}
+.description{
+    margin-top: 1%;
+}
+.form-depense {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+}
+li{
+    list-style : none;
+}
+
+.titre{
+    align-items: center;
+    display: flex;
+    gap: 180px;
+    margin-bottom: 20px;
+
+}
+h2{
+    font-size: 18px;
+}
+.btn{
+    margin-top: 2%;
+    align-items: center;
+    display: flex;
+    gap: 50px;
+    .coment-btn{
+        color: #3A6BF3;
+        background-color: white;
+        border: #3A6BF3 solid;
+        border-radius: 25px;
+        width: 276px;
+        height: 60px;
+        a{
+            text-decoration: none;
+            color: #3A6BF3;
+            font-size: 20px;
+        }
+    }
+    .finish-btn{
+        width: 276px;
+        height: 60px;
+        color: white;
+        background-color: #3A6BF3;
+        border-radius: 25px;
+        border: #3A6BF3 solid;
+        font-size: 20px;
+    }
+}
+.form-depense{
+    margin-bottom: 10px;
+}
+
+.form-depense .check {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    width: 90%;
+    flex-direction: row;
+}
+
+
+.form-depense .check-title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 250px;
+}
+.bodyy{
+    margin-left: 40px ;
+    margin-top: 20px;
+}
+
+.inp-depense{
+    width: 127px;
+    height: 36px;
+    border-radius: 8px;
+
+}
+
+.inp-desc{
+    width: 258px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+i{
+    width: 80px;
+    height: 80px;
+}
+
+.sey{
+    align-items: center;
+    display: flex;
+    gap: 40px;
+}
+.btnpd{
+    padding-top: 6%;
+}
+
+.save{
+    width: 90px;
+    height: 36px;
+    border-radius: 8px;
+    color: #3A6BF3;
+    background-color: white;
+    border: #3A6BF3 solid;
+}

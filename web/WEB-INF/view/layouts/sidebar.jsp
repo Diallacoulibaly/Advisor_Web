@@ -48,8 +48,10 @@
                     <img src="${pageContext.request.contextPath}/assets/img/recom.png" alt="Recommandations" class="icon">
                 </div>
 
-                <div class="onglet-titre">
-                    <a href="#" class="a">Recommandations</a>
+                <div class="onglet-titre <%= "recommandation".equals(request.getAttribute("menuActif"))
+        ? "active"
+        : "" %>" >
+                    <a href="${pageContext.request.contextPath}/addRecommandation" class="a">Recommandations</a>
                 </div>
 
             </div>
@@ -61,7 +63,7 @@
                 </div>
 
                 <div class="onglet-titre">
-                    <a href="#" class="a">Historiques</a>
+                    <a href="${pageContext.request.contextPath}/historique" class="a">Historiques</a>
                 </div>
 
             </div>
@@ -90,7 +92,7 @@
             </div>
 
             <div class="onglet-titre">
-                <a href="#" class="a">Deconnexion</a>
+                <a href="${pageContext.request.contextPath}/deconnexion" class="a">Deconnexion</a>
             </div>
 
         </div>

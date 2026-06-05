@@ -6,7 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import main.java.model.DaoImplement.DomaineDaoImplement;
+import main.java.model.DaoImplement.LocaliteDaoImplement;
 import main.java.model.ServiceImplemente.ProjetServiceImpl;
+import main.java.model.dao.DomaineDao;
+import main.java.model.dao.LocaliteDao;
 import main.java.model.dao.ProjetDao;
 import main.java.model.enums.Niveau;
 import main.java.model.DaoImplement.ProjetDaoImpl;
@@ -51,7 +55,7 @@ public class ProjetController extends HttpServlet {
             default:
                 List<Projet> liste = service.getAllProjets();
                 request.setAttribute("projets", liste);
-                request.getRequestDispatcher("/WEB-INF/view/projets.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/view/Projets.jsp").forward(request, response);
                 break;
         }
     }
