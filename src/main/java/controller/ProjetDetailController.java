@@ -38,9 +38,10 @@ public class ProjetDetailController extends HttpServlet {
         Optional<Projet> projet = projetServiceImpl.getProjetById(idProjet);
         request.setAttribute("projet", projet.get());
         request.setAttribute("etapes", etapes);
+
         request.setAttribute(
                 "pageContent",
-                "detailsProjet.jsp");
+                "Cartes_etape.jsp");
         request.setAttribute("menuActif", "mes_projets");
 
         request.getRequestDispatcher(
