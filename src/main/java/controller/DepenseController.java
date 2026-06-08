@@ -8,6 +8,7 @@ import main.java.model.classes.Depense;
 import main.java.model.ServiceImplemente.DepenseImplement;
 import main.java.model.classes.Utilisateur;
 import main.java.model.dao.DepenseDao;
+import main.java.model.dao.ActiviteCloentDao;
 import main.java.model.DaoImplement.DepenseDaoImplement;
 import main.java.model.service.DepenseService;
 import jakarta.servlet.ServletException;
