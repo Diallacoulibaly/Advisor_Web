@@ -8,20 +8,18 @@ public class Activite {
     private String description;
     private int ordre;
     private int duree;
-    private int montant_activite;
     private Etape etape;
 
     // Constructeur vide
     public Activite() {}
 
     // Contruteurs avec paramètres
-    public Activite(int id, String titre, String description, int ordre, int duree, Etape etape){
+    public Activite(int id, String titre, String description, int ordre, int duree,Etape etape){
         this.id = id;
         this.titre = titre;
         this.description = description;
         this.ordre = ordre;
         this.duree = duree;
-        this.montant_activite = montant_activite;
         this.etape = etape;
     }
 
