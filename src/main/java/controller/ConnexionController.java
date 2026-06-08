@@ -6,13 +6,21 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import main.java.model.DaoImplement.*;
-import main.java.model.ServiceImplemente.*;
+import main.java.model.DaoImplement.ClientDAOImplement;
+import main.java.model.DaoImplement.EtapeDaoImplement;
+import main.java.model.DaoImplement.ProjetClientDAOImplement;
+import main.java.model.DaoImplement.UtilisateurDaoImplement;
+import main.java.model.ServiceImplemente.ClientServiceImplement;
+import main.java.model.ServiceImplemente.EtapeServiceImplement;
+import main.java.model.ServiceImplemente.ProjetClientServiceImplement;
+import main.java.model.ServiceImplemente.UtilisateurServiceImplement;
 import main.java.model.classes.ProjetClient;
 import main.java.model.classes.Utilisateur;
-import main.java.model.dao.*;
+import main.java.model.dao.ClientDAO;
+import main.java.model.dao.EtapeDao;
+import main.java.model.dao.ProjetClientDAO;
+import main.java.model.dao.UtilisateurDao;
 import main.java.model.enums.Role;
-import main.java.model.service.DepenseService;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -22,8 +30,6 @@ public class ConnexionController extends HttpServlet {
     private UtilisateurServiceImplement utilisateurServiceImplement;
     private ProjetClientServiceImplement projetClientServiceImplement;
     private EtapeServiceImplement etapeServiceImplement;
-    private DepenseService depenseService;
-
 
     public void init(){
         EtapeDao etapeDao= new EtapeDaoImplement();
@@ -33,8 +39,6 @@ public class ConnexionController extends HttpServlet {
         projetClientServiceImplement= new ProjetClientServiceImplement(projetClientDAO);
         etapeServiceImplement= new EtapeServiceImplement(etapeDao);
         utilisateurServiceImplement= new UtilisateurServiceImplement(utilisateurDao);
-        DepenseDao depenseDao = new DepenseDaoImplement();
-        depenseService = new DepenseImplement(depenseDao);
     }
 
     @Override
@@ -67,14 +71,6 @@ public class ConnexionController extends HttpServlet {
             session.setAttribute("role", utilisateur.get().getRole());
 
             if (utilisateur.get().getRole() == Role.CLIENT) {
-                //envoie des depense du client
-                int idClient = utilisateur.get().getIdUtilisateur();
-
-                double totalDepense =
-                        depenseService.getTotalDepenseClient(idClient);
-
-                req.setAttribute("totalDepense", totalDepense);
-
                 Optional<ProjetClient> projetClientOpt= projetClientServiceImplement.getByClientEncours(utilisateur.get().getIdUtilisateur());
                 projetClientOpt.ifPresent(projetClient -> {
                     req.setAttribute("projetClientOpt", projetClient);

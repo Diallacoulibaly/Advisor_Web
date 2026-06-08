@@ -13,6 +13,7 @@ public interface EtapeDao {
     List<Etape> Liste_etape();
     boolean mise_a_jour_etape(Etape etape);
     boolean suppr_etape(int idEtape);
+    boolean verif_etape(int idEtape);
     List<Etape> getByProjetId(int idProjet);
     int count_etape(int idProjet);
 }

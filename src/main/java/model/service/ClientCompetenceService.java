@@ -1,22 +1,18 @@
-package main.java.model.service;
-
-import main.java.model.classes.ClientCompetence;
-
-import java.util.List;
-
-public interface ClientCompetenceService {
-
-    void add(ClientCompetence clientCompetence);
-
-    List<ClientCompetence> getAll();
-
-    void update(ClientCompetence cc, int oldIdClient, int oldIdCompetence);
-
-    void delete(int idClient, int idCompetence);
-
-    List<Integer> filterSkills(List<Integer> competences, int id);
-
-    void addListClientCompetence(List<Integer> competencesId, int id);
-
-
-}
+//package main.java.model.service;
+//
+//import main.java.model.classes.ClientCompetence;
+//
+//import java.util.List;
+//
+//public interface ClientCompetenceService {
+//
+//
+//    void add(ClientCompetence clientCompetence);
+//
+//    List<ClientCompetence> getAll();
+//
+//    void update(ClientCompetence clientCompetence);
+//
+//    void delete(int id);
+//
+//}

@@ -18,8 +18,8 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
     public boolean save(ProjetClient projetClient) {
         String sql = """
                 INSERT INTO projetClient
-                (idClient, idProjet, statut)
-                VALUES (?, ?, ?)
+                (idClient, idProjet, statut, satisfaction)
+                VALUES (?, ?, ?, ?)
                 """;
         try (Connection connection= ConnectBD.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)){
 
@@ -29,6 +29,8 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
                     stmt.setInt(2, projetClient.getProjet().getId());
 
                     stmt.setString(3, StatutProjet.ENCOURS.name());
+
+                    stmt.setString(4, projetClient.getSatisfaction().name());
 
                     int row=stmt.executeUpdate();
 

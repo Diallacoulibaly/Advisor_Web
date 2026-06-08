@@ -1,102 +1,94 @@
-package main.java.model.DaoImplement;
+/*package main.java.model.DaoImplement;
 
-import main.java.model.classes.ClientCompetence;
-import main.java.model.dao.ClientCompetenceDao;
-import main.java.Database.ConnectBD;
+
+
+import main.java.model.dao.ClientCompetence;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
 
-    Connection conn = ConnectBD.getConnection();
 
-    //  ADD
+public class ClientCompetenceDaoImplement implements ClientCompetenceRepository {
+
     @Override
-    public void add(ClientCompetence cc) {
+    public void add(ClientCompetence clientCompetence) {
 
-        String sql = "INSERT INTO clientcompetence (idClient, idCompetence) VALUES (?, ?)";
+        String sql = "INSERT INTO ClientCompetence (idClient, idCompetence) VALUES (?, ?)";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection cnn = ConnexionBdd.getConnection();
+             PreparedStatement stml = cnn.prepareStatement(sql)) {
 
-            ps.setInt(1, cc.getIdClient());
-            ps.setInt(2, cc.getIdCompetence());
+            stml.setInt(1, clientCompetence.getClient().getIdUtilisateur());
 
-            ps.executeUpdate();
+            stml.setInt(2, clientCompetence.getCompetence().getIdCompetence());
+
+            stml.executeUpdate();
+
+            System.out.println("ClientCompetence ajouté avec succès");
 
         } catch (SQLException e) {
-            e.printStackTrace();
+
+            System.out.println("Erreur lors de l'ajout ClientCompetence");
         }
     }
 
-    //  GET ALL
     @Override
     public List<ClientCompetence> getAll() {
 
-        List<ClientCompetence> list = new ArrayList<>();
+        List<Models.ClientCompetence> list = new ArrayList<>();
 
-        String sql = "SELECT * FROM clientcompetence";
+        String sql = "SELECT * FROM ClientCompetence";
 
-        try (Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+        try (Connection cnn = ConnexionBdd.getConnection();
+             PreparedStatement stml = cnn.prepareStatement(sql);
+             ResultSet rs = stml.executeQuery()) {
 
             while (rs.next()) {
 
-                ClientCompetence cc = new ClientCompetence(
-                        rs.getInt("idClient"),
-                        rs.getInt("idCompetence")
-                );
-
+                ClientCompetence cc = new ClientCompetence();
+                Client cl = new Client();
+                Competence c = new Competence();
+                cc.setId(rs.getInt("id"));
+                cl.setIdUtilisateur(rs.getInt("idClient"));
+                c.setIdCompetence(rs.getInt("idCompetence"));
+                cc.setClient(cl);
+                cc.setCompetence(c);
                 list.add(cc);
+
+
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+
+            throw new RuntimeException(e);
         }
 
         return list;
     }
 
-    //  UPDATE
     @Override
-    public void update(ClientCompetence cc, int oldIdClient, int oldIdCompetence) {
+    public void update(ClientCompetence clientCompetence) {
+        String sql = "UPDATE ClientCompetence " +
+                "SET idClient = ?, idCompetence = ? " +
+                "WHERE id = ?";
+        try (Connection cnn = ConnexionBdd.getConnection();
+             PreparedStatement stml = cnn.prepareStatement(sql)) {
 
-        String sql = "UPDATE clientcompetence SET idClient=?, idCompetence=? " +
-                "WHERE idClient=? AND idCompetence=?";
+            stml.setInt(1, clientCompetence.getClient().getIdUtilisateur());
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            stml.setInt(2, clientCompetence.getCompetence().getIdCompetence());
 
-            // nouvelles valeurs
-            ps.setInt(1, cc.getIdClient());
-            ps.setInt(2, cc.getIdCompetence());
+            stml.setInt(3, clientCompetence.getId());
 
-            // anciennes valeurs
-            ps.setInt(3, oldIdClient);
-            ps.setInt(4, oldIdCompetence);
+            stml.executeUpdate();
 
-            ps.executeUpdate();
+            System.out.println("Modification réussie");
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
-    //  DELETE
-    @Override
-    public void delete(int idClient, int idCompetence) {
-
-        String sql = "DELETE FROM clientcompetence WHERE idClient=? AND idCompetence=?";
-
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, idClient);
-            ps.setInt(2, idCompetence);
-
-            ps.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Erreur lors de la modification");
         }
     }
 
@@ -105,7 +97,7 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
         List<Integer> skillIds = new ArrayList<>();
         String sql = "SELECT idCompetence FROM ClientCompetence WHERE idClient = ?";
 
-        try (Connection conn = ConnectBD.getConnection();
+        try (Connection conn = ConnexionBdd.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idClient);
 
@@ -120,4 +112,25 @@ public class ClientCompetenceDaoImplement implements ClientCompetenceDao {
         }
         return skillIds;
     }
+
+    @Override
+    public void delete(int id) {
+
+        String sql = "DELETE FROM ClientCompetence WHERE id = ?";
+
+        try (Connection cnn = ConnexionBdd.getConnection();
+             PreparedStatement stml = cnn.prepareStatement(sql)) {
+
+            stml.setInt(1, id);
+
+            stml.executeUpdate();
+
+            System.out.println("Suppression réussie");
+
+        } catch (SQLException e) {
+
+            System.out.println("Erreur lors de la suppression");
+        }
+    }
 }
+*/

@@ -1,29 +1,27 @@
 .mes-projets-container{
-
     padding: 30px;
 }
 
 .mes-projets-container h1{
-
+    margin-bottom: 30px;
     color: #17253C;
-    margin-bottom: 25px;
-    font-size: 32px;
 }
 
 .cards-container{
 
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(350px,1fr));
+
+    gap: 25px;
 }
 
 .project-card{
 
-    display: block;
+    background: white;
 
-    background: #ffffff;
-
-    border-radius: 18px;
+    border-radius: 20px;
 
     padding: 25px;
 
@@ -31,18 +29,18 @@
 
     color: inherit;
 
-    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    box-shadow:
+            0 4px 15px rgba(0,0,0,.08);
 
-    border-left: 6px solid #1B63E1;
-
-    transition: all .3s ease;
+    transition: .3s;
 }
 
 .project-card:hover{
 
-    transform: translateY(-4px);
+    transform: translateY(-5px);
 
-    box-shadow: 0 8px 24px rgba(0,0,0,.15);
+    box-shadow:
+            0 8px 25px rgba(0,0,0,.15);
 }
 
 .card-header{
@@ -53,58 +51,37 @@
 
     align-items: center;
 
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .card-header h2{
 
     color: #17253C;
 
-    font-size: 24px;
-
-    margin: 0;
+    font-size: 22px;
 }
 
 .status{
 
-    padding: 8px 18px;
+    background: #1B63E1;
 
-    border-radius: 50px;
+    color: white;
+
+    padding: 8px 15px;
+
+    border-radius: 20px;
 
     font-size: 14px;
-
-    font-weight: 600;
-
-    background: #E8F0FF;
-
-    color: #1B63E1;
-}
-
-.status-encours{
-
-    background: #FFF3CD;
-    color: #856404;
-}
-
-.status-termine{
-
-    background: #D4EDDA;
-    color: #155724;
-}
-
-.status-afaire{
-
-    background: #E8F0FF;
-    color: #1B63E1;
 }
 
 .card-body{
 
     display: grid;
 
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns:
+        repeat(2,1fr);
 
-    gap: 15px 30px;
+    gap: 20px;
 }
 
 .info{
@@ -112,13 +89,13 @@
     display: flex;
 
     flex-direction: column;
-
-    gap: 5px;
 }
 
 .info span{
 
     color: #777;
+
+    margin-bottom: 5px;
 
     font-size: 14px;
 }
@@ -127,30 +104,5 @@
 
     color: #17253C;
 
-    font-size: 16px;
-}
-
-.empty-state{
-
-    background: white;
-
-    border-radius: 20px;
-
-    padding: 60px;
-
-    text-align: center;
-
-    box-shadow: 0 4px 12px rgba(0,0,0,.08);
-}
-
-.empty-state h2{
-
-    color: #17253C;
-
-    margin-bottom: 10px;
-}
-
-.empty-state p{
-
-    color: #666;
+    font-size: 18px;
 }
