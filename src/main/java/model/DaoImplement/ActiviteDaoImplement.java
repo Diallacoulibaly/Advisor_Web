@@ -83,7 +83,6 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getString("description"),
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
-                        Statut.valueOf(rs.getString("statut")),
                         null
                 );
                 activites.add(activite);
@@ -97,15 +96,14 @@ public class ActiviteDaoImplement implements ActiviteDao {
 
     @Override
     public void modifierActivite(Activite activite) {
-        String sql = "UPDATE activite SET titre=?, description=?, ordre=?, duree=?, montant_activite=?, statut=? WHERE id=?";
+        String sql = "UPDATE activite SET titre=?, description=?, ordre=?, duree=?, montant_activite=? WHERE id=?";
         try(Connection connection = ConnectBD.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setString(1, activite.getTitre());
             ps.setString(2, activite.getDescription());
             ps.setInt(3, activite.getOrdre());
             ps.setInt(4, activite.getDuree());
-            ps.setString(6, String.valueOf(activite.getStatutActivite()));
-            ps.setInt(7, activite.getId());
+            ps.setInt(6, activite.getId());
 
             ps.executeUpdate();
             System.out.println("Activité modifiée avec succès ! ");
