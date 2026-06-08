@@ -19,11 +19,12 @@
 
     <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList");
     Integer idEtape=(Integer) request.getAttribute("idEtape");
-    String titreEtape = (String) request.getAttribute("titreEtape");
+        String titreEtape = (String) request.getAttribute("titreEtape");
+        String descEtape = (String) request.getAttribute("descEtape");
     %>
     <div class="etape">
-        <h1> Etape <%= idEtape %></h1>
-        <p class="description"> Description de l'étape ...</p>
+        <h1> Etape <%= idEtape %>:<%=titreEtape%></h1>
+        <p class="description"> <%=descEtape%></p>
     </div>
     <div class="bodyy">
     <div class="titre">
@@ -89,3 +90,4 @@
     </div>
 </body>
 </html>
+ 
