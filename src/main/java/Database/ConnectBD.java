@@ -8,29 +8,29 @@ public class ConnectBD {
 
     private static final String URL = "jdbc:mysql://localhost:3306/advisor";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "diallacoul";
+    private static final String PASSWORD = "root";
 
-    private static final String USER = "root";
-    private static final String PASSWORD = "1234";
- main
+    private static Connection connection;
+
+
+    private ConnectBD() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("CONNEXION avec succès !");
+        } catch (Exception e) {
+            System.err.println("Erreur de connexion à la BDD : " + e.getMessage());
+        }
+    }
 
     public static Connection getConnection() {
-
         try {
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection conn =
-                    DriverManager.getConnection(URL, USERNAME, PASSWORD);
-
-            System.out.println("CONNEXION avec succes");
-
-            return conn;
-
-        } catch (Exception e) {
+            if (connection == null || connection.isClosed()) {
+                new ConnectBD();
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return null;
+        return connection;
     }
 }
