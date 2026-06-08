@@ -39,13 +39,15 @@
                 </div>
             </div>
 
-            <!-- Historiques -->
-            <div class="onglet-section">
+            <div class="onglet-section <%= "historique".equals(request.getAttribute("menuActif"))
+        ? "active"
+        : "" %>">
+
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/hist.png" alt="Historique" class="icon">
                 </div>
                 <div class="onglet-titre">
-                    <a href="#" class="a">Historiques</a>
+                    <a href="${pageContext.request.contextPath}/historique" class="a">Historiques</a>
                 </div>
             </div>
 
@@ -79,7 +81,7 @@
                 <img src="${pageContext.request.contextPath}/assets/img/decon.png" alt="deconnexion" class="icon">
             </div>
             <div class="onglet-titre">
-                <a href="#" class="a">Deconnexion</a>
+                <a href="${pageContext.request.contextPath}/deconnexion" class="a">Deconnexion</a>
             </div>
         </div>
 

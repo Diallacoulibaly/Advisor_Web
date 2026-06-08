@@ -9,6 +9,8 @@ import main.java.model.DaoImplement.ProjetClientDAOImplement;
 import main.java.model.DaoImplement.UtilisateurDaoImplement;
 import main.java.model.ServiceImplemente.ProjetClientServiceImplement;
 import main.java.model.ServiceImplemente.UtilisateurServiceImplement;
+import main.java.model.classes.Client;
+import main.java.model.classes.Projet;
 import main.java.model.classes.ProjetClient;
 import main.java.model.classes.Utilisateur;
 import main.java.model.dao.ProjetClientDAO;
@@ -47,8 +49,41 @@ public class ProjetClientController extends HttpServlet {
 
         req.setAttribute("pageContent", "mes_projets.jsp");
         req.setAttribute("menuActif", "mes_projets");
-
         req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+            Utilisateur user = (Utilisateur) req.getSession().getAttribute("user");
+            int idProjet = (Integer.parseInt(req.getParameter("idProjet")));
+
+            Projet projet = new Projet();
+            projet.setId(idProjet);
+
+            Client client = new Client();
+            client.setIdUtilisateur(user.getIdUtilisateur());
+
+            ProjetClient projetclient = new ProjetClient();
+            projetclient.setClient(client);
+            projetclient.setProjet(projet);
+            boolean succes= pcServiceImplement.add(projetclient);
+            System.out.println(succes);
+            if(!succes){
+                req.setAttribute("erreur", "Vous avez deja un projet en cours !!!");
+
+                req.setAttribute("pageContent", "formRecomm.jsp");
+                req.setAttribute("menuActif", "recommandation");
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+                return;
+            }
+            doGet(req, resp);
+//        req.setAttribute("pageContent", "mes_projets.jsp");
+//        req.setAttribute("menuActif", "mes_projets");
+//        req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
+
+
     }
 
 }

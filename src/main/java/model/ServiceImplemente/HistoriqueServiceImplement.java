@@ -1,6 +1,7 @@
 package main.java.model.ServiceImplemente;
 
 import main.java.model.classes.Historique;
+import main.java.model.classes.HistoriqueProjet;
 import main.java.model.dao.HistoriqueDao;
 import main.java.model.service.HistoriqueService;
 
@@ -14,14 +15,18 @@ public class HistoriqueServiceImplement implements HistoriqueService {
     }
 
     @Override
-    public void ajouterHistorique(Historique historique) {
-        historiqueDao.ajouterHistorique(historique);
-
+    public int ajouterHistorique(Historique historique) {
+        return historiqueDao.ajouterHistorique(historique);
     }
 
     @Override
     public List<Historique> afficherHistorique() {
         return historiqueDao.afficherHistorique();
+    }
+
+    @Override
+    public List<HistoriqueProjet> afficherHistoriqueClient(int idClient) {
+        return historiqueDao.afficherHistoriqueClient(idClient);
     }
 
     @Override
