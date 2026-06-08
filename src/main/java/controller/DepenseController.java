@@ -77,6 +77,7 @@ public class DepenseController extends HttpServlet {
         switch (action) {
             case "ajouter" -> {
                 try {
+
                     double montant = Double.parseDouble(request.getParameter("montant"));
                     String description = request.getParameter("description");
                     Date date = new Date(System.currentTimeMillis());
@@ -85,6 +86,7 @@ public class DepenseController extends HttpServlet {
                     String activiteIdParam = request.getParameter("idActivite");
                     Depense depense;
                     if (activiteIdParam != null && !activiteIdParam.isEmpty()) {
+                        System.out.println(montant+" test");
                         Activite activite = new Activite();
                         Client client=new Client();
                         activite.setId(Integer.parseInt(activiteIdParam));

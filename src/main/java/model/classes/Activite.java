@@ -9,21 +9,19 @@ public class Activite {
     private int ordre;
     private int duree;
     private int montant_activite;
-    private Statut statut;
     private Etape etape;
 
     // Constructeur vide
     public Activite() {}
 
     // Contruteurs avec paramètres
-    public Activite(int id, String titre, String description, int ordre, int duree, Statut statut, Etape etape){
+    public Activite(int id, String titre, String description, int ordre, int duree, Etape etape){
         this.id = id;
         this.titre = titre;
         this.description = description;
         this.ordre = ordre;
         this.duree = duree;
         this.montant_activite = montant_activite;
-        this.statut = statut;
         this.etape = etape;
     }
 
@@ -52,10 +50,6 @@ public class Activite {
         return montant_activite;
     }*/
 
-    public Statut getStatutActivite(){
-        return statut;
-
-    }
 
     public Etape getEtape(){
         return etape;
@@ -81,10 +75,6 @@ public class Activite {
     /*public void setMontantActivite(int montant_activite){
         this.montant_activite = montant_activite;
     }*/
-
-    public void setStatut(Statut statut){
-        this.statut = statut;
-    }
 
     public void setId(int id) {
         this.id = id;
