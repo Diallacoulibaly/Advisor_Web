@@ -3,8 +3,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .kotlin
-
-.smarttomcat/*
+.idea/libraries/*
 
 .smarttomcat/
 
@@ -30,12 +29,11 @@ bin/
 ### VS Code ###
 .vscode/
 web/WEB-INF/classes/
+web/WEB-INF/lib/jakar*
 
 ### Mac OS ###
 .DS_Store
 
 
 ### Database ###
-
-web/WEB-INF/view/Projets.jsp
-web/WEB-INF/view/projets.jsp
+src/main/java/Database/ConnectBD.java

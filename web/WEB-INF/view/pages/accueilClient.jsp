@@ -17,8 +17,6 @@
 <h2>Projet en cours</h2>
 <%
     ProjetClient projetClient= (ProjetClient) request.getAttribute("projetClientOpt");
-    Double totalDepense = (Double) request.getAttribute("totalDepense");
-    if (totalDepense == null) totalDepense = 0.0;
 %>
 <div class="cards-container">
 
@@ -100,7 +98,7 @@
                 <div class="money-content">
 
                     <div class="card-value money">
-                        <%= totalDepense %> F CFA
+                        10 000 F CFA
                     </div>
 
                     <img src="${pageContext.request.contextPath}/assets/img/money.png" alt="money" class="money-icon">

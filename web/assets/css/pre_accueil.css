@@ -1,3 +1,4 @@
+
 *{
     margin:0;
     padding:0;
@@ -5,9 +6,10 @@
 }
 
 body{
-    font-family:Arial, sans-serif;
-    background:white;
+    font-family: Arial, sans-serif;
+    background: white;
     color:#1d2b4f;
+
 }
 
 
@@ -18,30 +20,15 @@ header{
     padding:20px 50px;
 }
 
-.icone_container{
+header section{
     display:flex;
-    align-items:center;
-    gap:40px;
+    gap:20px;
 }
-
-.icone_fa{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.icone_fa i{
-    font-size:20px;
+section i{
     color:#2563eb;
+    width: 50px;
+    height: 50px;
 }
-
-.icone_fa p{
-    margin-top:10px;
-    font-size:15px;
-    font-weight:bold;
-}
-
-
 
 main{
     display:flex;
@@ -52,20 +39,18 @@ main{
 }
 
 .left{
-    width:40%;
+    width:50%;
 }
 
 .left h1{
     font-size:70px;
     color:#2563eb;
     margin-bottom:20px;
-    margin-top: 10px;
 }
 
 .left p{
-    font-size:20px;
-    line-height:1.7;
-    margin-top: 10px;
+    font-size:22px;
+    line-height:1.5;
 }
 
 .right{
@@ -79,7 +64,6 @@ main{
 }
 
 
-
 .btn-container{
     margin-top:30px;
     display:flex;
@@ -91,11 +75,6 @@ main{
     border-radius:10px;
     text-decoration:none;
     font-weight:bold;
-    font-size: 20px;
-}
-
-.btn:hover{
-    transform:translateY(-5px);
 }
 
 .btn-connecter{
@@ -108,80 +87,26 @@ main{
     color:#2563eb;
 }
 
+
 footer{
-    background:#1C3579;
+    background:#0f2d66;
     color:white;
     display:flex;
     justify-content:space-around;
-    padding:50px 30px;
+    padding:40px 20px;
     border-top-left-radius:40px;
     border-top-right-radius:40px;
-    align-items: center;
 }
 
 footer section{
-    width:300px;
+    width:250px;
 }
 
-.icone_fas{
-    display:flex;
-    align-items:center;
-    gap:20px;
-
-}
-
-.icone_fas:hover{
-    transform:translateY(-5px);
-}
-
-
-
-.icone_fas i{
-    font-size:50px;
-    color:white;
-
-    width:100px;
-    height:70px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background-color:#284ea3;
-    border-radius:12px;
-}
-.texte{
-    display:flex;
-    flex-direction:column;
-}
-
-.texte h1{
-    font-size:24px;
+footer h1{
+    font-size:25px;
     margin-bottom:10px;
 }
 
-.texte p{
-    font-size:16px;
-    line-height:1.6;
-}
-.lignes{
-    width:40px;
-    border-top:2px dashed #2563eb;
-}
-.etapes{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-}
-
-.etapes-titre{
-    margin-bottom:40px;
-    font-size:15px;
-}
-.bleu{
-    color:#2563eb;
-
-}
-.sous-titre{
-    font-weight:bold;
+footer p{
+    line-height:1.5;
 }

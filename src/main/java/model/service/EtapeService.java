@@ -6,6 +6,7 @@ import java.util.Optional;
 import main.java.model.classes.Etape;
 
 
+//Interface de Service pour gérer les opérations liées aux étapes
 public interface EtapeService {
 
     boolean ajoutt(Etape etape);
@@ -13,6 +14,7 @@ public interface EtapeService {
     List<Etape> Les_etapes();
     boolean miseAjour(Etape etape);
     boolean suppression(int idEtape);
+    boolean verification(int idEtape);
     List<Etape> ListeEtapesByProjet(int idProjet);
     int countEtapes(int idProjet);
 

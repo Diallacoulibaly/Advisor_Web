@@ -2,7 +2,6 @@ package main.java.model.ServiceImplemente;
 
 
 import main.java.model.classes.Activite;
-import main.java.model.classes.Etape;
 import main.java.model.dao.ActiviteDao;
 import main.java.model.service.ActiviteService;
 
@@ -29,11 +28,6 @@ public class ActiviteServiceImplement implements ActiviteService {
     @Override
     public List<Activite> afficherActivite() {
         return activiteDao.afficherActivite();
-    }
-
-    @Override
-    public List<Activite> getActiviteByEtape(int idEtape) {
-        return activiteDao.getActiviteByEtape(idEtape);
     }
 
     @Override
