@@ -171,13 +171,13 @@ public class EtapeDaoImplement implements EtapeDao {
             try (ResultSet rs = ps.executeQuery()){
                 while (rs.next()) {
 
-                    StatutEtape statut = StatutEtape.valueOf(rs.getString("statut"));
+//                    StatutEtape statut = StatutEtape.valueOf(rs.getString("statut"));
                     Etape etape = new Etape();
                     etape.setIdEtape(rs.getInt("id"));
                     etape.setTitre(rs.getString("titre"));
                     etape.setDescription(rs.getString("description"));
                     etape.setOrdre(rs.getInt("ordre"));
-                    etape.setStatutEtape(statut);
+//                    etape.setStatutEtape(statut);
                     etapeList.add(etape);
                 }
             }

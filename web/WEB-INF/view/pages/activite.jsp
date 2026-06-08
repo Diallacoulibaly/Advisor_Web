@@ -35,12 +35,8 @@
         </div>
     </div>
     <ol>
-        <% for (Activite activite : activiteList)
-
-        { %>
+        <% for (Activite activite : activiteList) { %>
         <li>
-
-
             <form action="depenses" method="post" class="form-depense">
                 <div class="check">
 
@@ -88,6 +84,7 @@
         </div></button>
     </div>
     </div>
+
 </body>
 </html>
- 
+
