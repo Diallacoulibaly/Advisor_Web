@@ -1,73 +1,88 @@
-package main.java.model.ServiceImplemente;
-
-import main.java.model.dao.CompetenceProjetDao;
-import main.java.model.service.CompetenceProjetService;
-import main.java.model.classes.CompetenceProjet;
-import java.util.List;
-
-public class CompetenceProjetImplement implements CompetenceProjetService {
-
-    private final CompetenceProjetDao competenceProjetDao;
-
-    public CompetenceProjetImplement(CompetenceProjetDao competenceProjetDao) {
-        this.competenceProjetDao = competenceProjetDao;
-    }
-
-    @Override
-    public boolean ajouter(CompetenceProjet cp) {
-        if (cp == null) {
-            System.out.println("L'association Competence-Projet ne peut pas être nulle.");
-            return false;
-        }
-        if (cp.getCompetenceId() <= 0 || cp.getIdProjet() <= 0) {
-            System.out.println("Les IDs de compétence et de projet doivent être positifs.");
-            return false;
-        }
-        return competenceProjetDao.add_CP(cp);
-    }
-
-    @Override
-    public CompetenceProjet rechercher(int idProjet, int idCompetence) {
-        if (idProjet <= 0 || idCompetence <= 0) {
-            System.out.println("Les IDs doivent être des entiers positifs.");
-            return null;
-        }
-        return competenceProjetDao.rech_CP(idProjet, idCompetence);
-    }
-
-    @Override
-    public List<Integer> listerIdsCompetencesParProjet(int idProjet) {
-        if (idProjet <= 0) {
-            System.out.println("L'ID du projet doit être un entier positif.");
-            return List.of();
-        }
-        return competenceProjetDao.rech_CP(idProjet);
-    }
-
-    @Override
-    public List<CompetenceProjet> lister() {
-        return competenceProjetDao.ListeCP();
-    }
-
-    @Override
-    public boolean miseAjour(int ancienIdProjet, int ancienIdCompetence, CompetenceProjet nouvelleAssociation) {
-        if (ancienIdProjet <= 0 || ancienIdCompetence <= 0) {
-            System.out.println("Les anciens identifiants doivent être positifs.");
-            return false;
-        }
-        if (nouvelleAssociation == null || nouvelleAssociation.getIdProjet() <= 0 || nouvelleAssociation.getCompetenceId() <= 0) {
-            System.out.println("La nouvelle association est invalide ou incomplète.");
-            return false;
-        }
-        return competenceProjetDao.mise_a_jour_CP(ancienIdProjet, ancienIdCompetence, nouvelleAssociation);
-    }
-
-    @Override
-    public boolean supprimer(int idProjet, int idCompetence) {
-        if (idProjet <= 0 || idCompetence <= 0) {
-            System.out.println("Les identifiants doivent être positifs.");
-            return false;
-        }
-        return competenceProjetDao.suppr_CP(idProjet, idCompetence);
-    }
-}
+//package model.ServiceImplemente;
+//
+//import model.service.CompetenceProjetDao;
+//import model.classes.CompetenceProjet;
+//
+//import java.util.List;
+//import java.util.Optional;
+//
+//public class CompetenceProjetImplement implements CompetenceProjetDao {
+//
+//    private final CompetenceProjetDao competenceProjetDao;
+//
+//    public CompetenceProjetService(CompetenceProjetDao competenceProjetDao) {
+//        this.competenceProjetDao = competenceProjetDao;
+//    }
+//
+//    //Ajouter
+//    @Override
+//    public boolean ajouter(CompetenceProjet cp) {
+//        if (cp == null) {
+//            System.out.println("L'association Competence-Projet ne peut pas être nulle.");
+//            return false;
+//        }
+//        if (cp.getCompetenceId() <= 0) {
+//            System.out.println("L'ID de la compétence est obligatoire et doit être positif.");
+//            return false;
+//        }
+//        if (cp.getIdProjet() <= 0) {
+//            System.out.println("L'ID du projet est obligatoire et doit être positif.");
+//            return false;
+//        }
+//
+//        boolean result = competenceProjetDao.ajouter(cp);
+//        System.out.println(result ? "Compétence associée au projet avec succès."
+//                : "Échec de l'association de la compétence.");
+//        return result;
+//    }
+//
+//    //Rechercher
+//    @Override
+//    public Optional<CompetenceProjet> rechercher(int id) {
+//        if (id <= 0) {
+//            System.out.println("L'ID doit être un entier positif.");
+//            return Optional.empty();
+//        }
+//        return competenceProjetDao.rechercher(id);
+//    }
+//
+//    //Liste
+//    @Override
+//    public List<CompetenceProjet> lister() {
+//        return competenceProjetDao.lister();
+//    }
+//
+//    //Mise à jour
+//    @Override
+//    public boolean mettre_a_jour(CompetenceProjet cp) {
+//        if (cp == null || cp.getCompetenceId() <= 0 || cp.getIdProjet() <= 0) {
+//            System.out.println("Les IDs de compétence et de projet sont obligatoires pour la mise à jour.");
+//            return false;
+//        }
+//
+//        boolean updated = competenceProjetDao.mettre_a_jour(cp);
+//        System.out.println(updated ? "Association mise à jour avec succès."
+//                : "Échec de la mise à jour.");
+//        return updated;
+//    }
+//
+//    //Suppression
+//    @Override
+//    public boolean supprime(int id) {
+//        if (id <= 0) {
+//            System.out.println("L'ID doit être un entier positif.");
+//            return false;
+//        }
+//
+//        boolean deleted = competenceProjetDao.supprime(id);
+//        System.out.println(deleted ? "Association supprimée avec succès."
+//                : "Échec de la suppression.");
+//        return deleted;
+//    }
+//
+//    //Verification
+//    @Override
+//    public boolean verification(int id) {
+//        return competenceProjetDao.verification(id);
+//    }
+//}

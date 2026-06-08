@@ -52,9 +52,9 @@ public class LocaliteController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = req.getParameter("action");
-        if (action != null && !action.isEmpty()) {
-            if (action.equalsIgnoreCase("add")) {
+        String action=req.getParameter("action");
+       if (!action.isEmpty()){
+           if (action.equalsIgnoreCase("add")){
                String regionClient=req.getParameter("regionClient");
                Localite localite=new Localite();
                localite.setRegionClient(regionClient);

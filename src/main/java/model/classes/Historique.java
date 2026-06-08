@@ -6,16 +6,16 @@ public class Historique {
 
     int id;
     LocalDate date;
-    int idClient;
+    //int budgetApporte;
     String descriptionAction;
 
     public Historique() {
     }
 
-    public Historique(int id, LocalDate date, int idClient, String descriptionAction ) {
+    public Historique(int id, LocalDate date, int budgetApporte, String descriptionAction ) {
         this.id = id;
         this.date = date;
-        this.idClient = idClient;
+        //this.budgetApporte = budgetApporte;
         this.descriptionAction = descriptionAction;
     }
 
@@ -27,10 +27,9 @@ public class Historique {
         return date;
     }
 
-    public int getIdClient(){
-        return idClient;
-    }
-
+    /*public int getBudgetApporte(){
+        return budgetApporte;
+    }*/
 
     public String getDescriptionAction(){return descriptionAction; }
 
@@ -42,10 +41,9 @@ public class Historique {
         this.date = date;
     }
 
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
-    }
-
+    /*public void setBudgetApporte(int budgetApporte){
+        this.budgetApporte = budgetApporte;
+    }*/
 
     public void setDescriptionAction(String descriptionAction ) {this.descriptionAction = descriptionAction;}
 

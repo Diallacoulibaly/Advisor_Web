@@ -5,7 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import main.java.model.DaoImplement.*;
+import main.java.model.DaoImplement.EtapeDaoImplement;
+import main.java.model.DaoImplement.ProjetClientDAOImplement;
+import main.java.model.DaoImplement.ProjetDaoImpl;
 import main.java.model.ServiceImplemente.EtapeServiceImplement;
 import main.java.model.ServiceImplemente.ProjetClientServiceImplement;
 import main.java.model.ServiceImplemente.ProjetServiceImpl;
@@ -25,7 +27,6 @@ public class ProjetDetailController extends HttpServlet {
 
     private ProjetServiceImpl projetServiceImpl;
     private EtapeServiceImplement etapeServiceImplement;
-
     public void init(){
         ProjetDao pDao= new ProjetDaoImpl();
         EtapeDao etapeDao= new EtapeDaoImplement();
@@ -38,10 +39,9 @@ public class ProjetDetailController extends HttpServlet {
         Optional<Projet> projet = projetServiceImpl.getProjetById(idProjet);
         request.setAttribute("projet", projet.get());
         request.setAttribute("etapes", etapes);
-
         request.setAttribute(
                 "pageContent",
-                "Cartes_etape.jsp");
+                "detailsProjet.jsp");
         request.setAttribute("menuActif", "mes_projets");
 
         request.getRequestDispatcher(

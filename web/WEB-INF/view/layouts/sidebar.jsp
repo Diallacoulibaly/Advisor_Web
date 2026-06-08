@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 25/05/2026
-  Time: 14:36
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,87 +13,76 @@
 
         <div class="logo-section">
             <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="Logo" class="logo">
-
-            <h3>De l’idée à la réussite</h3>
+            <h3>De l'idée à la réussite</h3>
         </div>
-
 
         <nav class="menu">
 
+            <!-- Accueil -->
             <div class="onglet-section
-<%= "accueil".equals(request.getAttribute("menuActif"))
-        ? "active"
-        : "" %>">
-
+<%= "accueil".equals(request.getAttribute("menuActif")) ? "active" : "" %>">
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/home.png" alt="Accueil" class="icon">
                 </div>
-
                 <div class="onglet-titre">
                     <a href="${pageContext.request.contextPath}/client" class="a">Accueil</a>
                 </div>
-
             </div>
 
-            <div class="onglet-section <%= "recommandation".equals(request.getAttribute("menuActif"))
-        ? "active"
-        : "" %>">
-
+            <!-- Recommandations -->
+            <div class="onglet-section">
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/recom.png" alt="Recommandations" class="icon">
                 </div>
-
-                <div class="onglet-titre" >
-                    <a href="${pageContext.request.contextPath}/addRecommandation" class="a">Recommandations</a>
+                <div class="onglet-titre">
+                    <a href="#" class="a">Recommandations</a>
                 </div>
-
             </div>
 
-            <div class="onglet-section <%= "historique".equals(request.getAttribute("menuActif"))
-        ? "active"
-        : "" %>">
-
+            <!-- Historiques -->
+            <div class="onglet-section">
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/hist.png" alt="Historique" class="icon">
                 </div>
-
                 <div class="onglet-titre">
-                    <a href="${pageContext.request.contextPath}/historique" class="a">Historiques</a>
+                    <a href="#" class="a">Historiques</a>
                 </div>
-
             </div>
 
+            <!-- Mes projets -->
             <div class="onglet-section
-<%= "mes_projets".equals(request.getAttribute("menuActif"))
-        ? "active"
-        : "" %>">
-
+<%= "mes_projets".equals(request.getAttribute("menuActif")) ? "active" : "" %>">
                 <div class="onglet-img">
                     <img src="${pageContext.request.contextPath}/assets/img/Project.png" alt="Projet" class="icon">
                 </div>
-
                 <div class="onglet-titre">
                     <a href="${pageContext.request.contextPath}/mes_projets" class="a">Mes projets</a>
                 </div>
+            </div>
 
+            <!-- Compétences (admin) -->
+            <div class="onglet-section
+<%= "competences".equals(request.getAttribute("menuActif")) ? "active" : "" %>">
+                <div class="onglet-img">
+                    <img src="${pageContext.request.contextPath}/assets/img/home.png" alt="Compétences" class="icon">
+                </div>
+                <div class="onglet-titre">
+                    <a href="${pageContext.request.contextPath}/competences" class="a">Compétences</a>
+                </div>
             </div>
 
         </nav>
 
+        <!-- Déconnexion -->
         <div class="onglet-section deconnexion">
-
             <div class="onglet-img">
                 <img src="${pageContext.request.contextPath}/assets/img/decon.png" alt="deconnexion" class="icon">
             </div>
-
             <div class="onglet-titre">
-                <a href="${pageContext.request.contextPath}/deconnexion" class="a">Deconnexion</a>
+                <a href="#" class="a">Deconnexion</a>
             </div>
-
         </div>
 
     </aside>
-
-
 </body>
 </html>
