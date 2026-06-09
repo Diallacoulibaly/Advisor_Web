@@ -39,7 +39,11 @@ public class DepenseDaoImplement implements DepenseDao {
             // CORRECTION: getActivite().getId() au lieu de getActivite() directement
             ps.setInt(4, depense.getActivite().getId());
             ps.setInt(5,depense.getClient().getIdUtilisateur());
-            ps.executeUpdate();
+            try {
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());;
+            }
             System.out.println("Dépense ajoutée avec succès.");
 
         } catch (SQLException e) {
