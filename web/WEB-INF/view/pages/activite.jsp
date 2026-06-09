@@ -75,7 +75,7 @@
         <% } %>
     </ol>
 
-    <div class="btn">
+    <%--<div class="btn">
         <button class="coment-btn">
             <div class="btnpd">
             <a href="commentaires?actions=addCmt&idEtape=<%=idEtape%>">
@@ -85,7 +85,14 @@
         </button>
         <button class="finish-btn"> <div class="btnpd">Etape terminée <i class="fa-regular fa-circle-check fa-lg"></i>
         </div></button>
+    </div>--%>
+        <form action="etape_activite" method="POST" style="margin: 0;">
+            <input type="hidden" name="action" value="terminerEtape">
+            <input type="hidden" name="idEtape" value="<%= idEtape %>">
+            <button type="submit" class="finish-btn">
+                <div class="btnpd">Etape terminée <i class="fa-regular fa-circle-check fa-lg"></i></div>
+            </button>
+        </form>
     </div>
-    </div>
-</body>
+    </body>
 </html>
