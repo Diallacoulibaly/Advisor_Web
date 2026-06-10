@@ -122,13 +122,33 @@ public class DepenseController extends HttpServlet {
                     int id = Integer.parseInt(request.getParameter("id"));
                     double montant = Double.parseDouble(request.getParameter("montant"));
                     String description = request.getParameter("description");
-                    Date date = Date.valueOf(request.getParameter("date"));
 
-                    // CORRECTION: créer un objet Depense complet pour la modification
-                    Depense depense = new Depense(id, montant, description, date);
+                    // On récupère la date actuelle ou celle du jour de la modification
+                    Date date = new Date(System.currentTimeMillis());
+
+                    // Récupération des objets liés pour reconstruire proprement la dépense
+                    String activiteIdParam = request.getParameter("idActivite");
+                    Depense depense;
+
+                    if (activiteIdParam != null && !activiteIdParam.isEmpty()) {
+                        Activite activite = new Activite();
+                        activite.setId(Integer.parseInt(activiteIdParam));
+
+                        Client client = new Client();
+                        if (user != null) {
+                            client.setIdUtilisateur(user.getIdUtilisateur());
+                        }
+
+                        depense = new Depense(id, montant, description, date, activite, client);
+                    } else {
+                        depense = new Depense(id, montant, description, date);
+                    }
+
+                    // Mise à jour dans la base de données
                     depenseService.update(depense);
+
                 } catch (Exception e) {
-                    request.setAttribute("erreur", "Données invalides : " + e.getMessage());
+                    request.setAttribute("erreur", "Erreur lors de la modification : " + e.getMessage());
                     request.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(request, response);
                     return;
                 }
