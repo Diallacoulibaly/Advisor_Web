@@ -25,6 +25,7 @@
     <div class="etape">
         <h1> Etape <%= idEtape %>:<%=titreEtape%></h1>
         <p class="description"> <%=descEtape%></p>
+
     </div>
     <div class="bodyy">
     <div class="titre">
@@ -51,7 +52,7 @@
 
                 <input class="inp-depense" type="number" id="montant" name="montant" placeholder=" Saisir le montant">
 
-                <textarea class="inp-desc" id="description" name="description" rows="4" cols="30" placeholder=""></textarea>
+                <textarea class="inp-desc" id="description" name="description" rows="4" cols="30" placeholder="" ></textarea>
                     <button class="save" type="submit"> Enregistrer </button>
                 </div>
 
