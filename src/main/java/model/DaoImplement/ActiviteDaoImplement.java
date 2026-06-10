@@ -24,7 +24,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
             ps.setString(2, activite.getDescription());
             ps.setInt(3, activite.getOrdre());
             ps.setInt(4, activite.getDuree());
-            ps.setString(5, String.valueOf(activite.getStatutActivite()));
+           // ps.setString(5, String.valueOf(activite.getStatutActivite()));
             ps.setInt(6, activite.getEtape().getIdEtape());
 
             ps.executeUpdate();
@@ -54,7 +54,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getString("description"),
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
-                        Statut.valueOf(rs.getString("statut")),
+                        //Statut.valueOf(rs.getString("statut")),
                         etape
                 );
 
@@ -85,7 +85,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getString("description"),
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
-                        Statut.valueOf(rs.getString("statut")),
+                      //  Statut.valueOf(rs.getString("statut")),
                         null
                 );
                 activites.add(activite);
@@ -106,7 +106,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
             ps.setString(2, activite.getDescription());
             ps.setInt(3, activite.getOrdre());
             ps.setInt(4, activite.getDuree());
-            ps.setString(6, String.valueOf(activite.getStatutActivite()));
+           // ps.setString(6, String.valueOf(activite.getStatutActivite()));
             ps.setInt(7, activite.getId());
 
             ps.executeUpdate();

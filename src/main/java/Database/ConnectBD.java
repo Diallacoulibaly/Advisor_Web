@@ -10,27 +10,23 @@ public class ConnectBD {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "diallacoul";
 
-    private static Connection connection;
-
-
-    private ConnectBD() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("CONNEXION avec succès !");
-        } catch (Exception e) {
-            System.err.println("Erreur de connexion à la BDD : " + e.getMessage());
-        }
-    }
-
     public static Connection getConnection() {
+
         try {
-            if (connection == null || connection.isClosed()) {
-                new ConnectBD();
-            }
-        } catch (SQLException e) {
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection conn =
+                    DriverManager.getConnection(URL, USERNAME, PASSWORD);
+
+            System.out.println("CONNEXION avec succes");
+
+            return conn;
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return connection;
+
+        return null;
     }
 }
