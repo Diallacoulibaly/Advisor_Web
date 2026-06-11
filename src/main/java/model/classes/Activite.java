@@ -9,18 +9,20 @@ public class Activite {
     private int ordre;
     private int duree;
     private Etape etape;
+    private Depense depense;
 
     // Constructeur vide
     public Activite() {}
 
     // Contruteurs avec paramètres
-    public Activite(int id, String titre, String description, int ordre, int duree,Etape etape){
+    public Activite(int id, String titre, String description, int ordre, int duree,Etape etape, Depense depense) {
         this.id = id;
         this.titre = titre;
         this.description = description;
         this.ordre = ordre;
         this.duree = duree;
         this.etape = etape;
+        this.depense = depense;
     }
 
     // Les getters (permettent de récuperer une information id, titre, description etc
@@ -53,6 +55,8 @@ public class Activite {
         return etape;
     }
 
+    public Depense getDepense(){return depense;}
+
     // Les setters, ils permettrons de modifier des informations de l'objet comme le titre, la description etc
     public void setTitre(String titre){
         this.titre = titre;
@@ -81,4 +85,5 @@ public class Activite {
     public void setEtape(Etape etape){
         this.etape = etape;
     }
+    public void setDepense(Depense depense){this.depense = depense;}
 }

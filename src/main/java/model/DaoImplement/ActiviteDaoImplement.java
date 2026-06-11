@@ -2,6 +2,7 @@ package main.java.model.DaoImplement;
 
 import main.java.Database.ConnectBD;
 import main.java.model.classes.Activite;
+import main.java.model.classes.Depense;
 import main.java.model.classes.Etape;
 import main.java.model.dao.ActiviteDao;
 import main.java.model.enums.Statut;
@@ -39,7 +40,14 @@ public class ActiviteDaoImplement implements ActiviteDao {
     public List<Activite> afficherActivite() {
         List<Activite> activites = new ArrayList<>();
 
-        String sql = "SELECT * FROM Activite JOIN Etape ON Activite.idEtape = Etape.id";
+        String sql = """
+                    SELECT  
+                        a.id as activite_id, a.titre as atitre, a.description as adescription, a.duree,a.ordre as aordre,
+                        d.id as depense_id,d.montant, d.description as ddescription
+                        FROM Activite a 
+                        JOIN Etape e ON a.idEtape = e.id 
+                        JOIN Depense d ON a.id = d.idActivite;
+                    """;
 
         try (Connection connection = ConnectBD.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
@@ -47,14 +55,20 @@ public class ActiviteDaoImplement implements ActiviteDao {
 
             while (rs.next()){
                 Etape etape = new Etape();
-                Activite activite = new Activite(
-                        rs.getInt("id"),
-                        rs.getString("titre"),
-                        rs.getString("description"),
-                        rs.getInt("duree"),
-                        rs.getInt("ordre"),
 
-                        etape
+                Depense depense = new Depense();
+                depense.setIdDepense(rs.getInt("depense_id"));
+                depense.setMontant(rs.getDouble("montant"));
+                depense.setDescription(rs.getString("description"));
+
+                Activite activite = new Activite(
+                        rs.getInt("activite_id"),
+                        rs.getString("atitre"),
+                        rs.getString("adescription"),
+                        rs.getInt("duree"),
+                        rs.getInt("aordre"),
+                        etape,
+                        depense
                 );
 
                 //Ajout de l'activité créer depuis la base de données dans la liste d'activités activites
@@ -71,25 +85,31 @@ public class ActiviteDaoImplement implements ActiviteDao {
     public List<Activite> getActiviteByEtape(int idEtape) {
         List<Activite> activites = new ArrayList<>();
 
-        String sql = "SELECT * FROM Activite WHERE idEtape=?";
+        String sql = """
+          SELECT * FROM Activite WHERE idEtape=?
+         """;
         try(Connection connection = ConnectBD.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, idEtape);
-            ResultSet rs = ps.executeQuery();
+            try {
+                ResultSet rs = ps.executeQuery();
 
-            while (rs.next()){
-                Activite activite = new Activite(
-                        rs.getInt("id"),
-                        rs.getString("titre"),
-                        rs.getString("description"),
-                        rs.getInt("duree"),
-                        rs.getInt("ordre"),
+                while (rs.next()){
+                    Activite activite = new Activite(
+                            rs.getInt("id"),
+                            rs.getString("titre"),
+                            rs.getString("description"),
+                            rs.getInt("duree"),
+                            rs.getInt("ordre"),
+                            null,
+                            null
+                    );
+                    activites.add(activite);
+                }
 
-                        null
-                );
-                activites.add(activite);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

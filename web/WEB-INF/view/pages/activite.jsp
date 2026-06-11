@@ -21,8 +21,6 @@
     Integer idEtape=(Integer) request.getAttribute("idEtape");
         String titreEtape = (String) request.getAttribute("titreEtape");
         String descEtape = (String) request.getAttribute("descEtape");
-        Depense depense = activite.getDepense();
-        boolean aUneDepense = (depense != null);
     %>
     <div class="etape">
         <h1> Etape <%= idEtape %>:<%=titreEtape%></h1>
@@ -38,7 +36,10 @@
         </div>
     </div>
     <ol>
-        <% for (Activite activite : activiteList) { %>
+        <% for (Activite activite : activiteList) {
+
+            Depense depense = activite.getDepense();
+            boolean aUneDepense = (depense != null);%>
         <li>
             <form action="depenses" method="post" class="form-depense">
                 <div class="check">
@@ -51,7 +52,7 @@
                     <input type="hidden" name="idActivite" value="<%= activite.getId() %>">
                     <input type="hidden" name="idEtape" value="<%= idEtape %>">
                     <% if (aUneDepense) { %>
-                    <input type="hidden" name="id" value="<%= depense.getId() %>">
+                    <input type="hidden" name="id" value="<%= depense.getIdDepense() %>">
                     <% } %>
 
                     <input class="inp-depense"

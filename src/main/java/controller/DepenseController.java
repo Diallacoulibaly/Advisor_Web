@@ -108,8 +108,8 @@ public class DepenseController extends HttpServlet {
                     }
 
                     depenseService.add(depense);
-                    assert activiteIdParam != null;
-                    activiteClientServiceImplement.marquerTerminer(Integer.parseInt(activiteIdParam));
+//                    assert activiteIdParam != null;
+//                    activiteClientServiceImplement.marquerTerminer(Integer.parseInt(activiteIdParam));
 
                 } catch (Exception e) {
                     request.setAttribute("erreur", "Données invalides : " + e.getMessage());
@@ -119,11 +119,11 @@ public class DepenseController extends HttpServlet {
             }
             case "modifier" -> {
                 try {
-                    int id = Integer.parseInt(request.getParameter("id"));
+                    int idDpense = Integer.parseInt(request.getParameter("id"));
                     double montant = Double.parseDouble(request.getParameter("montant"));
                     String description = request.getParameter("description");
 
-                    // On récupère la date actuelle ou celle du jour de la modification
+
                     Date date = new Date(System.currentTimeMillis());
 
                     // Récupération des objets liés pour reconstruire proprement la dépense
@@ -139,9 +139,9 @@ public class DepenseController extends HttpServlet {
                             client.setIdUtilisateur(user.getIdUtilisateur());
                         }
 
-                        depense = new Depense(id, montant, description, date, activite, client);
+                        depense = new Depense(idDpense, montant, description, date, activite, client);
                     } else {
-                        depense = new Depense(id, montant, description, date);
+                        depense = new Depense(idDpense, montant, description, date);
                     }
 
                     // Mise à jour dans la base de données
@@ -154,10 +154,6 @@ public class DepenseController extends HttpServlet {
                 }
             }
         }
-        
         response.sendRedirect(request.getContextPath() + "/etape_activite?idEtape="+ idEtape);
-        request.setAttribute("pageContent", "etape_activite.jsp");
-        request.setAttribute("menuActif", "accueil");
-        request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
     }
 }
