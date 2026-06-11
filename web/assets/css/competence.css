@@ -1,0 +1,234 @@
+/* ===== COMPÉTENCES - styles ===== */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.page-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #17253C;
+}
+
+/* ---- Bouton principal ---- */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #1B63E1;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #1450bf;
+}
+
+/* ---- Table ---- */
+.table-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead {
+    background-color: #17253C;
+    color: white;
+}
+
+.data-table th {
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.data-table td {
+    padding: 14px 20px;
+    font-size: 14px;
+    color: #374151;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f5f8ff;
+    transition: background 0.15s;
+}
+
+/* Badge compétence */
+.badge {
+    display: inline-block;
+    background-color: #e8f0fe;
+    color: #1B63E1;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-edit {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    background-color: #fef3c7;
+    color: #b45309;
+    transition: background 0.2s;
+}
+
+.btn-edit:hover {
+    background-color: #fde68a;
+}
+
+.btn-delete {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    background-color: #fee2e2;
+    color: #dc2626;
+    transition: background 0.2s;
+}
+
+.btn-delete:hover {
+    background-color: #fecaca;
+}
+
+/* État vide */
+.empty-state {
+    text-align: center;
+    color: #9ca3af;
+    padding: 50px 0 !important;
+    font-size: 15px;
+}
+
+/* ===== FORMULAIRE (add / update) ===== */
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+}
+
+.form-card {
+    background: white;
+    border-radius: 18px;
+    padding: 40px 44px;
+    width: 100%;
+    max-width: 460px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.09);
+}
+
+.form-card h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #17253C;
+    margin-bottom: 8px;
+}
+
+.form-subtitle {
+    font-size: 13px;
+    color: #9ca3af;
+    margin-bottom: 28px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #1f2937;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+    background-color: #fafafa;
+}
+
+.form-group input[type="text"]:focus {
+    border-color: #1B63E1;
+    box-shadow: 0 0 0 3px rgba(27, 99, 225, 0.1);
+    background-color: white;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 13px;
+    background-color: #1B63E1;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 6px;
+}
+
+.btn-submit:hover {
+    background-color: #1450bf;
+}
+
+.btn-submit.modifier {
+    background-color: #f59e0b;
+}
+
+.btn-submit.modifier:hover {
+    background-color: #d97706;
+}
+
+.btn-retour {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    color: #6b7280;
+    font-size: 13px;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.btn-retour:hover {
+    color: #1B63E1;
+}

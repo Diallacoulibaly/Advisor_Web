@@ -19,11 +19,15 @@
 
     <% List<Activite> activiteList = (List<Activite>) request.getAttribute("activiteList");
     Integer idEtape=(Integer) request.getAttribute("idEtape");
-    String titreEtape = (String) request.getAttribute("titreEtape");
+        String titreEtape = (String) request.getAttribute("titreEtape");
+        String descEtape = (String) request.getAttribute("descEtape");
+        Depense depense = activite.getDepense();
+        boolean aUneDepense = (depense != null);
     %>
     <div class="etape">
-        <h1> Etape <%= idEtape %></h1>
-        <p class="description"> Description de l'étape ...</p>
+        <h1> Etape <%= idEtape %>:<%=titreEtape%></h1>
+        <p class="description"> <%=descEtape%></p>
+
     </div>
     <div class="bodyy">
     <div class="titre">
@@ -34,12 +38,8 @@
         </div>
     </div>
     <ol>
-        <% for (Activite activite : activiteList)
-
-        { %>
+        <% for (Activite activite : activiteList) { %>
         <li>
-
-
             <form action="depenses" method="post" class="form-depense">
                 <div class="check">
 
@@ -47,15 +47,29 @@
                     <input type="checkbox" name="valider">
                     <span><%= activite.getTitre() %></span>
                     </div>
-                <input type="hidden" name="action" value="ajouter">
-                <input type="hidden" name="idActivite" value="<%= activite.getId() %>">
+                    <input type="hidden" name="action" value="<%= aUneDepense ? "modifier" : "ajouter" %>">
+                    <input type="hidden" name="idActivite" value="<%= activite.getId() %>">
+                    <input type="hidden" name="idEtape" value="<%= idEtape %>">
+                    <% if (aUneDepense) { %>
+                    <input type="hidden" name="id" value="<%= depense.getId() %>">
+                    <% } %>
 
-                <input type="hidden" name="idEtape" value="<%= idEtape %>">
+                    <input class="inp-depense"
+                           type="number"
+                           id="montant"
+                           name="montant"
+                           placeholder=" Saisir le montant"
+                           value="<%= aUneDepense ? depense.getMontant() : "" %>">
 
-                <input class="inp-depense" type="number" id="montant" name="montant" placeholder=" Saisir le montant">
-
-                <textarea class="inp-desc" id="description" name="description" rows="4" cols="30" placeholder=""></textarea>
-                    <button class="save" type="submit"> Enregistrer </button>
+                    <textarea class="inp-desc"
+                              id="description"
+                              name="description"
+                              rows="4"
+                              cols="30"
+                              placeholder=""><%= aUneDepense ? depense.getDescription() : "" %></textarea>
+                    <button class="save" type="submit">
+                        <%= aUneDepense ? "Modifier" : "Enregistrer" %>
+                    </button>
                 </div>
 
             </form>
@@ -87,5 +101,7 @@
         </div></button>
     </div>
     </div>
+
 </body>
 </html>
+

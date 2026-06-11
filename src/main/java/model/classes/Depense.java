@@ -30,6 +30,8 @@ public class Depense {
 
     public Depense() {}
 
+    public String getDepense(){return this.idDepense.toString();}
+
     public Integer getIdDepense() {
         return idDepense;
     }

@@ -32,35 +32,36 @@ public class CompetenceController extends HttpServlet {
         String action = req.getParameter("action");
         if (action == null) action = "liste";
 
+        req.setAttribute("menuActif", "competences");
+
         switch (action) {
 
             case "ajouter":
-                // Affiche le formulaire d'ajout
-                req.getRequestDispatcher("/WEB-INF/view/pages/add_competence.jsp")
+                req.setAttribute("pageContent", "add_competence.jsp");
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp")
                         .forward(req, resp);
                 break;
 
             case "editer":
-                // Récupère la compétence et affiche le formulaire de modification
                 int idEdit = Integer.parseInt(req.getParameter("id"));
                 Competence c = competenceService.getById(idEdit);
                 req.setAttribute("competence", c);
-                req.getRequestDispatcher("/WEB-INF/view/pages/update_competence.jsp")
+                req.setAttribute("pageContent", "update_competence.jsp");
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp")
                         .forward(req, resp);
                 break;
 
             case "supprimer":
-                // Supprime et redirige vers la liste
                 int idSuppr = Integer.parseInt(req.getParameter("id"));
                 competenceService.supprimer(idSuppr);
                 resp.sendRedirect("competences");
                 break;
 
             default:
-                // Affiche la liste de toutes les compétences
                 List<Competence> competences = competenceService.afficher();
                 req.setAttribute("competences", competences);
-                req.getRequestDispatcher("/WEB-INF/view/pages/index_competence.jsp")
+                req.setAttribute("pageContent", "index_competence.jsp");
+                req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp")
                         .forward(req, resp);
                 break;
         }
@@ -77,17 +78,14 @@ public class CompetenceController extends HttpServlet {
         }
 
         switch (action) {
-
             case "ajouter":
-                String nom = req.getParameter("nom");
-                competenceService.ajouter(nom);
+                competenceService.ajouter(req.getParameter("nom"));
                 resp.sendRedirect("competences");
                 break;
 
             case "modifier":
                 int id = Integer.parseInt(req.getParameter("id"));
-                String nomModifie = req.getParameter("nom");
-                competenceService.modifier(id, nomModifie);
+                competenceService.modifier(id, req.getParameter("nom"));
                 resp.sendRedirect("competences");
                 break;
 

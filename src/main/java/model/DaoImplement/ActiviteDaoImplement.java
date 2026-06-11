@@ -17,15 +17,14 @@ public class ActiviteDaoImplement implements ActiviteDao {
 
     @Override
     public void ajouterActivite(Activite activite) {
-        String sql = "INSERT INTO activite(titre, description, ordre, duree, statut, idEtape) VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO activite(titre, description, ordre, duree, idEtape) VALUES(?, ?, ?, ?, ?)";
         try (Connection connection = ConnectBD.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);){
             ps.setString(1, activite.getTitre());
             ps.setString(2, activite.getDescription());
             ps.setInt(3, activite.getOrdre());
             ps.setInt(4, activite.getDuree());
-            ps.setString(5, String.valueOf(activite.getStatutActivite()));
-            ps.setInt(6, activite.getEtape().getIdEtape());
+            ps.setInt(5, activite.getEtape().getIdEtape());
 
             ps.executeUpdate();
 
@@ -54,7 +53,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getString("description"),
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
-                        Statut.valueOf(rs.getString("statut")),
+
                         etape
                 );
 
@@ -85,7 +84,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getString("description"),
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
-                        Statut.valueOf(rs.getString("statut")),
+
                         null
                 );
                 activites.add(activite);
@@ -99,15 +98,14 @@ public class ActiviteDaoImplement implements ActiviteDao {
 
     @Override
     public void modifierActivite(Activite activite) {
-        String sql = "UPDATE activite SET titre=?, description=?, ordre=?, duree=?, montant_activite=?, statut=? WHERE id=?";
+        String sql = "UPDATE activite SET titre=?, description=?, ordre=?, duree=?, WHERE id=?";
         try(Connection connection = ConnectBD.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql)){
             ps.setString(1, activite.getTitre());
             ps.setString(2, activite.getDescription());
             ps.setInt(3, activite.getOrdre());
             ps.setInt(4, activite.getDuree());
-            ps.setString(6, String.valueOf(activite.getStatutActivite()));
-            ps.setInt(7, activite.getId());
+            ps.setInt(5, activite.getId());
 
             ps.executeUpdate();
             System.out.println("Activité modifiée avec succès ! ");
@@ -118,7 +116,81 @@ public class ActiviteDaoImplement implements ActiviteDao {
 
     }
 
+    @Override
+    public void marquerTerminer(int id) {
+        // 1. Requête pour passer l'activité à TERMINE
+        String sqlUpdateActivite = "UPDATE activite SET statut=? WHERE id=?";
 
+        // 2. Requête pour trouver l'idEtape liée à cette activité
+        String sqlGetEtape = "SELECT idEtape FROM activite WHERE id=?";
+
+        // 3. Requête pour compter s'il reste des activités non terminées pour cette étape
+        String sqlCountRestantes = "SELECT COUNT(*) FROM activite WHERE idEtape=? AND statut != 'TERMINE'";
+
+        // 4. Requête pour passer l'étape à TERMINE
+        String sqlUpdateEtape = "UPDATE etape SET statutEtape='TERMINE' WHERE id=?";
+
+        try (Connection connection = ConnectBD.getConnection()) {
+            // Désactiver l'auto-commit pour sécuriser la transaction
+            connection.setAutoCommit(false);
+
+            try {
+                // A. Mettre à jour l'activité
+                try (PreparedStatement psAct = connection.prepareStatement(sqlUpdateActivite)) {
+                    psAct.setString(1, String.valueOf(Statut.TERMINE));
+                    psAct.setInt(2, id);
+                    psAct.executeUpdate();
+                }
+
+                // B. Récupérer l'idEtape de l'activité courante
+                int idEtape = -1;
+                try (PreparedStatement psGetEt = connection.prepareStatement(sqlGetEtape)) {
+                    psGetEt.setInt(1, id);
+                    try (ResultSet rs = psGetEt.executeQuery()) {
+                        if (rs.next()) {
+                            idEtape = rs.getInt("idEtape");
+                        }
+                    }
+                }
+
+                // C. Si l'étape est trouvée, on vérifie ses autres activités
+                if (idEtape != -1) {
+                    int restantes = 0;
+                    try (PreparedStatement psCount = connection.prepareStatement(sqlCountRestantes)) {
+                        psCount.setInt(1, idEtape);
+                        try (ResultSet rs = psCount.executeQuery()) {
+                            if (rs.next()) {
+                                restantes = rs.getInt(1);
+                            }
+                        }
+                    }
+
+                    // D. Si plus aucune activité n'est en cours/à faire, l'étape est validée !
+                    if (restantes == 0) {
+                        try (PreparedStatement psUpEt = connection.prepareStatement(sqlUpdateEtape)) {
+                            psUpEt.setInt(1, idEtape);
+                            psUpEt.executeUpdate();
+                            System.out.println("Toutes les activités sont finies. Étape passée à TERMINE !");
+                        }
+                    }
+                }
+
+                // Valider définitivement toutes les modifications en BDD
+                connection.commit();
+                System.out.println("Activité marquée comme terminée avec succès !");
+
+            } catch (SQLException e) {
+                connection.rollback(); // Annuler en cas d'erreur
+                throw new RuntimeException("Erreur durant la transaction de validation de l'activité", e);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+/*
     @Override
     public void marquerTerminer(int id) {
         String sql = "UPDATE activite SET statut=? WHERE id=?";
@@ -135,7 +207,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
             throw new RuntimeException(e);
         }
 
-    }
+    }*/
 
     @Override
     public void supprimerActivite(int id) {
