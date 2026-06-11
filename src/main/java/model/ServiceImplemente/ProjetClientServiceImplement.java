@@ -46,6 +46,11 @@ public class ProjetClientServiceImplement implements ProjetClientService {
         return projetClientRepository.getByClient(idClient);
     }
 
+    @Override
+    public double getProjetDepenseEnCours(int id) {
+        return projetClientRepository.getProjetDepenseEnCours(id);
+    }
+
 
     @Override
     public Optional<ProjetClient> getById(int id) {
@@ -56,4 +61,5 @@ public class ProjetClientServiceImplement implements ProjetClientService {
     public Optional<ProjetClient> getByClientEncours(int id) {
         return projetClientRepository.getProjetEnCours(id);
     }
+
 }

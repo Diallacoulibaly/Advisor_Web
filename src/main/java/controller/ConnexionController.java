@@ -67,7 +67,7 @@ public class ConnexionController extends HttpServlet {
             session.setAttribute("role", utilisateur.get().getRole());
 
             if (utilisateur.get().getRole() == Role.CLIENT) {
-                //envoie des depense du client
+                //envoie des depense du client sur tout les projet qu'il a eu à faire sur l'appli
                 int idClient = utilisateur.get().getIdUtilisateur();
 
                 double totalDepense =
@@ -75,6 +75,9 @@ public class ConnexionController extends HttpServlet {
 
                 req.setAttribute("totalDepense", totalDepense);
 
+                //envoie des depense du client sur le projet qu'il accuellement
+                double totaldepenseparprojet=projetClientServiceImplement.getProjetDepenseEnCours(idClient);
+                req.setAttribute("totaldepenseparprojet", totaldepenseparprojet);
                 Optional<ProjetClient> projetClientOpt= projetClientServiceImplement.getByClientEncours(utilisateur.get().getIdUtilisateur());
                 projetClientOpt.ifPresent(projetClient -> {
                     req.setAttribute("projetClientOpt", projetClient);

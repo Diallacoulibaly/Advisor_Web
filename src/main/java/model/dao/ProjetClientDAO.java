@@ -20,6 +20,7 @@ public interface ProjetClientDAO {
     List<ProjetClient> getByClient(int idClient);
 
     Optional<ProjetClient> getProjetEnCours(int idClient);
+    public double getProjetDepenseEnCours(int idClient);
     boolean hasProjetEnCours(int idClient);
 
 }

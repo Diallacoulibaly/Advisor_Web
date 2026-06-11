@@ -14,4 +14,5 @@ public interface ProjetClientService {
     Optional<ProjetClient> getByClientEncours(int id);
     List<ProjetClient> getAll();
     List<ProjetClient> getByClient(int idClient);
+    public double getProjetDepenseEnCours(int id);
 }
