@@ -53,6 +53,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getString("description"),
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
+
                         etape
                 );
 
@@ -83,6 +84,7 @@ public class ActiviteDaoImplement implements ActiviteDao {
                         rs.getString("description"),
                         rs.getInt("duree"),
                         rs.getInt("ordre"),
+
                         null
                 );
                 activites.add(activite);
