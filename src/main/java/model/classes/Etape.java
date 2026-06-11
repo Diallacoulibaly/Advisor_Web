@@ -1,7 +1,6 @@
 package main.java.model.classes;
 
 import main.java.model.enums.StatutEtape;
-import main.java.model.classes.Projet;
 
 public class Etape {
     private int idEtape;

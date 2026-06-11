@@ -8,7 +8,9 @@ public class ConnectBD {
 
     private static final String URL = "jdbc:mysql://localhost:3306/advisor";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "isma@1604";
+    private static final String PASSWORD = "GENIUS2024!!";
+
+
 
     public static Connection getConnection() {
 
