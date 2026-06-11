@@ -299,5 +299,39 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
         return Optional.empty();
     }
 
+    @Override
+    public double getProjetDepenseEnCours(int idClient) {
+        String sql = """
+                SELECT SUM(montant)
+                FROM ProjetClient pc 
+                JOIN Projet as p on p.id=pc.idProjet
+                JOIN Client as cl on cl.id=pc.idClient
+                JOIN depense as d on d.idClient=cl.id
+                JOIN Utilisateur as u on u.id=cl.id
+                WHERE pc.idClient=? AND pc.statut="ENCOURS"
+                """;
+
+
+        try(Connection conn = ConnectBD.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idClient);
+
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                return rs.getDouble("totalDepenceparprojet");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+
+
+
+    }
+
 
 }

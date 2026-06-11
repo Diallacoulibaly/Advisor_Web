@@ -91,7 +91,7 @@
 
             <div class="etape-actions">
                 <% if (canAccessCurrent) { %>
-                <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&titreEtape=<%= etape.getTitre() %>&idProjet=<%= projet.getId() %>" class="btn-action">
+                <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&titreEtape=<%= etape.getTitre() %>&idProjet=<%= projet.getId() %>&descEtape=<%=etape.getDescription()%>" class="btn-action">
                     Voir les activités
                 </a>
                 <% } else { %>
