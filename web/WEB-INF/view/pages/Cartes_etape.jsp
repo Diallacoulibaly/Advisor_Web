@@ -18,7 +18,7 @@
 
 <%
     Projet projet = (Projet) request.getAttribute("projet");
-    List<Etape> etapes = (List<Etape>) request.getAttribute("etapes");
+    List<SuivieEtape> suivis = (List<SuivieEtape>) request.getAttribute("suivis");
 %>
 
 <div class="detail-projet-container">
@@ -51,16 +51,17 @@
 
     <div class="timeline-etapes">
         <%
-            if (etapes != null && !etapes.isEmpty()) {
+            if (suivis != null && !suivis.isEmpty()) {
                 boolean canAccessCurrent = true;
 
-                for(int i = 0; i < etapes.size(); i++) {
-                    Etape etape = etapes.get(i);
+                for(int i = 0; i < suivis.size(); i++) {
+                    SuivieEtape suiviActuel = suivis.get(i);
+                    Etape etape = suiviActuel.getEtape();
+                    StatutEtape statutActuel = suiviActuel.getStatutEtape();
 
-                    //Logique de déverrouillage
                     if (i > 0) {
-                        Etape etapePrecedente = etapes.get(i - 1);
-                        canAccessCurrent = StatutEtape.TERMINE.equals(etapePrecedente.getStatutEtape());
+                        SuivieEtape suiviPrecedent = suivis.get(i - 1);
+                        canAccessCurrent = StatutEtape.TERMINE.equals(suiviPrecedent.getStatutEtape());
                     }
         %>
 
@@ -77,11 +78,11 @@
 
             <div class="etape-corps">
                 <% if (canAccessCurrent) { %>
-                <!-- Contenu visible uniquement si l'étape est déverrouillée -->
+                <!-- Contenu si l'étape est déverrouillée -->
                 <h3><%= etape.getTitre() %></h3>
                 <p><%= etape.getDescription() %></p>
-                <span class="badge status-<%= etape.getStatutEtape().toString().toLowerCase() %>">
-                        <%= etape.getStatutEtape().toString() %>
+                <span class="badge status-<%= statutActuel.toString().toLowerCase() %>">
+                        <%= statutActuel.toString() %>
                     </span>
                 <% } else { %>
                 <!-- Masqué : aucun texte généré pour les étapes verrouillées -->
@@ -90,7 +91,7 @@
 
             <div class="etape-actions">
                 <% if (canAccessCurrent) { %>
-                <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&titreEtape=<%= etape.getTitre() %>&descEtape=<%=etape.getDescription()%>" class="btn-action">
+                <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&titreEtape=<%= etape.getTitre() %>&idProjet=<%= projet.getId() %>" class="btn-action">
                     Voir les activités
                 </a>
                 <% } else { %>
@@ -99,6 +100,7 @@
                 </button>
                 <% } %>
             </div>
+
 
         </div>
 
@@ -113,4 +115,3 @@
 </div>
 
 </body>
- 
