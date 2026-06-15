@@ -24,7 +24,7 @@ public class ConnectBD {
             return conn;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
 
         return null;
