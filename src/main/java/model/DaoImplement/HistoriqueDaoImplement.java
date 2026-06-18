@@ -59,7 +59,8 @@ public class HistoriqueDaoImplement implements HistoriqueDao {
         return historiques;
     }
 
-    @Override public List<HistoriqueProjet> afficherHistoriqueClient(int idClient) { String sql = "SELECT p.id as idP, p.titre as titre, p.description as description, p.duree as duree, p.budgetMin as budgetMin, p.budgetMax as budgetMax, h.date as dateH,l.regionClient as regionClient ,d.domaine as domaine FROM client cl INNER JOIN historique h ON h.idClient = cl.id INNER JOIN historiqueProjet as ph ON ph.idHistorique = h.id INNER JOIN projet as p ON p.id = ph.idProjet INNER JOIN domaine AS d ON d.id=p.idDomaine INNER JOIN localite AS l ON l.id=p.idLocalite WHERE cl.id = ?";
+    @Override public List<HistoriqueProjet> afficherHistoriqueClient(int idClient) {
+        String sql = "SELECT p.id as idP, p.titre as titre, p.description as description, p.duree as duree, p.budgetMin as budgetMin, p.budgetMax as budgetMax, h.date as dateH,l.regionClient as regionClient ,d.domaine as domaine FROM client cl INNER JOIN historique h ON h.idClient = cl.id INNER JOIN historiqueProjet as ph ON ph.idHistorique = h.id INNER JOIN projet as p ON p.id = ph.idProjet INNER JOIN domaine AS d ON d.id=p.idDomaine INNER JOIN localite AS l ON l.id=p.idLocalite WHERE cl.id = ?";
         List<HistoriqueProjet> historiquesP = new ArrayList<>();
         try(Connection connection = ConnectBD.getConnection();
             PreparedStatement ps = connection.prepareStatement(sql) )
@@ -100,6 +101,33 @@ public class HistoriqueDaoImplement implements HistoriqueDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    @Override
+    public List<Integer> getProjetIdsFromHist(int idClient) {
+        String sql = """
+                SELECT distinct hp.idProjet as id
+                FROM HistoriqueProjet hp 
+                     JOIN historique h ON hp.idHistorique = h.id
+                where idClient=?
+                """;
+
+        List<Integer> listId = new ArrayList<>();
+
+        try(Connection connection = ConnectBD.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setInt(1, idClient);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                listId.add(rs.getInt("id"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listId;
 
     }
 }

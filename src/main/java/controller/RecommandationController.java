@@ -121,32 +121,39 @@ public class RecommandationController extends HttpServlet{
                     recommandations.removeIf(p -> pc.getProjet().getId() == p.getId());
                 }
 
+                List<Integer> projetIdsFromHist = historiqueServiceImplement.getProjetIdsFromHist(user.getIdUtilisateur());
+                List<Projet> toInsertIntoHist = new ArrayList<>(recommandations);
 
-                if (!recommandations.isEmpty()) {
+                for(int id : projetIdsFromHist) {
+                    toInsertIntoHist.removeIf(p -> p.getId() == id);
+                }
+
+
+                if (!toInsertIntoHist.isEmpty()) {
                     Historique historique = new Historique();
                     historique.setIdClient(client.getIdUtilisateur());
                     int idHist = historiqueServiceImplement.ajouterHistorique(historique);
                     historique.setId(idHist);
 
-                    Map<Integer, Integer> nbEtapesMap = new HashMap<>();
-                    for (Projet p : recommandations) {
-                        nbEtapesMap.put(p.getId(), etapeServiceImplement.countEtapes(p.getId()));
+                    for(Projet p : toInsertIntoHist) {
                         HistoriqueProjet hp = new HistoriqueProjet(historique, p);
                         historiqueProjetServiceImplement.add(hp);
-
                     }
-                    request.setAttribute("NbreEtapes", nbEtapesMap);
-
-
-
                 }
-                
-                request.setAttribute("recommandations", recommandations);
 
+
+
+                Map<Integer, Integer> nbEtapesMap = new HashMap<>();
+                for (Projet p : recommandations) {
+                    nbEtapesMap.put(p.getId(), etapeServiceImplement.countEtapes(p.getId()));
+                }
+                request.setAttribute("NbreEtapes", nbEtapesMap);
+
+                request.setAttribute("recommandations", recommandations);
                 request.setAttribute("pageContent", "recommandations.jsp");
                 request.setAttribute("menuActif", "recommandation");
-
                 request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
+
             } else {
                 request.setAttribute("error", "Données incorrectes - Client non mis à jour");
                 request.setAttribute("pageContent", "formRecomm.jsp");

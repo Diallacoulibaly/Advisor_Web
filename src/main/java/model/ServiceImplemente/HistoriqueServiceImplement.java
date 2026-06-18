@@ -38,4 +38,9 @@ public class HistoriqueServiceImplement implements HistoriqueService {
         historiqueDao.supprimerHistorique(id);
 
     }
+
+    @Override
+    public List<Integer> getProjetIdsFromHist (int idClient) {
+        return historiqueDao.getProjetIdsFromHist(idClient);
+    }
 }

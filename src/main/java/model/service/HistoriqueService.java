@@ -10,4 +10,5 @@ public interface HistoriqueService {
     List<Historique> afficherHistorique();
     List<HistoriqueProjet> afficherHistoriqueClient(int idClient);
     void supprimerHistorique(int id);
+    List<Integer> getProjetIdsFromHist(int idClient);
 }

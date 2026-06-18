@@ -19,8 +19,14 @@ import main.java.model.dao.ClientDAO;
 import main.java.model.dao.EtapeDao;
 import main.java.model.dao.ProjetClientDAO;
 import main.java.model.service.ClientService;
+import main.java.model.service.DepenseService;
+import main.java.model.dao.DepenseDao;
+import main.java.model.DaoImplement.DepenseDaoImplement;
+import main.java.model.ServiceImplemente.DepenseImplement;
+
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +36,8 @@ public class ClientController extends HttpServlet {
     private ClientServiceImplement clientServiceImplement;
     private ProjetClientServiceImplement projetClientServiceImplement;
     private EtapeServiceImplement etapeServiceImplement;
+    private DepenseService depenseService;
+
 
     public void init(){
         ClientDAO clientDAO= new ClientDAOImplement();
@@ -38,6 +46,8 @@ public class ClientController extends HttpServlet {
         clientServiceImplement= new ClientServiceImplement(clientDAO);
         projetClientServiceImplement= new ProjetClientServiceImplement(projetClientDAO);
         etapeServiceImplement= new EtapeServiceImplement(etapeDao);
+        DepenseDao depenseDao = new DepenseDaoImplement();
+        depenseService = new DepenseImplement(depenseDao);
     }
 
     @Override
@@ -81,6 +91,15 @@ public class ClientController extends HttpServlet {
             req.setAttribute("projetClientOpt", projetClient);
             int nbreEtape= etapeServiceImplement.countEtapes(projetClient.getProjet().getId());
             req.setAttribute("nbreEtape", nbreEtape);
+            //envoie des depense du client sur le projet qu'il accuellement
+            double totaldepenseparprojet=projetClientServiceImplement.getProjetDepenseEnCours(user.getIdUtilisateur());
+            req.setAttribute("totaldepenseparprojet",  new DecimalFormat("#, ###").format(totaldepenseparprojet).replace(",", " "));
+
+
+            double totalDepense =
+                    depenseService.getTotalDepenseClient(user.getIdUtilisateur());
+
+            req.setAttribute("totalDepense",  new DecimalFormat("#, ###").format(totalDepense).replace(",", " "));
 
         });
 
