@@ -15,6 +15,7 @@ import main.java.model.enums.Role;
 import main.java.model.service.DepenseService;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Optional;
 
 @WebServlet("/connexion")
@@ -73,11 +74,12 @@ public class ConnexionController extends HttpServlet {
                 double totalDepense =
                         depenseService.getTotalDepenseClient(idClient);
 
-                req.setAttribute("totalDepense", totalDepense);
+                req.setAttribute("totalDepense", new DecimalFormat("#, ###").format(totalDepense).replace(",", " "));
 
                 //envoie des depense du client sur le projet qu'il accuellement
                 double totaldepenseparprojet=projetClientServiceImplement.getProjetDepenseEnCours(idClient);
-                req.setAttribute("totaldepenseparprojet", totaldepenseparprojet);
+
+                req.setAttribute("totaldepenseparprojet", new DecimalFormat("#, ###").format(totaldepenseparprojet).replace(",", " "));
                 Optional<ProjetClient> projetClientOpt= projetClientServiceImplement.getByClientEncours(utilisateur.get().getIdUtilisateur());
                 projetClientOpt.ifPresent(projetClient -> {
                     req.setAttribute("projetClientOpt", projetClient);

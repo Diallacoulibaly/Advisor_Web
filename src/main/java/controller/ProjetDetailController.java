@@ -51,18 +51,17 @@ public class ProjetDetailController extends HttpServlet {
         List<Etape> etapes = etapeServiceImplement.ListeEtapesByProjet(idProjet);
         Optional<Projet> projet = projetServiceImpl.getProjetById(idProjet);
 
-        if (clientConnecte != null) {
-            int idClient = clientConnecte.getIdUtilisateur();
-            List<SuivieEtape> suivis = suivieEtapeService.obtenirSuivisParProjetEtClient(idProjet, idClient);
-            request.setAttribute("suivis", suivis);
-        }
+        int idClient = clientConnecte.getIdUtilisateur();
+        List<SuivieEtape> suivis = suivieEtapeService.obtenirSuivisParProjetEtClient(idProjet, idClient);
+        request.setAttribute("suivis", suivis);
+
 
         if (projet.isPresent()) {
             request.setAttribute("projet", projet.get());
         }
 
         request.setAttribute("etapes", etapes);
-        request.setAttribute("pageContent", "Cartes_etape.jsp");
+        request.setAttribute("pageContent", "detailsProjet.jsp");
         request.setAttribute("menuActif", "mes_projets");
 
         request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);

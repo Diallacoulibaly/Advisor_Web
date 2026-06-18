@@ -12,4 +12,5 @@ public interface HistoriqueDao {
     List<Historique> afficherHistorique();
     List<HistoriqueProjet> afficherHistoriqueClient(int idClient);
     void supprimerHistorique(int id);
+    List<Integer> getProjetIdsFromHist (int idclient);
 }

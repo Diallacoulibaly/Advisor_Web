@@ -14,13 +14,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/accueilClient.css">
     </head>
 <body>
-<h2>Projet en cours</h2>
+<!--<h2>Projet en cours</h2>!-->
 <%
     ProjetClient projetClient= (ProjetClient) request.getAttribute("projetClientOpt");
-    Double totalDepense = (Double) request.getAttribute("totalDepense");
-    if (totalDepense == null) totalDepense = 0.0;
-    Double totaldepenseparprojet=(double) request.getAttribute("totaldepenseparprojet");
-    if(totaldepenseparprojet==null) totaldepenseparprojet=0.0;
+    String totalDepense = (String) request.getAttribute("totalDepense");
+//    if (totalDepense == null) totalDepense = 0.0;
+    String totaldepenseparprojet=(String) request.getAttribute("totaldepenseparprojet");
+//    if(totaldepenseparprojet==null) totaldepenseparprojet=0.0;
 %>
 <div class="cards-container">
 
@@ -119,7 +119,7 @@
                 <div class="money-content">
 
                     <div class="card-value money">
-                        <%= projetClient.getProjet().getBudgetMax() %> F CFA
+                        <%= projetClient.getProjet().getBudgetMaxFormat() %> F CFA
                     </div>
 
                     <img src="${pageContext.request.contextPath}/assets/img/money.png" alt="money" class="money-icon">
@@ -201,7 +201,7 @@
 
                     <h3>Budget</h3>
 
-                    <p><%= projetClient.getProjet().getBudgetMax() %> F CFA</p>
+                    <p><%= projetClient.getProjet().getBudgetMaxFormat() %> F CFA</p>
 
                 </div>
 

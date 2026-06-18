@@ -18,6 +18,7 @@
 
 <%
     Projet projet = (Projet) request.getAttribute("projet");
+    List<Etape> etapes = (List<Etape>) request.getAttribute("etapes");
     List<SuivieEtape> suivis = (List<SuivieEtape>) request.getAttribute("suivis");
 %>
 

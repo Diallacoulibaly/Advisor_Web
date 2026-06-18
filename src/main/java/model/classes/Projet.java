@@ -4,6 +4,8 @@ package main.java.model.classes;
 import main.java.model.enums.Niveau;
 import main.java.model.enums.StatutProjet;
 
+import java.text.DecimalFormat;
+
 public class Projet {
 
     private int id;
@@ -187,6 +189,10 @@ public class Projet {
      */
     public Domaine getDomaine() {
         return domaine;
+    }
+
+    public String getBudgetMaxFormat() {
+        return new DecimalFormat("#, ###").format(this.budgetMax).replace(",", " ");
     }
 
 
