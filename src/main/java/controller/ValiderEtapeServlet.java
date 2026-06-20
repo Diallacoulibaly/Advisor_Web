@@ -38,7 +38,7 @@ public class ValiderEtapeServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Paramètres invalides.");
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }

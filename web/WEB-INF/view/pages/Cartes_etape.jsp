@@ -42,7 +42,7 @@
 
         <div class="info-card">
             <span>Budget estimé</span>
-            <strong><%= projet.getBudgetMax() %> FCFA</strong>
+            <strong><%= projet.getBudgetMaxFormat() %> FCFA</strong>
         </div>
     </div>
 
@@ -51,66 +51,131 @@
     </div>
 
     <div class="timeline-etapes">
+
         <%
-            if (suivis != null && !suivis.isEmpty()) {
-                boolean canAccessCurrent = true;
+            if (etapes != null && !etapes.isEmpty()) {
 
-                for(int i = 0; i < suivis.size(); i++) {
-                    SuivieEtape suiviActuel = suivis.get(i);
-                    Etape etape = suiviActuel.getEtape();
-                    StatutEtape statutActuel = suiviActuel.getStatutEtape();
+                for (Etape etape : etapes) {
 
-                    if (i > 0) {
-                        SuivieEtape suiviPrecedent = suivis.get(i - 1);
-                        canAccessCurrent = StatutEtape.TERMINE.equals(suiviPrecedent.getStatutEtape());
+                    boolean canAccessCurrent = false;
+                    String statutAffiche = "AFAIRE";
+
+                    // Cas où aucun suivi n'existe encore
+                    if (suivis == null || suivis.isEmpty()) {
+
+                        canAccessCurrent = (etape.getOrdre() == 1);
+
+                    } else {
+
+                        // Recherche du suivi correspondant à cette étape
+                        SuivieEtape suiviCourant = null;
+
+                        for (SuivieEtape s : suivis) {
+                            if (s.getEtape().getIdEtape() == etape.getIdEtape()) {
+                                suiviCourant = s;
+                                break;
+                            }
+                        }
+
+                        if (suiviCourant != null) {
+
+                            statutAffiche = suiviCourant.getStatutEtape().toString();
+
+                            // Étape 1 toujours accessible
+                            if (etape.getOrdre() == 1) {
+
+                                canAccessCurrent = true;
+
+                            } else {
+
+                                // Recherche de l'étape précédente
+                                for (SuivieEtape s : suivis) {
+
+                                    if (s.getEtape().getOrdre() == etape.getOrdre() - 1) {
+
+                                        canAccessCurrent =
+                                                s.getStatutEtape() == StatutEtape.TERMINE;
+
+                                        break;
+                                    }
+                                }
+                            }
+
+                        } else {
+
+                            // Si pas de suivi trouvé pour cette étape
+                            canAccessCurrent = false;
+                        }
                     }
         %>
 
         <div class="etape-card <%= canAccessCurrent ? "" : "locked" %>">
 
             <div class="etape-header">
-                <div class="etape-ordre">Étape <%= etape.getOrdre() %></div>
+
+                <div class="etape-ordre">
+                    Étape <%= etape.getOrdre() %>
+                </div>
+
                 <% if (!canAccessCurrent) { %>
                 <div class="lock-icon">
                     <span class="material-icons">lock</span>
                 </div>
                 <% } %>
+
             </div>
 
             <div class="etape-corps">
+
                 <% if (canAccessCurrent) { %>
-                <!-- Contenu si l'étape est déverrouillée -->
+
                 <h3><%= etape.getTitre() %></h3>
+
                 <p><%= etape.getDescription() %></p>
-                <span class="badge status-<%= statutActuel.toString().toLowerCase() %>">
-                        <%= statutActuel.toString() %>
-                    </span>
-                <% } else { %>
-                <!-- Masqué : aucun texte généré pour les étapes verrouillées -->
+
+                <span class="badge status-<%= statutAffiche.toLowerCase() %>">
+                    <%= statutAffiche %>
+                </span>
+
                 <% } %>
+
             </div>
 
             <div class="etape-actions">
+
                 <% if (canAccessCurrent) { %>
-                <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&titreEtape=<%= etape.getTitre() %>&idProjet=<%= projet.getId() %>&descEtape=<%=etape.getDescription()%>" class="btn-action">
+
+                <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&idProjet=<%= projet.getId() %>"
+                   class="btn-action">
+
                     Voir les activités
+
                 </a>
+
                 <% } else { %>
+
                 <button class="btn-action disabled" disabled>
                     Verrouillé
                 </button>
-                <% } %>
-            </div>
 
+                <% } %>
+
+            </div>
 
         </div>
 
         <%
             }
+
         } else {
         %>
+
         <p class="no-data">Aucune étape disponible pour ce projet.</p>
-        <% } %>
+
+        <%
+            }
+        %>
+
     </div>
 
 </div>

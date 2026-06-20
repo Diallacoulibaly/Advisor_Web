@@ -68,7 +68,7 @@ public class DepenseDaoImplement implements DepenseDao {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
 
         return 0;

@@ -46,13 +46,18 @@ public class ProjetDetailController extends HttpServlet {
         int idProjet = Integer.parseInt(request.getParameter("id"));
 
         HttpSession session = request.getSession();
+
         Utilisateur clientConnecte = (Utilisateur) session.getAttribute("user");
 
+
         List<Etape> etapes = etapeServiceImplement.ListeEtapesByProjet(idProjet);
+
+
         Optional<Projet> projet = projetServiceImpl.getProjetById(idProjet);
 
-        int idClient = clientConnecte.getIdUtilisateur();
-        List<SuivieEtape> suivis = suivieEtapeService.obtenirSuivisParProjetEtClient(idProjet, idClient);
+//        int idClient = clientConnecte.getIdUtilisateur();
+        List<SuivieEtape> suivis = suivieEtapeService.obtenirSuivisParProjetEtClient(idProjet, clientConnecte.getIdUtilisateur());
+        System.out.println("suivis: " + suivis.size());
         request.setAttribute("suivis", suivis);
 
 
@@ -61,7 +66,7 @@ public class ProjetDetailController extends HttpServlet {
         }
 
         request.setAttribute("etapes", etapes);
-        request.setAttribute("pageContent", "detailsProjet.jsp");
+        request.setAttribute("pageContent", "Cartes_etape.jsp");
         request.setAttribute("menuActif", "mes_projets");
 
         request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
