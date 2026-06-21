@@ -17,4 +17,6 @@ public interface DepenseDao {
     void delete(int id);
 
      double getTotalDepenseClient(int idClient);
+    public List<Depense> getDepenseByActivite(int idActivite);
+
 }

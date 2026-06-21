@@ -48,16 +48,30 @@ public class DepenseController extends HttpServlet {
 
         switch (action) {
             case "liste" -> {
-                List<Depense> depenses = depenseService.getAll();
+
+                String idActiviteParam = request.getParameter("idActivite");
+
+
+                int idActivite = Integer.parseInt(idActiviteParam);
+
+                List<Depense> depenses = depenseService.getDepenseByActivite(idActivite);
+
                 request.setAttribute("depenses", depenses);
-                request.getRequestDispatcher("/WEB-INF/views/depenses/liste.jsp").forward(request, response);
+                request.setAttribute("idActivite", idActivite);
+
+                request.getRequestDispatcher("/WEB-INF/view/liste.jsp")
+                        .forward(request, response);
             }
             case "supprimer" -> {
-                String idParam = request.getParameter("id");
+                String idParam = request.getParameter("idDepense");
+                String idActivite = request.getParameter("idActivite");
+
                 if (idParam != null && !idParam.isEmpty()) {
                     depenseService.delete(Integer.parseInt(idParam));
                 }
-                response.sendRedirect(request.getContextPath() + "/depenses?action=liste");
+
+                response.sendRedirect(request.getContextPath()
+                        + "/depenses?action=liste&idActivite=" + idActivite);
             }
             case "formulaire" -> {
                 String idParam = request.getParameter("id");
@@ -87,77 +101,77 @@ public class DepenseController extends HttpServlet {
 
         switch (action) {
             case "ajouter" -> {
-                try {
 
+                try {
                     double montant = Double.parseDouble(request.getParameter("montant"));
                     String description = request.getParameter("description");
+                    //jour actuelle
                     Date date = new Date(System.currentTimeMillis());
 
-                    // CORRECTION: récupération de l'activité si nécessaire
-                    String activiteIdParam = request.getParameter("idActivite");
-                    Depense depense;
-                    if (activiteIdParam != null && !activiteIdParam.isEmpty()) {
-                        Activite activite = new Activite();
-                        Client client=new Client();
-                        assert user != null;
+                    String idAct = request.getParameter("idActivite");
+
+                    Activite activite = new Activite();
+                    activite.setId(Integer.parseInt(idAct));
+
+                    Client client = new Client();
+                    if (user != null) {
                         client.setIdUtilisateur(user.getIdUtilisateur());
-                        activite.setId(Integer.parseInt(activiteIdParam));
-                        depense = new Depense(null, montant, description, date, activite,client);
-                    } else {
-                        depense = new Depense(null, montant, description, date);
                     }
 
+                    Depense depense = new Depense(null, montant, description, date, activite, client);
+
                     depenseService.add(depense);
-                    assert activiteIdParam != null;
-                    activiteClientServiceImplement.marquerTerminer(Integer.parseInt(activiteIdParam));
 
                 } catch (Exception e) {
-                    request.setAttribute("erreur", "Données invalides : " + e.getMessage());
-                    request.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(request, response);
+
+                    request.setAttribute("erreur", e.getMessage());
+                    request.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp")
+                            .forward(request, response);
                     return;
                 }
             }
+
             case "modifier" -> {
+
                 try {
-                    int id = Integer.parseInt(request.getParameter("id"));
+                    int idDepense = Integer.parseInt(request.getParameter("idDepense"));
                     double montant = Double.parseDouble(request.getParameter("montant"));
                     String description = request.getParameter("description");
-
-                    // On récupère la date actuelle ou celle du jour de la modification
                     Date date = new Date(System.currentTimeMillis());
 
-                    // Récupération des objets liés pour reconstruire proprement la dépense
-                    String activiteIdParam = request.getParameter("idActivite");
-                    Depense depense;
+                    String idAct = request.getParameter("idActivite");
 
-                    if (activiteIdParam != null && !activiteIdParam.isEmpty()) {
-                        Activite activite = new Activite();
-                        activite.setId(Integer.parseInt(activiteIdParam));
+                    Activite activite = new Activite();
+                    activite.setId(Integer.parseInt(idAct));
 
-                        Client client = new Client();
-                        if (user != null) {
-                            client.setIdUtilisateur(user.getIdUtilisateur());
-                        }
-
-                        depense = new Depense(id, montant, description, date, activite, client);
-                    } else {
-                        depense = new Depense(id, montant, description, date);
+                    Client client = new Client();
+                    if (user != null) {
+                        client.setIdUtilisateur(user.getIdUtilisateur());
                     }
 
-                    // Mise à jour dans la base de données
+                    Depense depense = new Depense(
+                            idDepense,
+                            montant,
+                            description,
+                            date,
+                            activite,
+                            client
+                    );
+
                     depenseService.update(depense);
 
                 } catch (Exception e) {
-                    request.setAttribute("erreur", "Erreur lors de la modification : " + e.getMessage());
-                    request.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp").forward(request, response);
+
+                    request.setAttribute("erreur", e.getMessage());
+                    request.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp")
+                            .forward(request, response);
                     return;
                 }
             }
         }
-        
-        response.sendRedirect(request.getContextPath() + "/etape_activite?idEtape="+ idEtape);
-        request.setAttribute("pageContent", "etape_activite.jsp");
-        request.setAttribute("menuActif", "accueil");
-        request.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(request, response);
+
+
+        response.sendRedirect(request.getContextPath()
+                + "/etape_activite?idEtape=" + idEtape);
     }
 }

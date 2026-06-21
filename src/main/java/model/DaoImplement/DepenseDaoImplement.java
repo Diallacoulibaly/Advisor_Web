@@ -73,7 +73,10 @@ public class DepenseDaoImplement implements DepenseDao {
 
         return 0;
     }
-@Override
+
+
+
+    @Override
 public Optional<Depense> getById(int id) {
     String sql = "SELECT * FROM depense WHERE id = ?";
     try (Connection conn = ConnectBD.getConnection();
@@ -142,4 +145,48 @@ public void delete(int id) {
         System.out.println("Erreur suppression dépense : " + e.getMessage());
     }
 }
+
+
+    @Override
+    public List<Depense> getDepenseByActivite(int idActivite) {
+
+        List<Depense> list = new ArrayList<>();
+
+        String sql = "SELECT * FROM depense WHERE idActivite=?";
+
+        try (Connection conn = ConnectBD.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idActivite);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    Activite activite = new Activite();
+                    activite.setId(rs.getInt("idActivite"));
+
+                    Client client = new Client();
+                    client.setIdUtilisateur(rs.getInt("idClient"));
+
+                    Depense d = new Depense(
+                            rs.getInt("idDepense"),
+                            rs.getDouble("montant"),
+                            rs.getString("description"),
+                            rs.getDate("date"),
+                            activite,
+                            client
+                    );
+
+                    list.add(d);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
 }

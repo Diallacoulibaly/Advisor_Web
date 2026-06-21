@@ -13,4 +13,5 @@ public interface DepenseService {
     List<Depense> getAll();
     void update(Depense depense);  // CORRECTION: reçoit un objet Depense
     void delete(int id);
-}
+    public List<Depense> getDepenseByActivite(int idActivite) ;
+    }

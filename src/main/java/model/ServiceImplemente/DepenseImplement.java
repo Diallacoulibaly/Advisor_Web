@@ -64,4 +64,9 @@ public class DepenseImplement implements DepenseService {
         }
         depenseDao.delete(id);
     }
+
+    @Override
+    public List<Depense> getDepenseByActivite(int idActivite) {
+        return depenseDao.getDepenseByActivite(idActivite);
+    }
 }
