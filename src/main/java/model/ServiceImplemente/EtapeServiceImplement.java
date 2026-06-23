@@ -11,9 +11,9 @@ import main.java.model.classes.Etape;
 
 public class EtapeServiceImplement implements EtapeService {
 
-    private final main.java.model.dao.EtapeDao etapeDao;
+    private final EtapeDao etapeDao;
 
-    public EtapeServiceImplement (main.java.model.dao.EtapeDao etapeDao) {
+    public EtapeServiceImplement (EtapeDao etapeDao) {
         this.etapeDao = etapeDao;
     }
 

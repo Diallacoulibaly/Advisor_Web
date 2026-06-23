@@ -145,7 +145,7 @@
 
                 <% if (canAccessCurrent) { %>
 
-                <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&idProjet=<%= projet.getId() %>"
+                <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&idProjet=<%= projet.getId() %>&titreEtape=<%= etape.getTitre() %>&descEtape=<%= etape.getDescription() %>"
                    class="btn-action">
 
                     Voir les activités

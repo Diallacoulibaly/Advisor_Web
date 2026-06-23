@@ -31,6 +31,7 @@ public class ActiviteEtapeController extends HttpServlet {
             String etapeTitre = req.getParameter("titreEtape");
             String descEtape=req.getParameter("descEtape");
             int idProjet = Integer.parseInt(req.getParameter("idProjet"));
+            System.out.println(etapeTitre);
             List<Activite> activiteList = activiteServiceImplement.getActiviteByEtape(idEtape);
             req.setAttribute("activiteList", activiteList);
             req.setAttribute("idEtape",idEtape);

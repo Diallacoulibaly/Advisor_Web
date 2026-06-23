@@ -66,7 +66,7 @@ public class SuivieEtapeDaoImplement implements SuivieEtapeDao {
                     // Récupération du statut ENUM
                     String statutStr = rs.getString("statut");
                     if (statutStr != null) {
-                        suivi.setStatutEtape(main.java.model.enums.StatutEtape.valueOf(statutStr));
+                        suivi.setStatutEtape(StatutEtape.valueOf(statutStr));
                     }
 
                     // Reconstruction de l'objet Etape lié

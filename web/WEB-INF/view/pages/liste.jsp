@@ -1,25 +1,30 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.yourpackage.entity.Depense" %>
+<%@ page import="main.java.model.classes.Depense" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Liste des dépenses</title>
-
-
 </head>
 
 <body>
 
 <h2>Liste des dépenses</h2>
 
+<%
+    List<Depense> depenses = (List<Depense>) request.getAttribute("depenses");
+    Integer idProjet = (Integer) request.getAttribute("idProjet");
+    Integer idEtape = (Integer) request.getAttribute("idEtape");
+%>
 
-<a class="btn-back" href="activites"> Retour aux activités</a>
+<a href="etape_activite?idEtape=<%=idEtape%>&idProjet=<%=idProjet%>">
+    Retour aux activités
+</a>
 
-<hr>
+<br><br>
 
-<table>
+<table border="1" cellpadding="8" cellspacing="0">
 
     <tr>
         <th>ID</th>
@@ -30,10 +35,7 @@
     </tr>
 
     <%
-        List<Depense> depenses = (List<Depense>) request.getAttribute("depenses");
-
         if (depenses != null && !depenses.isEmpty()) {
-
             for (Depense d : depenses) {
     %>
 
@@ -44,19 +46,15 @@
         <td><%= d.getDate() %></td>
 
         <td>
-
             <a href="depenses?action=modifier&idDepense=<%= d.getIdDepense() %>">
                 Modifier
             </a>
 
             |
 
-
-            <a href="depenses?action=supprimer&idDepense=<%= d.getIdDepense() %>&idActivite=<%= d.getActivite().getId() %>"
-               onclick="return confirm('Voulez-vous vraiment supprimer cette dépense ?')">
-                 Supprimer
+            <a href="depenses?action=supprimer&idDepense=<%= d.getIdDepense() %>&idActivite=<%= d.getActivite().getId() %>">
+                Supprimer
             </a>
-
         </td>
     </tr>
 
@@ -67,7 +65,7 @@
 
     <tr>
         <td colspan="5">
-             Aucune dépense trouvée pour cette activité
+            Aucune dépense trouvée pour cette activité
         </td>
     </tr>
 

@@ -170,7 +170,7 @@ public void delete(int id) {
                     client.setIdUtilisateur(rs.getInt("idClient"));
 
                     Depense d = new Depense(
-                            rs.getInt("idDepense"),
+                            rs.getInt("id"),
                             rs.getDouble("montant"),
                             rs.getString("description"),
                             rs.getDate("date"),

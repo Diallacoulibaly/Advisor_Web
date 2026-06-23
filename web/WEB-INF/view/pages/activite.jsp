@@ -52,10 +52,15 @@
                     <input type="hidden" name="action" value="ajouter">
                     <input type="hidden" name="idActivite" value="<%= activite.getId() %>">
                     <input type="hidden" name="idEtape" value="<%= idEtape %>">
+                    <input type="hidden" name="idProjet" value="<%= idProjet %>">
+
+
+
+
                     <input class="inp-depense" type="number" id="montant" name="montant"  placeholder=" Saisir le montant">
                     <textarea class="inp-desc" id="description" name="description" rows="4" cols="30"></textarea>
                     <button class="save" type="submit"> Enregistrer </button>
-                                <a href="depenses?action=lister&idActivite=<%= activite.getId() %>">
+                                <a href="depenses?action=liste&idActivite=<%= activite.getId() %>&idEtape=<%=idEtape %>&idProjet=<%=idProjet %>">
                                     Voir les dépenses
                                 </a>
 

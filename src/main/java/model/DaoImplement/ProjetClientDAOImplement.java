@@ -302,7 +302,7 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
     @Override
     public double getProjetDepenseEnCours(int idClient) {
         String sql = """
-                SELECT SUM(montant)
+                SELECT SUM(montant) As totalDepenceparprojet
                 FROM ProjetClient pc 
                 JOIN Projet as p on p.id=pc.idProjet
                 JOIN Client as cl on cl.id=pc.idClient
