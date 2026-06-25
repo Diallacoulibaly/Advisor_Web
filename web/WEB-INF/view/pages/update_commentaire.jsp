@@ -30,8 +30,5 @@
 
     </form>
 
-    <a href="commentaires" class="btn-retour">
-        Retour à la liste
-    </a>
 
 </div>

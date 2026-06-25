@@ -38,6 +38,7 @@ public class CommentaireController extends HttpServlet {
             case "addCmt":
                 req.setAttribute("pageContent", "add_commentaire.jsp");
 
+
                 req.getRequestDispatcher("/WEB-INF/view/layouts/layout.jsp").forward(req, resp);
 
                 break;
@@ -75,7 +76,7 @@ public class CommentaireController extends HttpServlet {
             if (actions.equalsIgnoreCase("addCmt")){
                 String cmt=req.getParameter("cmt");
                 int idEtape=Integer.parseInt(req.getParameter("idEtape")) ;
-                System.out.println("ggggg:"+idEtape);
+
                 Etape etape=new Etape();
                 etape.setIdEtape(idEtape);
                 commentaireService.ajouter(cmt,etape);

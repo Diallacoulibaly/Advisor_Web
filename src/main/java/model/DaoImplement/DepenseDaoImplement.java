@@ -116,12 +116,19 @@ public void update(Depense depense) {
     try (Connection conn = ConnectBD.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        ps.setDouble(1, depense.getMontant());
+      /*  ps.setDouble(1, depense.getMontant());
         ps.setString(2, depense.getDescription());
         ps.setDate(3, depense.getDate());
         ps.setInt(4, depense.getActivite().getId());
         ps.setInt(5, depense.getIdDepense());
-        ps.setInt(6,depense.getClient().getIdUtilisateur());
+        ps.setInt(6,depense.getClient().getIdUtilisateur());*/
+
+        ps.setDouble(1, depense.getMontant());
+        ps.setString(2, depense.getDescription());
+        ps.setDate(3, depense.getDate());
+        ps.setInt(4, depense.getActivite().getId());
+        ps.setInt(5, depense.getClient().getIdUtilisateur());
+        ps.setInt(6, depense.getIdDepense());
 
         int lines = ps.executeUpdate();
         System.out.println(lines > 0 ? "Dépense modifiée." : "Aucune dépense modifiée.");

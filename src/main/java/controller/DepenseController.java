@@ -50,44 +50,71 @@ public class DepenseController extends HttpServlet {
             case "liste" -> {
 
                 String idActiviteParam = request.getParameter("idActivite");
+                String idEtapeParam = request.getParameter("idEtape");
+                String idProjetParam = request.getParameter("idProjet");
 
+                if (idActiviteParam == null || idEtapeParam == null || idProjetParam == null) {
+                    System.out.println("PARAMETRES MANQUANTS");
+                    return;
+                }
 
                 int idActivite = Integer.parseInt(idActiviteParam);
-                int idEtape=Integer.parseInt(request.getParameter("idEtape"));
-                int idProjet=Integer.parseInt(request.getParameter("idProjet"));
+                int idEtape = Integer.parseInt(idEtapeParam);
+                int idProjet = Integer.parseInt(idProjetParam);
 
                 List<Depense> depenses = depenseService.getDepenseByActivite(idActivite);
-                System.out.println("le sise:"+depenses.size());
 
                 request.setAttribute("depenses", depenses);
                 request.setAttribute("idActivite", idActivite);
-                request.setAttribute("idEtape",idEtape);
-                request.setAttribute("idProjet",idProjet);
+                request.setAttribute("idEtape", idEtape);
+                request.setAttribute("idProjet", idProjet);
 
                 request.getRequestDispatcher("/WEB-INF/view/pages/liste.jsp")
                         .forward(request, response);
             }
             case "supprimer" -> {
-                String idParam = request.getParameter("idDepense");
-                String idActivite = request.getParameter("idActivite");
+                int idParam = Integer.parseInt(request.getParameter("idDepense"));
+                int idActivite = Integer.parseInt(request.getParameter("idActivite"));
+                int idEtape = Integer.parseInt(request.getParameter("idEtape"));
+                int idProjet = Integer.parseInt(request.getParameter("idProjet"));
 
-                if (idParam != null && !idParam.isEmpty()) {
-                    depenseService.delete(Integer.parseInt(idParam));
-                }
+                    depenseService.delete(idParam);
 
-                response.sendRedirect(request.getContextPath()
-                        + "/depenses?action=liste&idActivite=" + idActivite);
+
+                response.sendRedirect(
+                        request.getContextPath()
+                                + "/depenses?action=liste"
+                                + "&idActivite=" + idActivite
+                                + "&idEtape=" + idEtape
+                                + "&idProjet=" + idProjet
+                );
             }
             case "modifier" -> {
 
-                int idDepense = Integer.parseInt(request.getParameter("idDepense"));
-                System.out.println(idDepense);
+                String idDepenseParam = request.getParameter("idDepense");
+                String idActiviteParam = request.getParameter("idActivite");
+                String idEtapeParam = request.getParameter("idEtape");
+                String idProjetParam = request.getParameter("idProjet");
 
-                // Optional<Depense> depense= depenseService.getById(idDepense);
-                Depense depense = depenseService.getById(idDepense)
-                        .orElse(null);
+                /*if (idDepenseParam == null || idActiviteParam == null || idEtapeParam == null || idProjetParam == null) {
+
+                    response.sendRedirect(request.getContextPath() + "/depenses?action=liste");
+                    return;
+                }*/
+
+                int idDepense = Integer.parseInt(idDepenseParam);
+                int idActivite = Integer.parseInt(idActiviteParam);
+                int idEtape = Integer.parseInt(idEtapeParam);
+                int idProjet = Integer.parseInt(idProjetParam);
+
+
+
+                Depense depense = depenseService.getById(idDepense).orElse(null);
 
                 request.setAttribute("depense", depense);
+                request.setAttribute("idActivite", idActivite);
+                request.setAttribute("idEtape", idEtape);
+                request.setAttribute("idProjet", idProjet);
 
                 request.getRequestDispatcher("/WEB-INF/view/pages/update_depense.jsp")
                         .forward(request, response);
@@ -161,10 +188,11 @@ public class DepenseController extends HttpServlet {
                     String description = request.getParameter("description");
                     Date date = new Date(System.currentTimeMillis());
 
-                    String idAct = request.getParameter("idActivite");
+                    String idActivite = request.getParameter("idActivite");
+                    String idProjet = request.getParameter("idProjet");
 
                     Activite activite = new Activite();
-                    activite.setId(Integer.parseInt(idAct));
+                    activite.setId(Integer.parseInt(idActivite));
 
                     Client client = new Client();
                     if (user != null) {
@@ -182,8 +210,16 @@ public class DepenseController extends HttpServlet {
 
                     depenseService.update(depense);
 
-                } catch (Exception e) {
+                    response.sendRedirect(
+                            request.getContextPath()
+                                    + "/depenses?action=liste"
+                                    + "&idActivite=" + idActivite
+                                    + "&idEtape=" + idEtape
+                                    + "&idProjet=" + idProjet
+                    );
+                    return;
 
+                } catch (Exception e) {
                     request.setAttribute("erreur", e.getMessage());
                     request.getRequestDispatcher("/WEB-INF/view/pages/activite.jsp")
                             .forward(request, response);

@@ -16,6 +16,8 @@
     List<Depense> depenses = (List<Depense>) request.getAttribute("depenses");
     Integer idProjet = (Integer) request.getAttribute("idProjet");
     Integer idEtape = (Integer) request.getAttribute("idEtape");
+        Integer idActivite = (Integer) request.getAttribute("idActivite");
+
 %>
 
 <a href="etape_activite?idEtape=<%=idEtape%>&idProjet=<%=idProjet%>">
@@ -45,16 +47,18 @@
         <td><%= d.getDescription() %></td>
         <td><%= d.getDate() %></td>
 
-        <td>
-            <a href="depenses?action=modifier&idDepense=<%= d.getIdDepense() %>">
+        <td><a href="depenses?action=modifier&idDepense=<%=d.getIdDepense()%>&idActivite=<%=idActivite%>&idEtape=<%=idEtape%>&idProjet=<%=idProjet%>">
                 Modifier
             </a>
 
             |
-
-            <a href="depenses?action=supprimer&idDepense=<%= d.getIdDepense() %>&idActivite=<%= d.getActivite().getId() %>">
-                Supprimer
-            </a>
+<a href="depenses?action=supprimer
+&idDepense=<%= d.getIdDepense() %>
+&idActivite=<%= d.getActivite().getId() %>
+&idEtape=<%= idEtape %>
+&idProjet=<%= idProjet %>">
+    Supprimer
+</a>
         </td>
     </tr>
 

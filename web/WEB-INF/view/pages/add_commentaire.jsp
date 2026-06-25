@@ -2,6 +2,8 @@
 
 <%
     int idEtape = Integer.parseInt(request.getParameter("idEtape"));
+
+
 %>
 
 <html>
