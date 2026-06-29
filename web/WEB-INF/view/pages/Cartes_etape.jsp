@@ -57,59 +57,33 @@
 
                 for (Etape etape : etapes) {
 
-                    boolean canAccessCurrent = false;
-                    String statutAffiche = "AFAIRE";
+                    SuivieEtape suiviCourant = null;
 
-                    // Cas où aucun suivi n'existe encore
-                    if (suivis == null || suivis.isEmpty()) {
-
-                        canAccessCurrent = (etape.getOrdre() == 1);
-
-                    } else {
-
-                        // Recherche du suivi correspondant à cette étape
-                        SuivieEtape suiviCourant = null;
-
+                    if (suivis != null) {
                         for (SuivieEtape s : suivis) {
                             if (s.getEtape().getIdEtape() == etape.getIdEtape()) {
                                 suiviCourant = s;
                                 break;
                             }
                         }
+                    }
 
-                        if (suiviCourant != null) {
+                    String statut = "AFAIRE";
+                    boolean accessible = false;
 
-                            statutAffiche = suiviCourant.getStatutEtape().toString();
+                    if (suiviCourant != null) {
 
-                            // Étape 1 toujours accessible
-                            if (etape.getOrdre() == 1) {
+                        statut = suiviCourant.getStatutEtape().name();
 
-                                canAccessCurrent = true;
+                        if (suiviCourant.getStatutEtape() == StatutEtape.ENCOURS
+                                || suiviCourant.getStatutEtape() == StatutEtape.TERMINE) {
 
-                            } else {
-
-                                // Recherche de l'étape précédente
-                                for (SuivieEtape s : suivis) {
-
-                                    if (s.getEtape().getOrdre() == etape.getOrdre() - 1) {
-
-                                        canAccessCurrent =
-                                                s.getStatutEtape() == StatutEtape.TERMINE;
-
-                                        break;
-                                    }
-                                }
-                            }
-
-                        } else {
-
-                            // Si pas de suivi trouvé pour cette étape
-                            canAccessCurrent = false;
+                            accessible = true;
                         }
                     }
         %>
 
-        <div class="etape-card <%= canAccessCurrent ? "" : "locked" %>">
+        <div class="etape-card <%= accessible ? "" : "locked" %>">
 
             <div class="etape-header">
 
@@ -117,25 +91,35 @@
                     Étape <%= etape.getOrdre() %>
                 </div>
 
-                <% if (!canAccessCurrent) { %>
+                <% if(!accessible){ %>
+
                 <div class="lock-icon">
-                    <span class="material-icons">lock</span>
+                    🔒
                 </div>
+
                 <% } %>
 
             </div>
 
             <div class="etape-corps">
 
-                <% if (canAccessCurrent) { %>
+                <% if(accessible){ %>
 
                 <h3><%= etape.getTitre() %></h3>
 
                 <p><%= etape.getDescription() %></p>
 
-                <span class="badge status-<%= statutAffiche.toLowerCase() %>">
-                    <%= statutAffiche %>
-                </span>
+                <span class="badge status-<%= statut.toLowerCase() %>">
+                <%= statut %>
+            </span>
+
+                <% }else{ %>
+
+                <h3>Étape verrouillée</h3>
+
+                <p>
+                    Vous devez terminer l'étape précédente avant d'accéder à celle-ci.
+                </p>
 
                 <% } %>
 
@@ -143,7 +127,7 @@
 
             <div class="etape-actions">
 
-                <% if (canAccessCurrent) { %>
+                <% if(accessible){ %>
 
                 <a href="${pageContext.request.contextPath}/etape_activite?idEtape=<%= etape.getIdEtape() %>&idProjet=<%= projet.getId() %>"
                    class="btn-action">
@@ -152,7 +136,7 @@
 
                 </a>
 
-                <% } else { %>
+                <% }else{ %>
 
                 <button class="btn-action disabled" disabled>
                     Verrouillé
@@ -170,7 +154,9 @@
         } else {
         %>
 
-        <p class="no-data">Aucune étape disponible pour ce projet.</p>
+        <p class="no-data">
+            Aucune étape disponible pour ce projet.
+        </p>
 
         <%
             }

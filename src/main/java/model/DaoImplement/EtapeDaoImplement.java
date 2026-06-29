@@ -56,10 +56,7 @@ public class EtapeDaoImplement implements EtapeDao {
                 etape.setDescription(rs.getString("description"));
                 etape.setOrdre(rs.getInt("ordre"));
 
-                String statut = rs.getString("statut");
-                if (statut != null) {
-                    etape.setStatutEtape(StatutEtape.valueOf(statut));
-                }
+
 
                 Projet projet = new Projet();
                 projet.setId(rs.getInt("idProjet"));

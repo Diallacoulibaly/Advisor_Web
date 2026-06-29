@@ -5,6 +5,7 @@ import main.java.model.classes.*;
 import main.java.model.dao.ProjetClientDAO;
 import main.java.model.enums.Niveau;
 import main.java.model.enums.Satifaction;
+import main.java.model.enums.StatutEtape;
 import main.java.model.enums.StatutProjet;
 
 import java.sql.*;
@@ -16,31 +17,94 @@ public class ProjetClientDAOImplement implements ProjetClientDAO {
 
     @Override
     public boolean save(ProjetClient projetClient) {
-        String sql = """
-                INSERT INTO projetClient
-                (idClient, idProjet, statut)
-                VALUES (?, ?, ?)
-                """;
-        try (Connection connection= ConnectBD.getConnection(); PreparedStatement stmt = connection.prepareStatement(sql)){
 
+        String sqlProjet = """
+            INSERT INTO projetClient
+            (idClient, idProjet, statut)
+            VALUES (?, ?, ?)
+            """;
+
+        String sqlEtapes = """
+            SELECT id, ordre
+            FROM etape
+            WHERE idProjet = ?
+            ORDER BY ordre
+            """;
+
+        String sqlSuivie = """
+            INSERT INTO suivieEtape(idEtape, idClient, statut)
+            VALUES (?, ?, ?)
+            """;
+
+        try (Connection connection = ConnectBD.getConnection()) {
+
+            connection.setAutoCommit(false);
+
+            try {
+
+                // Enregistrement du projet
+                try (PreparedStatement stmt = connection.prepareStatement(sqlProjet)) {
 
                     stmt.setInt(1, projetClient.getClient().getIdUtilisateur());
-
                     stmt.setInt(2, projetClient.getProjet().getId());
-
                     stmt.setString(3, StatutProjet.ENCOURS.name());
 
-                    int row=stmt.executeUpdate();
+                    int row = stmt.executeUpdate();
 
-                    return row>0;
+                    if (row == 0) {
+                        connection.rollback();
+                        return false;
+                    }
+                }
+
+                // Récupération des étapes du projet
+                try (PreparedStatement stmtEtape =
+                             connection.prepareStatement(sqlEtapes)) {
+
+                    stmtEtape.setInt(1, projetClient.getProjet().getId());
+
+                    try (ResultSet rs = stmtEtape.executeQuery()) {
+
+                        while (rs.next()) {
+
+                            int idEtape = rs.getInt("id");
+                            int ordre = rs.getInt("ordre");
+
+                            try (PreparedStatement stmtSuivi =
+                                         connection.prepareStatement(sqlSuivie)) {
+
+                                stmtSuivi.setInt(1, idEtape);
+                                stmtSuivi.setInt(2,
+                                        projetClient.getClient().getIdUtilisateur());
+
+                                if (ordre == 1) {
+                                    stmtSuivi.setString(3,
+                                            StatutEtape.ENCOURS.name());
+                                } else {
+                                    stmtSuivi.setString(3,
+                                            StatutEtape.AFAIRE.name());
+                                }
+
+                                stmtSuivi.executeUpdate();
+                            }
+                        }
+                    }
+                }
+
+                connection.commit();
+                return true;
+
+            } catch (Exception e) {
+
+                connection.rollback();
+                throw e;
             }
 
-        catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(
                     "Erreur lors de l'ajout du projet", e);
         }
     }
-
     @Override
     public boolean hasProjetEnCours(int idClient) {
 

@@ -1,132 +1,153 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+:root{
+    --primary:#1B63E1;
+    --secondary:#17253C;
+    --background:#f5f7fb;
+    --success:#1eb980;
 }
 
 body{
+    background:var(--background);
     font-family:Arial, sans-serif;
+}
+
+.etape-header{
     background:white;
-    color:#1d2b4f;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.08);
 }
 
-.etape {
-    color: black;
-    width: 831px;
-    height: 139px;
-    border: #2E58CC solid;
-    border-radius: 20px;
-    background-color: rgba(46, 88, 204, 0.1);
-    margin: 0 auto 0;
-    padding: 10px;
-}
-.description{
-    margin-top: 1%;
-}
-.form-depense {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 10px;
-}
-li{
-    list-style : none;
+.etape-header h1{
+    color:var(--secondary);
+    margin-bottom:10px;
 }
 
-.titre{
-    align-items: center;
-    display: flex;
-    gap: 180px;
-    margin-bottom: 20px;
+.etape-header p{
+    color:#666;
+    line-height:1.6;
+}
 
+.activities-container{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
 }
-h2{
-    font-size: 18px;
+
+.activity-card{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.08);
 }
-.btn{
-    margin-top: 2%;
-    align-items: center;
-    display: flex;
-    gap: 50px;
-    .coment-btn{
-        color: #3A6BF3;
-        background-color: white;
-        border: #3A6BF3 solid;
-        border-radius: 25px;
-        width: 276px;
-        height: 60px;
-        a{
-            text-decoration: none;
-            color: #3A6BF3;
-            font-size: 20px;
-        }
+
+.activity-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.activity-title h3{
+    color:var(--secondary);
+    font-size:20px;
+}
+
+.btn-finish{
+    background:var(--secondary);
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-finish:hover{
+    transform:translateY(-2px);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:250px 1fr;
+    gap:20px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+}
+
+.field label{
+    margin-bottom:8px;
+    font-weight:600;
+    color:var(--secondary);
+}
+
+.field input,
+.field textarea{
+    border:1px solid #dcdcdc;
+    border-radius:10px;
+    padding:12px;
+    font-size:15px;
+}
+
+.field textarea{
+    resize:vertical;
+}
+
+.btn-save{
+    margin-top:20px;
+    background:var(--primary);
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:12px 20px;
+    cursor:pointer;
+}
+
+.bottom-actions{
+    margin-top:30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.btn-comment{
+    background:white;
+    text-decoration:none;
+    color:var(--secondary);
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:bold;
+    box-shadow:0 3px 10px rgba(0,0,0,0.08);
+}
+
+.btn-etape{
+    background:var(--success);
+    color:white;
+    border:none;
+    padding:14px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+@media(max-width:768px){
+
+    .activity-top{
+        flex-direction:column;
+        gap:15px;
+        align-items:flex-start;
     }
-    .finish-btn{
-        width: 276px;
-        height: 60px;
-        color: white;
-        background-color: #3A6BF3;
-        border-radius: 25px;
-        border: #3A6BF3 solid;
-        font-size: 20px;
+
+    .form-grid{
+        grid-template-columns:1fr;
     }
-}
-.form-depense{
-    margin-bottom: 10px;
-}
 
-.form-depense .check {
-    display: flex;
-    align-items: center;
-    gap: 50px;
-    width: 90%;
-    flex-direction: row;
-}
+    .bottom-actions{
+        flex-direction:column;
+        gap:15px;
+    }
 
-
-.form-depense .check-title {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    width: 250px;
-}
-.bodyy{
-    margin-left: 40px ;
-    margin-top: 20px;
-}
-
-.inp-depense{
-    width: 127px;
-    height: 36px;
-    border-radius: 8px;
-
-}
-
-.inp-desc{
-    width: 258px;
-    height: 36px;
-    border-radius: 8px;
-}
-
-i{
-    width: 80px;
-    height: 80px;
-}
-
-.sey{
-    align-items: center;
-    display: flex;
-    gap: 40px;
-}
-.btnpd{
-    padding-top: 6%;
-}
-
-.save{
-    width: 90px;
-    height: 36px;
-    border-radius: 8px;
-    color: #3A6BF3;
-    background-color: white;
-    border: #3A6BF3 solid;
 }
